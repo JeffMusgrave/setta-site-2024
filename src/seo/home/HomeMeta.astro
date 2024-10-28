@@ -1,0 +1,41 @@
+---
+import { Schema } from "astro-seo-schema";
+import { Seo } from "astro-seo-meta";
+import type {
+  WithContext,
+  WebSite,
+  Organization,
+  ProfessionalService,
+} from "schema-dts";
+
+const seoProps = {
+  title: "Setta",
+  description: "The Configuration Canvas.",
+  canonical: "https://setta.dev/",
+  openGraph: {
+    basic: {
+      title: "Setta: Your Configuration Canvas",
+      type: "website",
+      // image: "https://designgenius.com/path/to/og-image.jpg",
+    },
+  },
+  // twitter: {
+  //   card: "summary_large_image",
+  //   site: "@DesignGeniusHandle", 
+  //   creator: "@JeffDesignGenius", 
+  // },
+} as const;
+
+const websiteSchema: WithContext<WebSite> = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://setta.dev",
+  name: "Design Genius",
+  url: "https://setta.dev",
+  description: "The Configuration Canvas",
+};
+
+---
+
+<Schema item={websiteSchema} />
+<Seo {...seoProps} />

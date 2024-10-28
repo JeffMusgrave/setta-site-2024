@@ -1,0 +1,22 @@
+---
+import {siteWidth} from "../../styles/constants.js";
+interface Props {
+  id?: string;
+  outerClass?: string;
+  innerClass?: string;
+}
+
+const { id = "", outerClass = "relative pt-36 pb-24 overflow-hidden", innerClass = "relative z-10 justify-between mx-auto flex gap-2"} = Astro.props;
+
+
+---
+
+<section id={id} class={`${outerClass} w-full`}>
+  <div class:list={[siteWidth, innerClass]} >
+      <div class="prose prose-2xl prose-headings:my-6 prose-h1:font-semibold prose-h2:!font-bold dark:prose-invert prose:max-w-full">
+        <slot name="left-side" />
+      </div>
+      <slot />
+  </div>
+</section>
+

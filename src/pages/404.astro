@@ -1,0 +1,18 @@
+---
+import {siteWidth} from "../styles/constants.js"
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="404 - Page Not Found" 
+>
+  <section class="py-20 text-center">
+    <div class={`${siteWidth} mx-auto `}>
+      <h1 class="text-6xl mb-4">404</h1>
+      <p class="text-2xl mb-8">Oops! The page you're looking for doesn't exist.</p>
+      <a href="/" class="bg-setta-500 hover:bg-setta-600  font-bold py-2 rounded-lg transition duration-300">
+        Go Back Home
+      </a>
+    </div>
+  </section>
+</Layout>
