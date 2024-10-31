@@ -11,6 +11,7 @@ import ThemeImage from '../components/ThemeImage.astro';
 import HeroCTA from '../components/pages/home/HeroCTA.astro';
 import Section from '../components/sections/Section.astro';
 import VideoPlaceholder from "../assets/img/home/video-placeholder.png"
+import ConfigSolved from "../snippets/home/configuration-solved.md"
 ---
 
 <Layout>
@@ -19,12 +20,15 @@ import VideoPlaceholder from "../assets/img/home/video-placeholder.png"
     <h1 slot="left-side">The Developer's Configuration Canvas</h1>
     <p class="my-0" slot="left-side">Perfect for Python AI & Data Science Projects</p>
     <HeroCTA slot="left-side" />
-    <ThemeImage alt="Setta Card With Parameters" lightImage={AlgoLight} darkImage={AlgoDark} width={350} height={564} imageClass="rounded-[18px] drop-shadow-[0_0px_120px_rgba(59,129,246,0.6)]"/>
-    <ThemeImage alt="Setta Card With Parameters" lightImage={HeroBgLight} darkImage={HeroBgDark} width={683} height={695} class="absolute -right-52 -z-10"/>
+    <ThemeImage class="hidden lg:block" alt="Setta Card With Parameters" lightImage={AlgoLight} darkImage={AlgoDark} width={350} height={564} imageClass="rounded-[18px] drop-shadow-[0_0px_120px_rgba(59,129,246,0.6)]"/>
+    <ThemeImage alt="Setta Cards in the BG" lightImage={HeroBgLight} darkImage={HeroBgDark} width={683} height={695} class="hidden md:block absolute -right-52 -z-10"/>
   </Hero>
   <Section 
-  outerClass="relative py-32 bg-gradient-to-b from-[#060709] to-transparent"
-  innerClass="relative z-10 justify-center mx-auto" >
-    <Image src={VideoPlaceholder} alt="setta video placeholder" width={1280} height={960} class="-mt-48 p-4 bg-setta-900 rounded-2xl min-w-full" />
+  outerClass="relative py-6 sm:py-12 md:py-32 md:bg-gradient-to-b md:from-[#060709] md:to-transparent"
+ >
+    <Image src={VideoPlaceholder} alt="setta video placeholder" width={1280} height={960} class="md:-mt-48 md:p-4 bg-setta-900 rounded-2xl min-w-full border border-setta-500/50 shadow-lg" />
+  </Section>
+  <Section>
+    <ConfigSolved />
   </Section>
 </Layout>
