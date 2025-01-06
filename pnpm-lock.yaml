@@ -41,6 +41,9 @@ dependencies:
   astro-seo-schema:
     specifier: ^4.0.2
     version: 4.0.2(astro@4.15.4)(schema-dts@1.1.2)
+  lucide-astro:
+    specifier: ^0.469.0
+    version: 0.469.0(astro@4.15.4)
   schema-dts:
     specifier: ^1.1.2
     version: 1.1.2(typescript@5.6.2)
@@ -3260,6 +3263,14 @@ packages:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
     dependencies:
       yallist: 3.1.1
+    dev: false
+
+  /lucide-astro@0.469.0(astro@4.15.4):
+    resolution: {integrity: sha512-JHj98KsiJ3VZE4jWUNlV1gVcTBDp8zzDt9FCrWoUUQUqM8ak/hqWRGkweqsa07HtrjjNiM6SVvBvxh1fna5fRg==}
+    peerDependencies:
+      astro: '>=2.7.1'
+    dependencies:
+      astro: 4.15.4(typescript@5.6.2)
     dev: false
 
   /lusca@1.6.1:

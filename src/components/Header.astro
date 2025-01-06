@@ -10,7 +10,7 @@ const nav = [
 
 ---
 
-<header class="fixed py-2 md:py-8 top-0 left-0 right-0 z-50 scroll-fade-bg before:bg-setta-100 dark:before:bg-setta-900/70 backdrop-blur-md  transition-all duration-300">
+<header class="fixed py-2 md:py-8 top-0 left-0 right-0 z-50 scroll-fade-bg before:bg-setta-100 dark:before:bg-setta-900/90 transition-all duration-300">
   <div class={`${siteWidth} sticky mx-auto py-3 flex justify-between items-center`}>
     <a href="/" class="flex items-center">
       <span class="sr-only">setta</span>
@@ -33,7 +33,7 @@ const nav = [
     <nav
       role="navigation"
       aria-label="Main Navigation"
-      class="nav-menu max-h-0 rounded-md lg:max-h-none fixed top-0 left-0 right-0 bottom-0 flex h-[100dvh] flex-col place-content-center items-center gap-[clamp(1rem,_8vh,_5rem)] overflow-hidden  text-3xl  transition-all lg:relative lg:h-fit lg:w-auto lg:flex-row lg:place-content-start lg:bg-transparent lg:gap-4"
+      class="nav-menu max-h-0 rounded-md lg:max-h-none fixed top-0 bg-white dark:bg-setta-950 left-0 right-0 bottom-0 flex h-[100dvh] flex-col place-content-center items-center gap-[clamp(1rem,_8vh,_5rem)] overflow-hidden  text-3xl  transition-all lg:relative lg:h-fit lg:w-auto lg:flex-row lg:place-content-start lg:bg-transparent dark:lg:bg-transparent lg:gap-4"
     >
       {
         nav.map((item) => (
@@ -45,7 +45,7 @@ const nav = [
           </a>
         ))
       }
-      <ColorModeButton />
+      <!-- <ColorModeButton /> -->
     </nav>
     
   </div>
@@ -84,7 +84,10 @@ const nav = [
     z-index: -1;
     animation: fade-in linear;
     animation-timeline: scroll();
-    animation-range: 0 10vh;
+    animation-range: 0 8vh;
+    --tw-backdrop-blur: blur(12px);
+  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
   }
   .gg-menu {
   transform: scale(var(--ggs, 1));
