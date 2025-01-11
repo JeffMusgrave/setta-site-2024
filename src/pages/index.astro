@@ -1,72 +1,18 @@
 ---
-import { Image } from 'astro:assets';
-import Hero from '../components/sections/Hero.astro';
 import Layout from '../layouts/Layout.astro';
-import AlgoDark from "../assets/img/home/algorithm-dark.png"
-import AlgoLight from "../assets/img/home/algorithm-light.png"
-import HeroBgDark from "../assets/img/home/hero-bg-dark.png"
-import HeroBgLight from "../assets/img/home/hero-bg-light.png"
 import HomeMeta from "../seo/home/HomeMeta.astro"
-import ThemeImage from '../components/ThemeImage.astro';
-import HeroCTA from '../components/pages/home/HeroCTA.astro';
-import Section from '../components/sections/Section.astro';
-import VideoPlaceholder from "../assets/img/home/video-placeholder.png"
-import ConfigSolved from "../snippets/home/configuration-solved.md"
-import Card from '../components/general/Card.astro';
-import { Copy, Github, Terminal, Code2, Layout as LayoutIcon, FileJson } from 'lucide-astro';
+import BottomCTA from '../components/BottomCTA.astro';
+import FeaturesGrid from '../components/FeaturesGrid.astro';
+import BigVideo from '../components/BigVideo.astro';
+import HomeHero from '../components/HomeHero.astro';
+import BottomBlurb from '../components/BottomBlurb.astro';
 ---
 
 <Layout>
   <HomeMeta slot="SEO" />
-  <Hero innerClass="relative z-10 items-center justify-between mx-auto flex gap-2">
-    <h1 slot="left-side">The Developer's Configuration Canvas</h1>
-    <p class="my-0" slot="left-side">Python AI & Data Science Projects</p>
-    <HeroCTA slot="left-side" />
-    <ThemeImage class="hidden lg:block" alt="Setta Card With Parameters" lightImage={AlgoLight} darkImage={AlgoDark} width={350} height={564} imageClass="rounded-[18px] drop-shadow-[0_0px_120px_rgba(59,129,246,0.6)]"/>
-    <ThemeImage alt="Setta Cards in the BG" lightImage={HeroBgLight} darkImage={HeroBgDark} width={683} height={695} class="hidden md:block absolute -right-52 -z-10"/>
-  </Hero>
-  <Section 
-  outerClass="relative py-6 sm:py-12 md:py-32 md:bg-gradient-to-b md:from-[#060709] md:to-transparent"
- >
-    <Image src={VideoPlaceholder} alt="setta video placeholder" width={1280} height={960} class="md:-mt-48 md:p-4 bg-setta-900 rounded-2xl min-w-full border border-setta-500/50 shadow-lg" />
-  </Section>
-  <Section outerClass="border-y border-setta-700 py-16 bg-setta-900">
-    <aside class="mx-auto max-w-3xl">
-      <h2>The Configuration Problem Solved</h2>
-      <p>Every Python application needs configuration. But traditional approaches force developers to write endless boilerplate code, manage complex config files, and build custom UIs. Setta eliminates these pain points with a revolutionary canvas-based approach.</p>
-    </aside>
-
-
-    <h2 class="mx-auto max-w-3xl">Why Developers Choose Setta</h2>
-
-    <aside class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
-      <Card>
-        <Terminal slot="icon" />
-        <Fragment slot="title">Visual Configuration with Zero Code</Fragment>
-        <Fragment slot="body">Drop the tedious UI boilerplate code. Setta lets you create & manage complex configurations with the click of a button.</Fragment>
-      </Card>
-      <Card>
-        <LayoutIcon slot="icon" />
-        <Fragment slot="title">Skip The Boilerplate</Fragment>
-        <Fragment slot="body">Stop writing config parsers. Setta handles all configuration management, letting you focus on what matters - your application's core functionality.</Fragment>
-      </Card>
-      <Card>
-        <Code2 slot="icon" />
-        <Fragment slot="title">Configurations As Code</Fragment>
-        <Fragment slot="body">Define configurations with Python classes. Get type hints, validation, and documentation for free.</Fragment>
-      </Card>
-      <Card>
-        <Code2 slot="icon" />
-        <Fragment slot="title"> Rich Documenatation & Interactive Elements</Fragment>
-        <Fragment slot="body">Integrate documentation, tooltips, markdown, social content, images, and interactive elements to make configurations more approachable.</Fragment>
-      </Card>
-
-      
-    </aside>
-  </Section>
-  <Section outerClass="bg-setta-850 ">
-    <div class="mx-auto max-w-3xl [&_ul]:list-none">
-      <ConfigSolved />
-    </div>  
-  </Section>
+  <HomeHero />
+  <BigVideo />
+  <FeaturesGrid />
+  <BottomBlurb />
+  <BottomCTA />
 </Layout>

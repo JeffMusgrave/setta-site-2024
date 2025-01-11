@@ -1,0 +1,12 @@
+---
+import { Image } from "astro:assets";
+import Section from "./sections/Section.astro";
+import VideoPlaceholder from "../assets/img/home/video-placeholder.png"
+---
+
+<Section
+outerClass="relative py-6 sm:py-12 md:py-16 bg-setta-875/80"
+
+>
+  <Image src={VideoPlaceholder} alt="setta video placeholder" width={1280} height={960} class="md:-mt-24 md:-mb-24 md:p-4 bg-setta-900 rounded-2xl min-w-full border border-setta-500/50 shadow-lg" />
+</Section>
