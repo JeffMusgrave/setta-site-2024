@@ -13,7 +13,7 @@ const {lightImage, darkImage, alt, href} = Astro.props;
 ---
 
 <div class="flex-1 basis-80 bg-white border border-setta-200 rounded-lg shadow dark:bg-setta-900 dark:border-setta-800">
-  {lightImage && <a href="#">
+  {lightImage || darkImage && <a href="#">
        <ThemeImage class="mb-2" lightImage={lightImage} darkImage={darkImage} alt={alt} />
   </a>}
   <div class="p-5">

@@ -26,20 +26,20 @@ const {
 ---
 
 <div class={className}>
-  <Image
+  {lightImage && <Image
     src={lightImage}
     alt={alt}
     width={width}
     height={height}
     class={`block dark:hidden ${imageClass}`}
     quality={quality}
-  />
-  <Image
+  />}
+  {darkImage && <Image
     src={darkImage}
     alt={alt}
     width={width}
     height={height}
     class={`hidden dark:block ${imageClass}`}
     quality={quality}
-  />
+  />}
 </div>
