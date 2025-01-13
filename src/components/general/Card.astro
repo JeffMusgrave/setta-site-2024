@@ -13,6 +13,7 @@ interface Props {
   muted?: boolean;
   loop?: boolean;
   playsInline?: boolean;
+  gridSpan?: string;
 }
 
 const {
@@ -26,11 +27,14 @@ const {
   autoplay = false,
   muted = true,
   loop = false,
-  playsInline = true
+  playsInline = true,
+  gridSpan
 } = Astro.props;
+
+const cardStyle = "group/card flex-1 flex flex-col py-3 px-5 gap-0 rounded-xl border-white dark:border-setta-700 border  bg-white  dark:bg-setta-860 shadow-md dark:shadow-setta-900/30 focus:shadow-2xl dark:focus:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] outline outline-4 outline-transparent active:outline-cyan-300 focus:outline-blue-600 transition-all"
 ---
 
-<div class="flex-1 flex flex-col py-3 px-5 gap-0 rounded-xl border-white dark:border-setta-700 border  bg-white  dark:bg-setta-860 shadow-md dark:shadow-setta-900/30 focus:shadow-2xl dark:focus:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] outline outline-4 outline-transparent active:outline-cyan-300 focus:outline-blue-600 transition-all" tabindex="1">
+<div class:list={[cardStyle, gridSpan]} tabindex="1">
     <header class="flex items-center gap-4">
       <slot name="icon" />
       {href ?  
@@ -67,7 +71,7 @@ const {
       )
     )}
 
-    <div class="mt-2 mb-3 prose text-setta-700 dark:text-setta-400">
+    <div class="mt-2 mb-3 prose text-setta-700 dark:text-setta-400 overflow-y-scroll setta-scroll  pr-5 -mr-5">
       <slot name="body" />
     </div>
     
