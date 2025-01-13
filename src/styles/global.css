@@ -110,3 +110,14 @@ h6 {
 .gg-sun::after {
   transform: rotate(45deg);
 }
+
+.pattern {
+  --d: 2px;
+
+  background: radial-gradient(
+      circle at var(--d) var(--d),
+      hsla(219, 26%, 23%, 0.5) calc(var(--d) - 1px),
+      #0000 var(--d)
+    )
+    0 0 / 20px 20px;
+}
