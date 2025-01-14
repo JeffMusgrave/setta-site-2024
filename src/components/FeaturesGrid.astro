@@ -12,13 +12,13 @@ const iconStyle = "min-w-6 [&_*]:!text-setta-600 group-hover/card:[&_*]:!text-bl
 
   <h2 class="mx-auto">Why Developers Think Setta Is Betta</h2>
 
-  <aside class="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-[2rem] mx-auto">
+  <aside class="flex flex-wrap flex-row gap-4">
     <Card isVideo={true}
     videoSrc="/assets/video/clean-ui.mp4"
     controls={false}
     muted
     autoplay
-    loop={true}  gridSpan="md:row-span-12">
+    loop={true}>
       <Terminal slot="icon" class={iconStyle} />
       <Fragment slot="title">Clean UI</Fragment>
       <Fragment slot="body">Drop the tedious UI boilerplate code. Setta lets you create & manage complex configurations with the click of a button.</Fragment>
@@ -29,7 +29,7 @@ const iconStyle = "min-w-6 [&_*]:!text-setta-600 group-hover/card:[&_*]:!text-bl
     muted
     autoplay
     loop={true}
-    gridSpan="md:row-span-12">
+    >
       <LayoutIcon slot="icon" class={iconStyle} />
       <Fragment slot="title">Built for Devs</Fragment>
       <Fragment slot="body">Stop writing config parsers. Setta handles all configuration management, letting you focus on what matters - your application's core functionality.</Fragment>
@@ -39,7 +39,7 @@ const iconStyle = "min-w-6 [&_*]:!text-setta-600 group-hover/card:[&_*]:!text-bl
     controls={false}
     muted
     autoplay
-    loop={true} gridSpan="md:row-span-12">
+    loop={true} >
       <Code2 slot="icon" class={iconStyle} />
       <Fragment slot="title">Manage Complex Configs </Fragment>
       <Fragment slot="body">Define configurations with Python classes. Get type hints, validation, and documentation for free.</Fragment>
@@ -49,7 +49,7 @@ const iconStyle = "min-w-6 [&_*]:!text-setta-600 group-hover/card:[&_*]:!text-bl
     controls={false}
     muted
     autoplay
-    loop={true} gridSpan="md:row-span-12">
+    loop={true} >
       <Code2 slot="icon" class={iconStyle} />
       <Fragment slot="title">In Project Docs</Fragment>
       <Fragment slot="body">Integrate documentation, tooltips, markdown, social content, images, and interactive elements to make configurations more approachable.</Fragment>
@@ -59,7 +59,8 @@ const iconStyle = "min-w-6 [&_*]:!text-setta-600 group-hover/card:[&_*]:!text-bl
     controls={false}
     muted
     autoplay
-    loop={true} gridSpan="md:row-span-12">
+    loop={true}
+    width="" >
       <Code2 slot="icon" class={iconStyle} />
       <Fragment slot="title">Great for Training Runs</Fragment>
       <Fragment slot="body">Integrate documentation, tooltips, markdown, social content, images, and interactive elements to make configurations more approachable.</Fragment>
