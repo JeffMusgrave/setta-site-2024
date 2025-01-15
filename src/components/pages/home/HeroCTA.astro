@@ -10,6 +10,7 @@ import GithubIcon from "../../general/GithubIcon.astro"
     <button 
       class="px-2 py-2 [&_*]:text-setta-300 [&_*]:hover:text-setta-100 rounded-full"
       onclick="copyToClipboard('pip install setta')"
+      client:load
     >
       <svg 
         xmlns="http://www.w3.org/2000/svg" 
@@ -31,11 +32,11 @@ import GithubIcon from "../../general/GithubIcon.astro"
     <div class="flex gap-2 items-center">
       <GithubIcon class="w-6 h-6" />
       View on Github
-  </div>
+    </div>
   </button>
 </div>
 
-<script>
+<script is:inline>
   function copyToClipboard(text) {
     navigator.clipboard.writeText(text)
       .then(() => {
