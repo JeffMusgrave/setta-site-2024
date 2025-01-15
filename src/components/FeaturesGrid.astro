@@ -59,10 +59,20 @@ const iconStyle = "min-w-6 [&_*]:!text-setta-600 group-hover/card:[&_*]:!text-bl
     controls={false}
     muted
     autoplay
-    loop={true}
-    width="" >
+    loop={true} >
       <Code2 slot="icon" class={iconStyle} />
       <Fragment slot="title">Great for Training Runs</Fragment>
+      <Fragment slot="body">Integrate documentation, tooltips, markdown, social content, images, and interactive elements to make configurations more approachable.</Fragment>
+    </Card>
+    <Card isVideo={true}
+    videoSrc="/assets/video/interactive-example.mp4"
+    controls={false}
+    muted
+    autoplay
+    loop={true}
+ >
+      <Code2 slot="icon" class={iconStyle} />
+      <Fragment slot="title">Interactive Elements</Fragment>
       <Fragment slot="body">Integrate documentation, tooltips, markdown, social content, images, and interactive elements to make configurations more approachable.</Fragment>
     </Card>
 
