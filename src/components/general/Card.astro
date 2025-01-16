@@ -13,7 +13,6 @@ interface Props {
   muted?: boolean;
   loop?: boolean;
   playsInline?: boolean;
-  // gridSpan?: string;
   width?: string;
 }
 
@@ -29,60 +28,100 @@ const {
   muted = true,
   loop = false,
   playsInline = true,
-  // gridSpan
   width = "max-w-lg"
 } = Astro.props;
 
-const cardStyle = "group/card flex flex-col md:py-3 md:px-5 gap-0 md:rounded-xl border-transparent md:border-white md:dark:border-setta-700 border md:bg-white  md:dark:bg-setta-860 md:shadow-md md:dark:shadow-setta-900/30 md:focus:shadow-2xl md:dark:focus:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] md:outline md:outline-4 md:outline-transparent md:active:outline-cyan-300 md:focus:outline-blue-600 transition-all"
+// bg-setta-900/80 -mx-7 px-7
+
+const cardStyle = "group/card flex flex-col md:py-3 md:px-5 gap-0 md:rounded-xl border-transparent md:border-white md:dark:border-setta-700 border md:bg-white md:dark:bg-setta-860 md:dark:shadow-setta-900/50 md:shadow-xl md:dark:focus:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] md:outline md:outline-4 transition-all scroll-reveal"
 ---
 
 <div class:list={[cardStyle, width]} tabindex="1">
-    <header class="flex items-center gap-4">
-      <slot name="icon" />
-      {href ?  
-        <a href={href}>
-          <h4 class="!my-0 pb-2 pt-2 md:pb-4 text-3xl font-normal tracking-tight text-setta-900 dark:!text-setta-100 md:dark:!text-setta-300">
-            <slot name="title" />
-          </h4>
-        </a> :       
-        <h4 class="!my-0 pb-2 pt-2 md:py-4 text-3xl font-normal tracking-tight text-setta-900 dark:!text-setta-100 md:dark:!text-setta-300">
+  <header class="flex items-center gap-4 shadow">
+    <slot name="icon" />
+    {href ?  
+      <a href={href}>
+        <h4 class="!my-0 pb-2 pt-2 md:pb-4 text-3xl font-normal tracking-tight text-setta-900 dark:!text-setta-100 md:dark:!text-setta-300">
           <slot name="title" />
         </h4>
-      }
-    </header>
-
-    {isVideo ? (
-      <div class="border border-solid border-setta-600 shadow-2xl md:shadow-none shadow-setta-950/70 md:border-800 rounded-lg overflow-hidden mt-2 [&_*]:!my-0">
-        <video
-          class="w-full h-auto"
-          {controls}
-          {autoplay}
-          {muted}
-          {loop}
-          playsinline={playsInline}
-        >
-          <source src={videoSrc} type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-      </div>
-    ) : (
-      (lightImage || darkImage) && (
-        <a href="#" class="border border-setta-800 rounded-lg overflow-hidden mt-2">
-          <ThemeImage class="[&_*]:!mt-0 [&_*]:!mb-0" lightImage={lightImage} darkImage={darkImage} alt={alt} />
-        </a>
-      )
-    )}
-
-    <div class="mt-2 mb-3 text-setta-700 dark:!text-setta-200 overflow-y-scroll setta-scroll pr-5 -mr-5">
-      <slot name="body" />
-    </div>
-    
-    {href && 
-      <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        Read more
-        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-        </svg>
-      </a>
+      </a> :       
+      <h4 class="!my-0 pb-2 pt-2 md:py-4 text-3xl font-normal tracking-tight text-setta-900 dark:!text-setta-100 md:dark:!text-setta-300">
+        <slot name="title" />
+      </h4>
     }
+  </header>
+
+  {isVideo ? (
+    <div class="border border-solid border-setta-600 shadow-2xl md:shadow-none shadow-setta-950/70 md:border-800 rounded-lg overflow-hidden mt-2 [&_*]:!my-0">
+      <video
+        class="w-full h-auto"
+        {controls}
+        {autoplay}
+        {muted}
+        {loop}
+        playsinline={playsInline}
+      >
+        <source src={videoSrc} type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  ) : (
+    (lightImage || darkImage) && (
+      <a href="#" class="border border-setta-800 rounded-lg overflow-hidden mt-2">
+        <ThemeImage class="[&_*]:!mt-0 [&_*]:!mb-0" lightImage={lightImage} darkImage={darkImage} alt={alt} />
+      </a>
+    )
+  )}
+
+  <div class="mt-2 mb-3 text-setta-700 dark:!text-setta-200 overflow-y-scroll setta-scroll pr-5 -mr-5">
+    <slot name="body" />
+  </div>
+  
+  {href && 
+    <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+      Read more
+      <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+      </svg>
+    </a>
+  }
 </div>
+
+<style>
+@keyframes outline-reveal {
+  0%, 25% {
+    outline-color: transparent;
+    box-shadow: var(--tw-shadow);
+    }
+  38% {
+    outline-color: rgb(34 211 238); /* cyan-400 */
+    box-shadow: var(--tw-shadow);
+  }
+  40% {
+    outline-color: rgb(37 99 235); /* blue-600 */
+    box-shadow: var(--tw-shadow-2xl);
+  }
+  50% {
+    outline-color: rgb(37 99 235);
+    box-shadow: var(--tw-shadow-2xl);
+  }
+  65% {
+    outline-color: transparent;
+    box-shadow: var(--tw-shadow);
+  }
+}
+
+.scroll-reveal {
+  animation-timeline: view();
+  animation-name: outline-reveal;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+  animation-range: entry 0% center, center exit;
+  animation-direction: normal, reverse;
+  outline-color: transparent;
+}
+
+</style>
+
+
