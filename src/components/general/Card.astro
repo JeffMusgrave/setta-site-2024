@@ -30,10 +30,10 @@ const {
   loop = false,
   playsInline = true,
   // gridSpan
-  width = "md:w-[calc(50%_-_0.5rem)]"
+  width = "max-w-lg"
 } = Astro.props;
 
-const cardStyle = "group/card w-full  flex flex-col py-3 px-5 gap-0 rounded-xl border-white dark:border-setta-700 border bg-white  dark:bg-setta-860 shadow-md dark:shadow-setta-900/30 focus:shadow-2xl dark:focus:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] outline outline-4 outline-transparent active:outline-cyan-300 focus:outline-blue-600 transition-all"
+const cardStyle = "group/card flex flex-col md:py-3 md:px-5 gap-0 md:rounded-xl border-transparent md:border-white md:dark:border-setta-700 border md:bg-white  md:dark:bg-setta-860 md:shadow-md md:dark:shadow-setta-900/30 md:focus:shadow-2xl md:dark:focus:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] md:outline md:outline-4 md:outline-transparent md:active:outline-cyan-300 md:focus:outline-blue-600 transition-all"
 ---
 
 <div class:list={[cardStyle, width]} tabindex="1">
@@ -41,18 +41,18 @@ const cardStyle = "group/card w-full  flex flex-col py-3 px-5 gap-0 rounded-xl b
       <slot name="icon" />
       {href ?  
         <a href={href}>
-          <h4 class="!my-0 text-2xl font-semibold tracking-tight text-setta-900 dark:!text-setta-300">
+          <h4 class="!my-0 pb-2 pt-2 md:pb-4 text-3xl font-normal tracking-tight text-setta-900 dark:!text-setta-100 md:dark:!text-setta-300">
             <slot name="title" />
           </h4>
         </a> :       
-        <h4 class="!my-0 text-2xl font-semibold tracking-tight text-setta-900 dark:!text-setta-300">
+        <h4 class="!my-0 pb-2 pt-2 md:py-4 text-3xl font-normal tracking-tight text-setta-900 dark:!text-setta-100 md:dark:!text-setta-300">
           <slot name="title" />
         </h4>
       }
     </header>
 
     {isVideo ? (
-      <div class="border border-setta-800 rounded-lg overflow-hidden mt-2 [&_*]:!my-0">
+      <div class="border border-solid border-setta-600 shadow-2xl md:shadow-none shadow-setta-950/70 md:border-800 rounded-lg overflow-hidden mt-2 [&_*]:!my-0">
         <video
           class="w-full h-auto"
           {controls}
@@ -73,7 +73,7 @@ const cardStyle = "group/card w-full  flex flex-col py-3 px-5 gap-0 rounded-xl b
       )
     )}
 
-    <div class="mt-2 mb-3 prose-xl text-setta-700 dark:!text-setta-200 overflow-y-scroll setta-scroll pr-5 -mr-5">
+    <div class="mt-2 mb-3 text-setta-700 dark:!text-setta-200 overflow-y-scroll setta-scroll pr-5 -mr-5">
       <slot name="body" />
     </div>
     
