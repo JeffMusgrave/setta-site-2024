@@ -6,13 +6,15 @@ import TempImage from "../assets/img/tempimage.png"
 
 
 const iconStyle = "min-w-6 [&_*]:!text-setta-600 group-hover/card:[&_*]:!text-blue-600 [&_*]:transition-colors"
+
+// [&>*:nth-child(even)]:!flex-row-reverse
 ---
 
-<Section outerClass="pt-16 md:pt-32 pb-16 pattern" innerClass="max-w-xl md:max-w-none mx-auto" >
+<Section outerClass="pt-16 md:pt-32 pb-16 pattern" innerClass="max-w-xl md:max-w-4xl mx-auto" >
 
-  <h2 class="mx-auto mb-4 !text-6xl text-center !font-medium">Why Setta Is Betta</h2>
+  <h2 class="mx-auto mb-4 md:mb-8 !text-6xl text-center !font-medium">Why Setta Is Betta</h2>
 
-  <aside class="flex flex-col items-center flex-wrap gap-10 md:gap-8">
+  <aside class="flex flex-col items-center flex-wrap gap-10 md:gap-20 ">
     <Card isVideo={true}
     videoSrc="/assets/video/clean-ui.mp4"
     controls={false}
