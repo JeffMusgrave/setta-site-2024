@@ -35,30 +35,33 @@ const {
 
 const cardStyle = "group/card md:rounded-xl border-transparent md:border-white md:dark:border-setta-700 border md:bg-white md:dark:bg-setta-860 md:dark:shadow-setta-900/50 md:shadow-xl md:dark:focus:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] md:outline md:outline-4 transition-all scroll-reveal"
 ---
-<div class:list={[cardStyle, width, "flex flex-col items-center md:flex-row py-2 px-5 gap-5 max-w-4xl"]}>
-  <div class="mt-2 px-2 mb-3 prose-xl text-setta-700 dark:!text-setta-200 
-  bg-setta-dark md:bg-transparent py-1 
+<div class:list={[cardStyle, width, "flex flex-col items-center md:flex-row py-2 px-5 md:gap-5 max-w-4xl"]}>
+  <div class="w-full md:w-auto mt-2 px-2 mb-3 prose-xl text-setta-700 dark:!text-setta-200 
+   md:bg-transparent py-1 
   overflow-y-scroll setta-scroll self-center flex-1">
-    <header class="flex items-center gap-4 shadow">
+    <header class="flex w-full items-center gap-4 shadow">
       <slot name="icon" />
       {href ?  
         <a href={href}>
-          <h4 class="!my-0 pb-2 pt-2 md:pb-4 text-4xl font-normal tracking-tight text-setta-900 dark:!text-setta-100 md:dark:!text-setta-300">
+          <h4 class="!my-0 pb-2 md:pb-4 text-2xl md:text-3xl lg:text-4xl font-normal tracking-tight text-setta-900 dark:!text-setta-100 md:dark:!text-setta-300">
             <slot name="title" />
           </h4>
         </a> :       
-        <h4 class="!my-0 pb-2 pt-2 md:py-4 text-4xl font-normal tracking-tight text-setta-900 dark:!text-setta-100 md:dark:!text-setta-300">
+        <h4 class="!my-0 pb-2 md:py-4 text-2xl md:text-3xl lg:text-4xl font-normal tracking-tight text-setta-900 dark:!text-setta-100 md:dark:!text-setta-300">
           <slot name="title" />
         </h4>
       }
     </header>
-    <slot name="body" />
+    <aside class="hidden md:block">
+      <slot name="body" />
+    </aside>
+    
   </div>
   <div class="flex flex-col md:py-3 gap-0 " tabindex="1">
 
 
     {isVideo ? (
-      <div class="border border-solid border-setta-600 shadow-2xl md:shadow-none shadow-setta-950/70 md:border-800 rounded-lg overflow-hidden [&_*]:!my-0 md:!max-w-80">
+      <div class="z-10 border border-solid border-setta-600 shadow-2xl md:shadow-none shadow-setta-950/70 md:border-800 rounded-lg overflow-hidden [&_*]:!my-0 md:!max-w-72 lg:!max-w-96">
         <video
           class="w-full h-auto"
           {controls}
@@ -89,6 +92,7 @@ const cardStyle = "group/card md:rounded-xl border-transparent md:border-white m
         </svg>
       </a>
     }
+    <aside class="block md:hidden mt-5 bg-setta-dark px-2 py-1"><slot name="body" /></aside>
   </div>
 
 
