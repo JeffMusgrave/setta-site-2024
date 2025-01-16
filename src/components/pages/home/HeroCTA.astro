@@ -1,5 +1,6 @@
 ---
 import GithubIcon from "../../general/GithubIcon.astro"
+import CopyButton from "../../CopyButton.astro"
 ---
 
 <div class="flex flex-col sm:flex-row items-stretch gap-4 pt-8 lg:pt-1">
@@ -7,43 +8,7 @@ import GithubIcon from "../../general/GithubIcon.astro"
     <code class="before:!content-none after:!content-none py-2 px-3 !text-setta-600 dark:!text-setta-200">
       pip install setta
     </code>
-    <button 
-      id="copyButton"
-      class="px-2 py-2 [&_*]:text-setta-300 [&_*]:hover:text-setta-100 rounded-full transition-colors duration-200"
-      client:load
-    >
-      <svg 
-        id="copyIcon"
-        class="block"
-        xmlns="http://www.w3.org/2000/svg" 
-        width="20" 
-        height="20" 
-        viewBox="0 0 24 24" 
-        fill="none" 
-        stroke="currentColor" 
-        stroke-width="2" 
-        stroke-linecap="round" 
-        stroke-linejoin="round"
-      >
-        <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
-        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
-      </svg>
-      <svg 
-        id="checkIcon"
-        class="hidden"
-        xmlns="http://www.w3.org/2000/svg" 
-        width="20" 
-        height="20" 
-        viewBox="0 0 24 24" 
-        fill="none" 
-        stroke="currentColor" 
-        stroke-width="2" 
-        stroke-linecap="round" 
-        stroke-linejoin="round"
-      >
-        <polyline points="20 6 9 17 4 12"></polyline>
-      </svg>
-    </button>
+    <CopyButton textToCopy="pip install setta" id="heroCTACopy"/>
   </div>
   <button class="flex justify-center items-center bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 !text-white font-bold px-4 py-1 rounded-2xl">
     <div class="flex gap-2 items-center">
@@ -52,33 +17,3 @@ import GithubIcon from "../../general/GithubIcon.astro"
     </div>
   </button>
 </div>
-
-<script is:inline>
-  document.getElementById('copyButton').addEventListener('click', () => {
-    const copyIcon = document.getElementById('copyIcon');
-    const checkIcon = document.getElementById('checkIcon');
-    const button = document.getElementById('copyButton');
-    
-    navigator.clipboard.writeText('pip install setta')
-      .then(() => {
-        // Show success state
-        copyIcon.classList.remove('block');
-        copyIcon.classList.add('hidden');
-        checkIcon.classList.remove('hidden');
-        checkIcon.classList.add('block');
-        button.classList.add('text-green-500');
-
-        // Reset after 2 seconds
-        setTimeout(() => {
-          copyIcon.classList.remove('hidden');
-          copyIcon.classList.add('block');
-          checkIcon.classList.remove('block');
-          checkIcon.classList.add('hidden');
-          button.classList.remove('text-green-500');
-        }, 2000);
-      })
-      .catch((err) => {
-        console.error('Failed to copy:', err);
-      });
-  });
-</script>

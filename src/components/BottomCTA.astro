@@ -1,41 +1,23 @@
 ---
 import GithubIcon from "./general/GithubIcon.astro";
 import Section from "./sections/Section.astro";
+import CopyButton from "./CopyButton.astro";
 ---
 
 <Section outerClass="py-16 bg-blue-800" innerClass="max-w-lg mx-auto" proseClasses="">
   <h2 class="font-bold text-3xl mb-4 text-center">Start Your Next Project With Setta</h2>
   <div class="flex flex-col sm:flex-row gap-2 justify-center">
-    <div class="flex px-2 justify-center items-center  bg-white dark:bg-setta-900 rounded-2xl border border-white dark:border-blue-500/50 ">
+    <div class="flex px-2 justify-center items-center bg-white dark:bg-setta-900 rounded-2xl border border-white dark:border-blue-500/50">
       <code class="before:!content-none after:!content-none py-2 px-3 !text-setta-600 dark:!text-setta-200">
         pip install setta
       </code>
-      <button 
-        class="px-2 py-2 [&_*]:text-setta-300 [&_*]:hover:text-setta-100 rounded-full"
-        onclick="copyToClipboard('pip install setta')"
-      >
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          width="20" 
-          height="20" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          stroke="currentColor" 
-          stroke-width="2" 
-          stroke-linecap="round" 
-          stroke-linejoin="round"
-        >
-          <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
-          <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
-        </svg>
-      </button>
+      <CopyButton textToCopy="pip install setta" id="bottomCTACopy"/>
     </div>
-    <button class="flex justify-center items-center dark:bg-transparent border border-white hover:shadow-lg shadow-setta-950/100  !text-white font-bold px-4 py-1 rounded-2xl transition-all">
+    <button class="flex justify-center items-center dark:bg-transparent border border-white hover:shadow-lg shadow-setta-950/100 !text-white font-bold px-4 py-1 rounded-2xl transition-all">
       <div class="flex gap-2 items-center">
         <GithubIcon class="w-6 h-6" />
         View on Github
-    </div>
+      </div>
     </button>
   </div>
-  
 </Section>
