@@ -1,6 +1,7 @@
 ---
 import GithubIcon from "../../general/GithubIcon.astro"
 import CopyButton from "../../CopyButton.astro"
+import { GITHUB_URL } from "../../../constants"
 ---
 
 <div class="flex flex-col sm:flex-row items-stretch gap-4 pt-8 lg:pt-1">
@@ -10,10 +11,10 @@ import CopyButton from "../../CopyButton.astro"
     </code>
     <CopyButton textToCopy="pip install setta" id="heroCTACopy"/>
   </div>
-  <button class="flex justify-center items-center bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 !text-white font-bold px-4 py-1 rounded-2xl">
+  <a href={GITHUB_URL} class="flex justify-center items-center bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 !text-white font-bold px-4 py-1 rounded-2xl no-underline">
     <div class="flex gap-2 items-center">
       <GithubIcon class="w-6 h-6" />
       View on Github
     </div>
-  </button>
+  </a>
 </div>

@@ -2,6 +2,7 @@
 import GithubIcon from "./general/GithubIcon.astro";
 import Section from "./sections/Section.astro";
 import CopyButton from "./CopyButton.astro";
+import { GITHUB_URL } from "../constants"
 ---
 
 <Section outerClass="py-16 bg-blue-800" innerClass="max-w-lg mx-auto" proseClasses="">
@@ -13,11 +14,11 @@ import CopyButton from "./CopyButton.astro";
       </code>
       <CopyButton textToCopy="pip install setta" id="bottomCTACopy"/>
     </div>
-    <button class="flex justify-center items-center dark:bg-transparent border border-white hover:shadow-lg shadow-setta-950/100 !text-white font-bold px-4 py-1 rounded-2xl transition-all">
+    <a href={GITHUB_URL} class="flex justify-center items-center dark:bg-transparent border border-white hover:shadow-lg shadow-setta-950/100 !text-white font-bold px-4 py-1 rounded-2xl transition-all no-underline">
       <div class="flex gap-2 items-center">
         <GithubIcon class="w-6 h-6" />
         View on Github
       </div>
-    </button>
+    </a>
   </div>
 </Section>
