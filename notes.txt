@@ -8,11 +8,14 @@ Hero ideas:
 - The Developer's Configuration Environment
 - The Configuration Development Environment
 - Configs to Code in Zero Steps
+- Skip The Config Parsers & Boilerplate. Use Your App. 
+- Say No To Boilerplate & Parsers. Setta Your Variables & Run!
  
 Subtitle ideas:
 - Setta is a configuration development environment and user interface canvas that skips the boilerplate code.
 - Say goodbye to all that config parsing and boilerplate code.
 - Like if Figma, YAML, and Python had a child. 
+- 
 
 
 Flexible UI:
