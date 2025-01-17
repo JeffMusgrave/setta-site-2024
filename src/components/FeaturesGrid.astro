@@ -4,6 +4,14 @@ import Section from "./sections/Section.astro";
 import { Copy, Github, Terminal, Code2, Layout as LayoutIcon, FileJson } from 'lucide-astro';
 import TempImage from "../assets/img/tempimage.png"
 
+import FlexibleUi from "../snippets/home/flexible-ui.md"
+import BuiltForDevs from "../snippets/home/built-for-devs.md"
+import PowerfulConfigs from "../snippets/home/powerful-config.md"
+import IntegratedDocs from "../snippets/home/integrated-docs.md"
+import LongRun from "../snippets/home/long-run.md"
+import RealTime from "../snippets/home/real-time.md"
+
+
 
 const iconStyle = "min-w-8 h-8 [&_*]:!text-setta-600 group-hover/card:[&_*]:!text-blue-600 [&_*]:transition-colors"
 
@@ -23,8 +31,8 @@ const iconStyle = "min-w-8 h-8 [&_*]:!text-setta-600 group-hover/card:[&_*]:!tex
     loop={true}>
       <Terminal slot="icon" class={iconStyle} />
       <Fragment slot="title">Flexible UI</Fragment>
-      <Fragment slot="body">Create, organize, and set your configs in a flexible drag-and-drop user interface.</Fragment>
-      <!-- <Fragment slot="body">Drop the tedious UI boilerplate code. Setta lets you create & manage complex configurations with the click of a button.</Fragment> -->
+      <Fragment slot="body"><FlexibleUi /></Fragment>
+    
     </Card>
     <Card isVideo={true}
     videoSrc="/assets/video/built-for-devs.mp4"
@@ -35,8 +43,8 @@ const iconStyle = "min-w-8 h-8 [&_*]:!text-setta-600 group-hover/card:[&_*]:!tex
     >
       <LayoutIcon slot="icon" class={iconStyle} />
       <Fragment slot="title">Built for Devs</Fragment>
-      <Fragment slot="body">Write your core functionality wherever you want, whether that's inside a Setta code block, or in your favorite IDE. Set your configs inside Setta, with autocompletions, type-checking, and refactoring support. Then run. No config parsers needed. Auto-export your Setta projects in a Git-friendly yaml format.</Fragment>
-      <!-- <Fragment slot="body">Stop writing config parsers. Setta handles all configuration management, letting you focus on what matters - your application's core functionality.</Fragment> -->
+      <Fragment slot="body"><BuiltForDevs /></Fragment>
+   
     </Card>
     <Card isVideo={true}
     videoSrc="/assets/video/complex-configs.mp4"
@@ -46,8 +54,8 @@ const iconStyle = "min-w-8 h-8 [&_*]:!text-setta-600 group-hover/card:[&_*]:!tex
     loop={true} >
       <Code2 slot="icon" class={iconStyle} />
       <Fragment slot="title">Powerful Config Management</Fragment>
-      <Fragment slot="body">Version your configs at a granular level. Share configurations between projects. Run param sweeps across both scalar values and config versions.</Fragment>
-      <!-- <Fragment slot="body">Define configurations with Python classes. Get type hints, validation, and documentation for free.</Fragment> -->
+      <Fragment slot="body"><PowerfulConfigs /></Fragment>
+     
     </Card>
     <Card isVideo={true}
     videoSrc="/assets/video/in-project-docs.mp4"
@@ -57,7 +65,7 @@ const iconStyle = "min-w-8 h-8 [&_*]:!text-setta-600 group-hover/card:[&_*]:!tex
     loop={true} >
       <Code2 slot="icon" class={iconStyle} />
       <Fragment slot="title">Customizable, Integrated Documentation</Fragment>
-      <Fragment slot="body">Integrate documentation, tooltips, markdown, social content, images, and interactive elements to make configurations more approachable.</Fragment>
+      <Fragment slot="body"><IntegratedDocs /></Fragment>
     </Card>
     <Card isVideo={true}
     videoSrc="/assets/video/training-run.mp4"
@@ -67,7 +75,7 @@ const iconStyle = "min-w-8 h-8 [&_*]:!text-setta-600 group-hover/card:[&_*]:!tex
     loop={true} >
       <Code2 slot="icon" class={iconStyle} />
       <Fragment slot="title">Works for scripts that take a while...</Fragment>
-      <Fragment slot="body">Configure your machine-learning training runs, LLM evals, and data analysis scripts.</Fragment>
+      <Fragment slot="body"><LongRun /></Fragment>
     </Card>
     <Card isVideo={true}
     videoSrc="/assets/video/interactive-example.mp4"
@@ -78,7 +86,7 @@ const iconStyle = "min-w-8 h-8 [&_*]:!text-setta-600 group-hover/card:[&_*]:!tex
  >
       <Code2 slot="icon" class={iconStyle} />
       <Fragment slot="title">...and for Real-Time Interactive Apps</Fragment>
-      <Fragment slot="body">Configure interactive applications that run directly in Setta, like AI image generation demos, and data visualizations.</Fragment>
+      <Fragment slot="body"><RealTime /></Fragment>
     </Card>
 
     
