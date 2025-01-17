@@ -33,10 +33,10 @@ const {
 
 // bg-setta-900/80 -mx-7 px-7
 
-const cardStyle = "group/card sm:rounded-xl !px-8 sm:!px-4 md:mx-0 bg-setta-875 md:border-white first:border-t border-b dark:border-setta-700 sm:border md:dark:border-setta-700 md:bg-white md:dark:bg-setta-860 md:dark:shadow-setta-900/50 border-setta-700 md:shadow-xl md:dark:focus:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] sm:outline sm:outline-4 transition-all scroll-reveal"
+const cardStyle = "group/card sm:rounded-xl !px-0 sm:!px-4 md:mx-0 bg-setta-875 md:border-white first:border-t border-b dark:border-setta-700 sm:border md:dark:border-setta-700 md:bg-white md:dark:bg-setta-860 md:dark:shadow-setta-900/50 border-setta-700 md:shadow-xl md:dark:focus:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] sm:outline sm:outline-4 transition-all scroll-reveal"
 ---
-<div class:list={[cardStyle, width, "sm:w-full flex flex-col items-center md:flex-row py-6 md:py-2 px-5 md:gap-5 max-w-4xl"]}>
-  <div class="w-full md:w-auto mt-2 px-2 mb-3 prose lg:prose-xl text-setta-700 dark:!text-setta-200 
+<div class:list={[cardStyle, width, "w-full flex flex-col items-center md:flex-row py-6 md:py-2 px-5 md:gap-5 max-w-4xl"]}>
+  <div class="w-[clamp(280px,_90vw,_1140px)] sm:w-full md:w-auto mt-2 px-2 mb-3 prose lg:prose-xl text-setta-700 dark:!text-setta-200 
    md:bg-transparent py-1 
   overflow-y-scroll setta-scroll self-center flex-1">
     <header class="flex w-full items-center gap-4 -ml-2 lg:-ml-0.5">
@@ -52,12 +52,12 @@ const cardStyle = "group/card sm:rounded-xl !px-8 sm:!px-4 md:mx-0 bg-setta-875 
         </h4>
       }
     </header>
-    <aside class="hidden md:block prose- [&_*]:!text-setta-300">
+    <aside class="hidden md:block  [&_*]:!text-setta-300">
       <slot name="body" />
     </aside>
     
   </div>
-  <div class="flex flex-col md:py-3 gap-0 " tabindex="1">
+  <div class="flex flex-col md:py-3 gap-0 w-[clamp(280px,_90vw,_1140px)] sm:w-auto" tabindex="1">
 
 
     {isVideo ? (
