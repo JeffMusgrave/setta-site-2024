@@ -1,0 +1,41 @@
+Hero ideas:
+- The Developer's Configuration Canvas
+- Unifying Configs and Code the Right Way
+- Configs as Code, But Better
+- From Config To Runnable Code in Zero Steps
+- Run Your Configs in Zero Steps
+- Bridging the Gap Between Configs and Code
+- The Developer's Configuration Environment
+- The Configuration Development Environment
+- Configs to Code in Zero Steps
+ 
+Subtitle ideas:
+- Setta is a configuration development environment and user interface canvas that skips the boilerplate code.
+- Say goodbye to all that config parsing and boilerplate code.
+- Like if Figma, YAML, and Python had a child. 
+
+
+Flexible UI:
+- Create, organize, and set your configs in a flexible drag-and-drop user interface.
+
+Built for Devs:
+- Write your core logic wherever you want, whether that's inside a Setta code block, or in your favorite IDE. 
+- Set your configs inside Setta, with autocompletions, type-checking, and refactoring support. 
+- Run. No config parsers needed. 
+- Auto-export your Setta projects in a Git-friendly yaml format.
+
+
+Powerful Config Management:
+- Version your configs at a granular level. 
+- Share configurations between projects. 
+- Run param sweeps across both scalar values and config versions.
+
+Customizable, Integrated Documentation:
+- Integrate documentation, tooltips, markdown, social content, images, and interactive elements to make configurations more approachable.
+
+
+Works for scripts that take a while...:
+- Configure your machine-learning training runs, LLM evals, and data analysis scripts.
+
+...and for Real-Time Interactive Apps
+- Configure interactive applications that run directly in Setta, like AI image generation demos, and data visualizations.
