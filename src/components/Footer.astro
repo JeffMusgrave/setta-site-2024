@@ -7,14 +7,18 @@ import {siteWidth} from "../styles/constants.js"
 <footer class="flex justify-center py-8 bg-setta-950">
   <div class={`${siteWidth} flex  flex-col items-center text-center`}>
 
-
-
-      <ul class="flex self-start flex-col gap-2 items-start">
+    <div class="self-start">
+      <h2 class="!text-setta-700 mb-3 font-black text-xs uppercase">More From Setta</h2>
+      <ul class="flex  flex-col gap-2 items-start">
+        <li><a href="https://docs.setta.dev/" class="!text-setta-600 text-sm  hover:underline">Docs</a></li>
         <li><a href="https://github.com/settadev" class="!text-setta-600 text-sm  hover:underline">Github</a></li>
         <li><a href="https://x.com/settadev" class="!text-setta-600 text-sm  hover:underline">X</a></li>
 
       </ul>
-
+    </div>
+    <div class="self-end  text-xs uppercase ">
+      <a href="#" class="!text-setta-700 hover:!text-setta-500">License</a>
+    </div>
 
   </div>
 </footer>

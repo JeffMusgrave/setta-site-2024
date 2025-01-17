@@ -6,6 +6,8 @@ const domain = "https://www.setta.dev"
 
 const nav = [
   { url: `${domain}/#`, name: "Docs" },
+  { url: 'https://github.com/settadev', name: "Github", target: "_blank"},
+  { url: 'https://x.com/settadev', name: "X", target: "_blank" },
 ];
 
 ---
@@ -39,7 +41,8 @@ const nav = [
         nav.map((item) => (
           <a
             href={item.url}
-            class="px-2 py-2 select-none font-bold transition-colors font-heading tracking-wide lg:text-base"
+            target={item?.target}
+            class="px-2 py-2 select-none font-bold lg:font-semibold transition-colors  !text-setta-200 hover:!text-white lg:text-base"
           >
             {item.name}
           </a>
