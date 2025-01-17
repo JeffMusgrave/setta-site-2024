@@ -23,7 +23,7 @@ const {
   href,
   videoSrc,
   isVideo = false,
-  controls = true,
+  controls,
   autoplay = false,
   muted = true,
   loop = false,
@@ -64,7 +64,6 @@ const cardStyle = "group/card sm:rounded-xl -mx-9 px-9 md:mx-0 bg-setta-875 md:b
       <div class="z-10 border border-solid border-setta-700 shadow-2xl md:shadow-none shadow-setta-950/70 rounded-lg overflow-hidden [&_*]:!my-0 md:!max-w-72 lg:!max-w-96">
         <video
           class="w-full h-auto"
-          {controls}
           {autoplay}
           {muted}
           {loop}
