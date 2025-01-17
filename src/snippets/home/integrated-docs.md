@@ -1,4 +1,4 @@
 ---
 ---
 
-- Integrate documentation, tooltips, markdown, social content, images, and interactive elements to make configurations more approachable.
+Integrate documentation, tooltips, markdown, social content, images, and interactive elements to make configurations more approachable.
