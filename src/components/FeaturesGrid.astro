@@ -1,93 +1,80 @@
 ---
 import Card from "./general/Card.astro";
 import Section from "./sections/Section.astro";
-import { Copy, Github, Terminal, Code2, Layout as LayoutIcon, FileJson } from 'lucide-astro';
-import TempImage from "../assets/img/tempimage.png"
+import { Copy, Monitor, Code, Terminal, BookOpenText, WandSparkles, SquarePlay } from 'lucide-astro';
+
+// Import content
+import FlexibleUi from "../snippets/home/flexible-ui.md"
+import BuiltForDevs from "../snippets/home/built-for-devs.md"
+import PowerfulConfigs from "../snippets/home/powerful-config.md"
+import IntegratedDocs from "../snippets/home/integrated-docs.md"
+import LongRun from "../snippets/home/long-run.md"
+import RealTime from "../snippets/home/real-time.md"
+
+const features = [
+  {
+    icon: Code,
+    title: "Built for Devs",
+    content: BuiltForDevs,
+    video: "/assets/video/built-for-devs.mp4"
+  },
+  {
+    icon: WandSparkles,
+    title: "Powerful Config Management",
+    content: PowerfulConfigs,
+    video: "/assets/video/complex-configs.mp4"
+  },
+  {
+    icon: BookOpenText,
+    title: "Customizable, Integrated Documentation",
+    content: IntegratedDocs,
+    video: "/assets/video/in-project-docs.mp4"
+  },
+  {
+    icon: Monitor,
+    title: "Flexible UI",
+    content: FlexibleUi,
+    video: "/assets/video/clean-ui.mp4"
+  },
+  {
+    icon: Terminal,
+    title: "Works for scripts that take a while...",
+    content: LongRun,
+    video: "/assets/video/training-run.mp4"
+  },
+  {
+    icon: SquarePlay,
+    title: "...and for Real-Time Interactive Apps",
+    content: RealTime,
+    video: "/assets/video/interactive-example.mp4"
+  }
+];
 
 
-const iconStyle = "min-w-6 [&_*]:!text-setta-600 group-hover/card:[&_*]:!text-blue-600 [&_*]:transition-colors"
+
+const iconClass = "min-w-6 mb-1 md:my-0 [&_*]:!text-setta-600 group-hover/card:[&_*]:!text-blue-600 [&_*]:transition-colors"
+
 ---
 
-<Section outerClass="pt-16 pb-16 bg-setta-dark pattern" >
+<Section customSiteWidth="sm:w-[clamp(280px,_90vw,_1140px)]" outerClass="pt-16 md:pt-32 sm:pb-16 pattern" innerClass="mx-auto">
+  <h2 class="mx-auto mb-4 md:mb-8 text-4xl md:!text-6xl text-center !font-medium">
+    Why Setta Is Betta
+  </h2>
 
-  <h2 class="mx-auto">Why Developers Think Setta Is Betta</h2>
-
-  <aside class="flex flex-wrap flex-row gap-4">
-    <Card isVideo={true}
-    videoSrc="/assets/video/clean-ui.mp4"
-    controls={false}
-    muted
-    autoplay
-    loop={true}>
-      <Terminal slot="icon" class={iconStyle} />
-      <Fragment slot="title">Clean UI</Fragment>
-      <Fragment slot="body">Drop the tedious UI boilerplate code. Setta lets you create & manage complex configurations with the click of a button.</Fragment>
-    </Card>
-    <Card isVideo={true}
-    videoSrc="/assets/video/built-for-devs.mp4"
-    controls={false}
-    muted
-    autoplay
-    loop={true}
-    >
-      <LayoutIcon slot="icon" class={iconStyle} />
-      <Fragment slot="title">Built for Devs</Fragment>
-      <Fragment slot="body">Stop writing config parsers. Setta handles all configuration management, letting you focus on what matters - your application's core functionality.</Fragment>
-    </Card>
-    <Card isVideo={true}
-    videoSrc="/assets/video/complex-configs.mp4"
-    controls={false}
-    muted
-    autoplay
-    loop={true} >
-      <Code2 slot="icon" class={iconStyle} />
-      <Fragment slot="title">Manage Complex Configs </Fragment>
-      <Fragment slot="body">Define configurations with Python classes. Get type hints, validation, and documentation for free.</Fragment>
-    </Card>
-    <Card isVideo={true}
-    videoSrc="/assets/video/in-project-docs.mp4"
-    controls={false}
-    muted
-    autoplay
-    loop={true} >
-      <Code2 slot="icon" class={iconStyle} />
-      <Fragment slot="title">In Project Docs</Fragment>
-      <Fragment slot="body">Integrate documentation, tooltips, markdown, social content, images, and interactive elements to make configurations more approachable.</Fragment>
-    </Card>
-    <Card isVideo={true}
-    videoSrc="/assets/video/training-run.mp4"
-    controls={false}
-    muted
-    autoplay
-    loop={true} >
-      <Code2 slot="icon" class={iconStyle} />
-      <Fragment slot="title">Great for Training Runs</Fragment>
-      <Fragment slot="body">Integrate documentation, tooltips, markdown, social content, images, and interactive elements to make configurations more approachable.</Fragment>
-    </Card>
-    <Card isVideo={true}
-    videoSrc="/assets/video/interactive-example.mp4"
-    controls={false}
-    muted
-    autoplay
-    loop={true}
- >
-      <Code2 slot="icon" class={iconStyle} />
-      <Fragment slot="title">Interactive Elements</Fragment>
-      <Fragment slot="body">Integrate documentation, tooltips, markdown, social content, images, and interactive elements to make configurations more approachable.</Fragment>
-    </Card>
-
-    
+  <aside class="flex flex-col items-center flex-wrap sm:gap-10 md:gap-20 md:[&>*:nth-child(even)]:!flex-row-reverse">
+    {features.map(({ icon: Icon, title, content: Content, video }) => (
+      <Card 
+        isVideo={true}
+        videoSrc={video}
+        controls={false}
+        muted
+        autoplay
+        loop={true}
+      >
+        <Icon slot="icon" class={iconClass} />
+        <Fragment slot="title">{title}</Fragment>
+        <Fragment slot="body"><Content /></Fragment>
+      </Card>
+    ))}
   </aside>
 </Section>
-
-
-  <!-- <Section innerClass="mx-auto" proseClasses=''>
-    <article class="flex justify-between">
-      <aside class="prose">
-        <h3>Forgettabout the config hell</h3>
-        <p>With Setta, you betta get to coding cause there isn't any configuration parsers to write!</p>
-      </aside>
-      <div class="w-16 h-16 bg-red-500 rounded" />
-
-    </article>
-  </Section> -->
