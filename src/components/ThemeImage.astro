@@ -3,8 +3,8 @@
 import { Image } from 'astro:assets';
 
 interface Props {
-  lightImage: ImageMetadata;
-  darkImage: ImageMetadata;
+  lightImage?: ImageMetadata;
+  darkImage?: ImageMetadata;
   alt: string;
   class?: string;
   width?: number;
