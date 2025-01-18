@@ -1,41 +1,94 @@
 ---
-import { Schema } from "astro-seo-schema";
 import { Seo } from "astro-seo-meta";
-import type {
-  WithContext,
-  WebSite,
-  Organization,
-  ProfessionalService,
-} from "schema-dts";
 
 const seoProps = {
-  title: "Setta",
-  description: "The Configuration Canvas.",
+  title: "Setta: Free & Open Source Configuration Management Tool for AI / ML Devs",
+  description: "Say No To Boilerplate with Setta. Skip config parsers and focus on results. Version configs, run param sweeps, and manage ML or real-time apps in a powerful drag-and-drop UI. Integrate docs, tooltips, and more. Free & open source.",
   canonical: "https://setta.dev/",
   openGraph: {
     basic: {
-      title: "Setta: Your Configuration Canvas",
+      title: "Setta - Configuration Management Made Simple",
       type: "website",
-      // image: "https://designgenius.com/path/to/og-image.jpg",
+      image: "https://setta.dev/assets/img/og-image.jpg",
+      url: "https://setta.dev"
     },
+    optional: {
+      description: "Powerful configuration management with an intuitive UI. Version configs, run parameter sweeps, and integrate documentation seamlessly.",
+      locale: "en_US",
+      siteName: "Setta"
+    }
   },
-  // twitter: {
-  //   card: "summary_large_image",
-  //   site: "@DesignGeniusHandle", 
-  //   creator: "@JeffDesignGenius", 
-  // },
+  twitter: {
+    card: "summary_large_image",
+    site: "@settadev",
+    creator: "@settadev"
+  },
+  extend: {
+    meta: [
+      { name: "application-name", content: "Setta" },
+      { name: "theme-color", content: "#3B82F6" },
+      { name: "keywords", content: "configuration management, developer tools, python, machine learning, UI/DX, open source" },
+      { name: "license", content: "Apache-2.0" },
+      { name: "robots", content: "index, follow" },
+      { name: "googlebot", content: "index, follow" }
+    ]
+  }
 } as const;
 
-const websiteSchema: WithContext<WebSite> = {
+const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "@id": "https://setta.dev",
-  name: "Design Genius",
-  url: "https://setta.dev",
-  description: "The Configuration Canvas",
+  "@id": "https://setta.dev/#website",
+  "name": "Setta",
+  "url": "https://setta.dev",
+  "description": "Skip the config parsers and focus on getting results. Powerful configuration management tool with intuitive UI/DX.",
+  "inLanguage": "en-US",
+  "publisher": {
+    "@type": "Organization",
+    "@id": "https://setta.dev/#organization",
+    "name": "Setta",
+    "url": "https://setta.dev",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://setta.dev/assets/img/og-image.jpg"
+    }
+  }
 };
 
+const softwareSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "@id": "https://setta.dev/#software",
+  "name": "Setta",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": ["Windows", "macOS", "Linux"],
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock"
+  },
+  "description": "Powerful configuration management that helps developers manage, version, and document configs with an intuitive UI.",
+  "url": "https://setta.dev",
+  "softwareVersion": "1.0",
+  "downloadUrl": "https://github.com/settadev/setta",
+  "applicationSubCategory": "Configuration Management",
+  "featureList": [
+    "Version control for configurations",
+    "Interactive UI/DX",
+    "Parameter sweeps",
+    "Documentation integration",
+    "Git-friendly yaml export"
+  ],
+  "requirements": "Python 3.8+",
+  "license": "https://www.apache.org/licenses/LICENSE-2.0",
+  "author": {
+    "@type": "Organization",
+    "@id": "https://setta.dev/#organization"
+  }
+};
 ---
 
-<Schema item={websiteSchema} />
 <Seo {...seoProps} />
+<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(softwareSchema)} />
