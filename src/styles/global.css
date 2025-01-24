@@ -4,6 +4,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply flex flex-col min-h-screen bg-setta-lightSite dark:bg-setta-dark text-setta-900 dark:text-[#D9E5FF] font-sans;
+  }
+}
+
+@layer components {
+  .transcript-highlight {
+    @apply !bg-blue-600 !text-setta-50;
+  }
+}
+
 /* body {
   font-family: "Montserrat", sans-serif;
 } */
