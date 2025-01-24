@@ -10,9 +10,9 @@
   }
 }
 
-@layer components {
+@layer utilities {
   .transcript-highlight {
-    @apply !bg-blue-600 !text-setta-50;
+    @apply !bg-blue-700 !text-setta-50;
   }
 }
 
