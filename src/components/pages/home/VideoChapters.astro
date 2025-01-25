@@ -2,6 +2,7 @@
 import Section from "../../sections/Section.astro";
 import MuteButton from "./MuteButton.astro";
 import { Image } from "astro:assets";
+import { siteWiderWidth } from "../../../styles/constants";
 
 
 const videoSegments = [
@@ -17,10 +18,11 @@ const videoSegments = [
   outerClass="py-0 md:py-16 bg-setta-900 md:bg-setta-875/80 shadow-2xl shadow-setta-950/50 border-b border-setta-700"
   proseClasses=""
   innerClass="flex flex-col [@media(min-width:800px)]:flex-row justify-center mx-auto gap-4"
+  customSiteWidth={siteWiderWidth}
 >
   <h3 class="block md:hidden font-semibold text-center text-4xl mt-16 z-10">Your Setta Workflow</h3>
   <div class="relative mt-0 md:my-auto lg:-mt-24 lg:-mb-24 overflow-hidden bg-setta-900 rounded-2xl min-w-full [@media(min-width:800px)]:w-1/3 [@media(min-width:800px)]:flex-grow my-auto [@media(min-width:800px)]:min-w-fit border border-setta-500/50 shadow-lg">
-    <div class="relative w-full h-full aspect-[4_/_3]" > 
+    <div class="relative w-full h-full aspect-video" > 
       <Image 
         src="/assets/img/hero.png"
         alt="setta video placeholder" 
@@ -31,14 +33,16 @@ const videoSegments = [
       <video
         class="absolute inset-0 w-full h-full object-cover md:object-cover z-10"
         id="video-player"
-        autoplay
+        
         loop
         muted
         playsinline
+        controls
       >
         <source src="assets/video/hero.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
+      <!-- <MuteButton /> -->
     </div>
   </div>
   
