@@ -5,8 +5,8 @@ import CopyButton from "./CopyButton.astro";
 import { GITHUB_URL } from "../constants"
 ---
 
-<Section outerClass="py-32 sm:py-64 bg-blue-800 relative overflow-hidden" innerClass="z-20 relative mx-auto" proseClasses="">
-  <h2 class="font-bold text-4xl md:text-5xl lg:text-6xl mb-6 lg:mb-8 text-center">Get Started With Setta</h2>
+<Section outerClass="py-16 md:py-24 bg-blue-800 relative overflow-hidden" innerClass="z-20 relative mx-auto" proseClasses="">
+  <h2 class="font-semibold text-3xl md:text-6xl mb-6 lg:mb-8 text-center">Get Started With Setta</h2>
   <div class="flex flex-row flex-wrap gap-2 justify-center">
     <a href={GITHUB_URL} class="flex justify-center items-center dark:bg-transparent border border-white hover:shadow-xl hover:!bg-black/30 shadow-setta-950/100 !text-white font-bold px-4 py-2 rounded-2xl transition-all no-underline text-lg">
       <div class="flex gap-2 items-center">
@@ -14,17 +14,5 @@ import { GITHUB_URL } from "../constants"
         Open Source on GitHub
       </div>
     </a>
-  </div>
-  <div class="absolute top-0 left-0 w-full h-full object-cover object-center scale-[1.5] opacity-10 blur-[1.5px]" slot="bg">
-    <video 
-      class="absolute inset-0 block w-full h-full object-cover object-center"
-      autoplay
-      muted
-      loop
-      playsinline
-      aria-hidden="true"
-    >
-      <source src="assets/video/hero.mp4" type="video/mp4">
-    </video>
   </div>
 </Section>
