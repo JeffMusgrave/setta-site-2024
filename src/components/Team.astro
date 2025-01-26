@@ -30,13 +30,13 @@ const features = [
 ---
 
 <Section outerClass="bg-setta-900 border-b border-setta-800 py-24">
-  <h2 class="mb-4 md:mb-8 !text-5xl text-center !font-semibold text-setta-700">
+  <h2 class="mb-4 md:mb-8 !text-5xl  !font-semibold text-setta-700">
     Setta Team
   </h2>
 
-  <aside class="flex flex-col md:flex-row flex-wrap mt-8 md:mt-0 gap-2 md:gap-8">
+  <aside class="flex flex-col md:flex-row flex-wrap md:-mx-4 mt-8 md:mt-0 gap-2 md:gap-8">
     {features.map(({ title, content: Content, image, link }) => (
-      <a href={link} class="flex gap-4 prose items-center md:basis-1/2 hover:bg-setta-850 rounded-xl py-3 px-4 -mx-4 transition-colors" target="_blank">
+      <a href={link} class="flex gap-4 prose items-center md:w-[calc(50%_-_1rem)] border border-transparent hover:border-setta-800 rounded-xl p-4 hover:bg-setta-875 transition-colors" target="_blank">
         {/* <Image src="" alt="" /> */}
         <Image 
           src={image} 
