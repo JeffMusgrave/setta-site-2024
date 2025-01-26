@@ -1,0 +1,56 @@
+---
+import Card from "./general/Card.astro";
+import Section from "./sections/Section.astro";
+
+// Import content
+import Jeff from "../snippets/home/team/jeff-musgrave.md"
+import Kevin from "../snippets/home/team/kevin-musgrave.md"
+import { Image } from "astro:assets";
+
+import JeffPhoto from "../assets/img/home/jeff-musgrave.jpg"
+import KevinPhoto from "../assets/img/home/kevin-musgrave.png"
+
+
+const features = [
+  {
+    title: "Kevin Musgrave",
+    content: Kevin,
+    image: KevinPhoto,
+    link: "https://github.com/KevinMusgrave"
+  },
+  {
+    title: "Jeff Musgrave",
+    content: Jeff,
+    image: JeffPhoto,
+    link: "https://github.com/JeffMusgrave"
+  },
+];
+
+
+---
+
+<Section outerClass="bg-setta-900 border-b border-setta-800 py-24">
+  <h2 class="mb-4 md:mb-8 !text-5xl !font-semibold text-setta-700">
+    Setta Team
+  </h2>
+
+  <aside class="flex flex-col md:flex-row flex-wrap mt-8 md:mt-0 gap-2 md:gap-8">
+    {features.map(({ title, content: Content, image, link }) => (
+      <a href={link} class="flex gap-4 prose items-center md:basis-1/2 hover:bg-setta-850 rounded-xl py-3 px-4 -mx-4 transition-colors" target="_blank">
+        {/* <Image src="" alt="" /> */}
+        <Image 
+          src={image} 
+          alt={`${title} profile photo`}
+          width={96}
+          height={96}
+          class="rounded-full mb-0"
+        />
+        <div class="flex flex-col h-full items-start prose-p:text-setta-500 prose-p:font-normal prose-p:mb-0">
+          <h3 class="mt-0 pt-0 text-setta-700 dark:text-setta-400 !text-2xl">{title}</h3>
+          <Content />
+        </div>
+
+      </a>
+    ))}
+  </aside>
+</Section>
