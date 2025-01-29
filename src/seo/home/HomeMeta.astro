@@ -3,17 +3,24 @@ import { Seo } from "astro-seo-meta";
 
 const seoProps = {
   title: "Setta: Free & Open Source Configuration Management Tool for AI / ML Devs",
-  description: "Say No To Boilerplate with Setta. Skip config parsers and focus on results. Version configs, run param sweeps, and manage ML or real-time apps in a powerful drag-and-drop UI. Integrate docs, tooltips, and more. Free & open source.",
+  description: "Streamline your code. Skip the boilerplate parsers and frontend. Effortlessly expose your Python functions as a flexible UI. Configure, interact, and share with ease.",
   canonical: "https://setta.dev/",
   openGraph: {
     basic: {
-      title: "Setta - Configuration Management Made Simple",
+      title: "Python Without The Drudgery",
       type: "website",
-      image: "https://setta.dev/assets/img/og-image.jpg",
+      // Move image out of basic
       url: "https://setta.dev"
     },
+    image: {
+      url: "https://setta.dev/assets/img/og-image.jpg",
+      width: 1200,  // Specify dimensions
+      height: 630,
+      alt: "Setta - Python Configuration Management Tool",
+      type: "image/jpeg"
+    },
     optional: {
-      description: "Powerful configuration management with an intuitive UI. Version configs, run parameter sweeps, and integrate documentation seamlessly.",
+      description: "Streamline your code. Skip the boilerplate parsers and frontend. Effortlessly expose your Python functions as a flexible UI. Configure, interact, and share with ease.",
       locale: "en_US",
       siteName: "Setta"
     }
@@ -21,7 +28,9 @@ const seoProps = {
   twitter: {
     card: "summary_large_image",
     site: "@settadev",
-    creator: "@settadev"
+    creator: "@settadev",
+    image: "https://setta.dev/assets/img/og-image.jpg",  // Add direct twitter image
+    imageAlt: "Setta - Python Configuration Management Tool"
   },
   extend: {
     meta: [
@@ -30,7 +39,11 @@ const seoProps = {
       { name: "keywords", content: "configuration management, developer tools, python, machine learning, UI/DX, open source" },
       { name: "license", content: "Apache-2.0" },
       { name: "robots", content: "index, follow" },
-      { name: "googlebot", content: "index, follow" }
+      { name: "googlebot", content: "index, follow" },
+      { property: "og:image", content: "https://setta.dev/assets/img/og-image.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Setta - Python Configuration Management Tool" }
     ]
   }
 } as const;
@@ -41,7 +54,7 @@ const websiteSchema = {
   "@id": "https://setta.dev/#website",
   "name": "Setta",
   "url": "https://setta.dev",
-  "description": "Skip the config parsers and focus on getting results. Powerful configuration management tool with intuitive UI/DX.",
+  "description": "Streamline your code. Skip the boilerplate parsers and frontend. Effortlessly expose your Python functions as a flexible UI. Configure, interact, and share with ease.",
   "inLanguage": "en-US",
   "publisher": {
     "@type": "Organization",
@@ -68,7 +81,7 @@ const softwareSchema = {
     "priceCurrency": "USD",
     "availability": "https://schema.org/InStock"
   },
-  "description": "Powerful configuration management that helps developers manage, version, and document configs with an intuitive UI.",
+  "description": "Streamline your code. Skip the boilerplate parsers and frontend. Effortlessly expose your Python functions as a flexible UI. Configure, interact, and share with ease.",
   "url": "https://setta.dev",
   "softwareVersion": "1.0",
   "downloadUrl": "https://github.com/settadev/setta",
