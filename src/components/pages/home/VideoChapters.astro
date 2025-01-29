@@ -20,7 +20,7 @@ const videoSegments = [
   id="setta-intro"
 >
   <h3 class="block md:hidden font-semibold text-center text-4xl mt-16 z-10">Your Setta Workflow</h3>
-  <div class="relative mt-0 md:my-auto lg:-mt-24 lg:-mb-24 [@media(min-width:800px)]:basis-2/3 overflow-clip rounded-2xl bg-setta-900 border border-setta-500/50 shadow-lg aspect-[1106_/_720]">
+  <div class="relative mt-0 md:my-auto lg:-mt-24 lg:-mb-24 [@media(min-width:800px)]:basis-2/3 overflow-clip rounded-2xl bg-setta-900 border border-setta-500/50 shadow-lg setta-video-aspect">
     <video
       class="absolute inset-0 w-full h-full z-10 object-cover"
       id="video-player"
@@ -52,6 +52,26 @@ const videoSegments = [
     </div>
   </div>
 </Section>
+
+<style>
+.setta-video-aspect {
+    aspect-ratio: 1106 / 720;
+}
+
+@supports not (aspect-ratio) {
+    .setta-video-aspect::before {
+        float: left;
+        padding-top: 65.1%;
+        content: "";
+    }
+
+    .setta-video-aspect::after {
+        display: block;
+        content: "";
+        clear: both;
+    }
+}
+</style>
 
 <script>
   function initializeVideoPlayer() {
