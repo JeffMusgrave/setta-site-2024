@@ -9,16 +9,17 @@ const seoProps = {
     basic: {
       title: "Python Without The Drudgery",
       type: "website",
-      // Move image out of basic
       url: "https://setta.dev"
     },
-    image: {
-      url: "https://setta.dev/assets/img/og-image.jpg",
-      width: 1200,  // Specify dimensions
-      height: 630,
-      alt: "Setta - Python Configuration Management Tool",
-      type: "image/jpeg"
-    },
+    images: [  // Updated to images array
+      {
+        url: "https://setta.dev/assets/img/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Setta - Python Configuration Management Tool",
+        type: "image/jpeg"
+      }
+    ],
     optional: {
       description: "Streamline your code. Skip the boilerplate parsers and frontend. Effortlessly expose your Python functions as a flexible UI. Configure, interact, and share with ease.",
       locale: "en_US",
@@ -29,7 +30,7 @@ const seoProps = {
     card: "summary_large_image",
     site: "@settadev",
     creator: "@settadev",
-    image: "https://setta.dev/assets/img/og-image.jpg",  // Add direct twitter image
+    image: "https://setta.dev/assets/img/og-image.jpg",
     imageAlt: "Setta - Python Configuration Management Tool"
   },
   extend: {
@@ -39,11 +40,8 @@ const seoProps = {
       { name: "keywords", content: "configuration management, developer tools, python, machine learning, UI/DX, open source" },
       { name: "license", content: "Apache-2.0" },
       { name: "robots", content: "index, follow" },
-      { name: "googlebot", content: "index, follow" },
-      { property: "og:image", content: "https://setta.dev/assets/img/og-image.jpg" },
-      { property: "og:image:width", content: "1200" },
-      { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "Setta - Python Configuration Management Tool" }
+      { name: "googlebot", content: "index, follow" }
+      // Removed og:image tags
     ]
   }
 } as const;
@@ -102,6 +100,8 @@ const softwareSchema = {
 };
 ---
 
+
 <Seo {...seoProps} />
 <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 <script type="application/ld+json" set:html={JSON.stringify(softwareSchema)} />
+
