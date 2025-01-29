@@ -4,6 +4,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply flex flex-col min-h-screen bg-setta-lightSite dark:bg-setta-dark text-setta-900 dark:text-[#D9E5FF] font-sans;
+  }
+}
+
+@layer utilities {
+  .transcript-highlight {
+    @apply !bg-blue-700 !text-setta-50;
+  }
+}
+
 /* body {
   font-family: "Montserrat", sans-serif;
 } */
@@ -11,6 +23,7 @@
 html {
   /* background-color: #150833; */
   /* scroll-behavior: smooth; */
+  scroll-padding-top: 150px;
 }
 
 /* body * {
@@ -27,19 +40,19 @@ h6 {
 
 @supports (-moz-appearance: none) {
   body {
-    scrollbar-width: thin;
+    /* scrollbar-width: thin; */
     scrollbar-color: #94a3b83a transparent;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
 
   body * {
-    scrollbar-width: thin;
+    /* scrollbar-width: thin; */
     scrollbar-color: #94a3b83a transparent;
   }
 }
 
 @supports (not (-moz-appearance: none)) {
-  body::-webkit-scrollbar {
+  /* body::-webkit-scrollbar {
     width: 0.375rem;
     height: 0.375rem;
     background-color: transparent;
@@ -53,7 +66,7 @@ h6 {
 
   ::-webkit-scrollbar-corner {
     background: transparent;
-  }
+  } */
 
   body::-webkit-scrollbar-track,
   body *::-webkit-scrollbar-track {
@@ -64,12 +77,12 @@ h6 {
     background: transparent;
   }
 
-  body::-webkit-scrollbar-thumb,
+  /* body::-webkit-scrollbar-thumb,
   body *::-webkit-scrollbar-thumb {
     background-color: #94a3b83a;
     border: 1px solid transparent;
     border-radius: 0.5rem;
-  }
+  } */
 }
 
 .single-cell-container {
@@ -163,7 +176,7 @@ h6 {
 
   background: radial-gradient(
       circle at var(--d) var(--d),
-      hsla(219, 26%, 23%, 0.5) calc(var(--d) - 1px),
+      hsla(219, 26%, 23%, 0.55) calc(var(--d) - 1px),
       #0000 var(--d)
     )
     0 0 / 20px 20px;

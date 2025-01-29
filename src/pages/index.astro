@@ -7,14 +7,17 @@ import BigVideo from '../components/BigVideo.astro';
 import HomeHero from '../components/HomeHero.astro';
 import BottomBlurb from '../components/BottomBlurb.astro';
 import FeaturesList from '../components/FeaturesList.astro';
+import VideoChapters from '../components/pages/home/VideoChapters.astro';
+import Modal from '../components/general/Modal.astro';
+import Section from '../components/sections/Section.astro';
+import Team from "../components/Team.astro"
 ---
 
 <Layout>
   <HomeMeta slot="SEO" />
   <HomeHero />
-  <BigVideo />
+  <VideoChapters />
   <FeaturesGrid />
-  <!-- <BottomBlurb />
-  <FeaturesList /> -->
   <BottomCTA />
+  <Team />
 </Layout>

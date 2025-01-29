@@ -1,0 +1,35 @@
+
+---
+---
+
+<button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" onclick="teamModal.showModal()">
+  View Team
+</button>
+
+<dialog id="teamModal" class="p-0 fixed top-0 bottom-0 left-0 right-0 rounded-lg shadow-xl backdrop:bg-black/50 backdrop:backdrop-blur-sm">
+  <div class="w-[40rem] max-w-full">
+    <div class="p-6">
+      <h3 class="text-xl font-semibold mb-4">Our Team</h3>
+      
+      <div class="flex gap-6 mb-4">
+        <div class="flex-1 p-4 border rounded-lg">
+          <img src="/api/placeholder/150/150" alt="John Doe" class="rounded-full mx-auto mb-3"/>
+          <h4 class="font-medium text-center">John Doe</h4>
+          <p class="text-gray-600 text-center">Lead Developer</p>
+        </div>
+        
+        <div class="flex-1 p-4 border rounded-lg">
+          <img src="/api/placeholder/150/150" alt="Jane Smith" class="rounded-full mx-auto mb-3"/>
+          <h4 class="font-medium text-center">Jane Smith</h4>
+          <p class="text-gray-600 text-center">Designer</p>
+        </div>
+      </div>
+
+      <form method="dialog" class="text-right">
+        <button class="bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded">
+          Close
+        </button>
+      </form>
+    </div>
+  </div>
+</dialog>

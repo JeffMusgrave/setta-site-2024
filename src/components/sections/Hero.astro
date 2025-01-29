@@ -1,4 +1,5 @@
 ---
+import { ChevronDown } from "lucide-astro";
 import {siteWidth} from "../../styles/constants.js";
 interface Props {
   id?: string;
@@ -6,15 +7,31 @@ interface Props {
   innerClass?: string;
 }
 
-const { id = "", outerClass = "relative pt-24 sm:pt-32 md:pt-36 pb-4 md:pb-24 overflow-hidden", innerClass = "relative z-10 justify-between mx-auto flex gap-2"} = Astro.props;
+const { id = "", outerClass = "relative pt-24 sm:pt-32 md:pt-48 pb-4 md:pb-40 overflow-hidden", innerClass = "relative z-10 justify-between mx-auto flex gap-2"} = Astro.props;
 ---
 
 <section id={id} class={`${outerClass} w-full`}>
-  <div class:list={[siteWidth, innerClass]} >
-    <div class="prose md:pr-4 sm:prose-2xl prose-h1:text-5xl lg:prose-h1:text-6xl prose-headings:mb-6 prose-h1:font-semibold prose-h2:!font-bold dark:prose-invert prose:max-w-full">
+  <div class:list={[siteWidth, innerClass]}>
+    <div class="prose md:pr-5 sm:prose-2xl prose-h1:text-5xl sm:prose-h1:text-6xl lg:prose-h1:text-[clamp(3.25rem,_4.75vw,_3.75rem)] prose-headings:mb-6 prose-h1:font-semibold prose-h2:!font-bold dark:prose-invert prose:max-w-full">
       <slot name="left-side" />
     </div>
     <slot />
   </div>
+  <ChevronDown 
+  class="hidden sm:block absolute sm:bottom-0 md:bottom-36 w-full cursor-pointer animate-bounce" 
+  data-scroll-to="setta-intro" 
+/>
 </section>
+
+<script>
+  const scrollButton = document.querySelector('[data-scroll-to]');
+  scrollButton?.addEventListener('click', () => {
+    const targetId = scrollButton.getAttribute('data-scroll-to');
+    if (targetId) {
+      document.getElementById(targetId)?.scrollIntoView({ 
+        behavior: 'smooth'
+      });
+    }
+  });
+</script>
 

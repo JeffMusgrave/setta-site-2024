@@ -1,0 +1,120 @@
+---
+import Section from "../../sections/Section.astro";
+import { Image } from "astro:assets";
+import { siteWiderWidth } from "../../../styles/constants";
+
+const videoSegments = [
+  { id: 'segment1', start: 0, end: 7.7, text: '1. Install Setta' },
+  { id: 'segment2', start: 7.7, end: 17.2, text: '2. Skip Boilerplate Parsers & Frontend' },
+  { id: 'segment3', start: 17.2, end: 40, text: '3. Expose Your Functions As a UI' },
+  { id: 'segment4', start: 40, end: 52.7, text: '4. Interact With Your UI' },
+  { id: 'segment5', start: 52.7, end: 65, text: '5. Simplify. Embed Docs. Share.' },
+];
+---
+
+<Section
+  outerClass="py-0 md:py-16 bg-setta-900 md:bg-setta-875/80 shadow-2xl shadow-setta-950/50 border-b border-setta-700"
+  proseClasses=""
+  innerClass="flex flex-col [@media(min-width:800px)]:flex-row justify-center mx-auto gap-4"
+  customSiteWidth={siteWiderWidth}
+  id="setta-intro"
+>
+  <h3 class="block md:hidden font-semibold text-center text-4xl mt-16 z-10">Your Setta Workflow</h3>
+  <div class="relative mt-0 md:my-auto lg:-mt-24 lg:-mb-24 [@media(min-width:800px)]:basis-2/3 overflow-clip rounded-2xl bg-setta-900 border border-setta-500/50 shadow-lg aspect-[1106_/_720]">
+    <video
+      class="absolute inset-0 w-full h-full z-10 object-cover"
+      id="video-player"
+      loop
+      muted
+      playsinline
+    >
+      <source src="assets/video/hero.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+  
+  <div class="flex-1 flex flex-col items-center md:items-start pb-8 sm:pb-12 md:py-0 pt-0 sm:pt-4 md:my-auto gap-4">
+    <h3 class="hidden md:block font-semibold text-3xl px-3">Your Setta Workflow</h3>
+    <div class="flex flex-col [&_p]:text-setta-500 w-full">
+      {
+        videoSegments.map(segment => (
+          <p
+            id={segment.id}
+            data-start={segment.start}
+            data-end={segment.end}
+            class="px-3 py-1 rounded-xl transition-colors duration-300 cursor-pointer hover:!bg-blue-700/50 hover:!text-setta-50"
+          >
+            {segment.text}
+          </p>
+        ))
+      }
+    </div>
+  </div>
+</Section>
+
+<script>
+  function initializeVideoPlayer() {
+    const video = document.getElementById('video-player') as HTMLVideoElement;
+    const segments = document.querySelectorAll('p[id^="segment"]');
+
+    if (!video) {
+      console.error('Video element not found');
+      return;
+    }
+
+    // Create intersection observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        // Start playing when 75% of the video is visible
+        if (entry.intersectionRatio >= 0.75) {
+          video.play().catch(console.error);
+        } else {
+          video.pause();
+        }
+      });
+    }, {
+      threshold: 0.75 // Trigger when 75% is visible
+    });
+
+    // Start observing the video element
+    observer.observe(video);
+
+    // Handle segment clicks
+    segments.forEach(segment => {
+      segment.addEventListener('click', () => {
+        const startTime = parseFloat(segment.getAttribute('data-start') || '0');
+        video.currentTime = startTime;
+        // Only play if sufficiently in view
+        if (video.getBoundingClientRect().top < window.innerHeight * 0.25) {
+          video.play().catch(console.error);
+        }
+      });
+    });
+
+    // Update segment highlighting
+    function updateSegmentHighlight() {
+      const time = video.currentTime;
+
+      // Remove existing highlights from all segments
+      segments.forEach(segment => {
+        segment.classList.remove('transcript-highlight');
+      });
+
+      // Find and highlight current segment
+      const currentSegment = Array.from(segments).find(segment => {
+        const start = parseFloat(segment.getAttribute('data-start') || '0');
+        const end = parseFloat(segment.getAttribute('data-end') || '0');
+        return time >= start && time < end;
+      });
+
+      if (currentSegment) {
+        currentSegment.classList.add('transcript-highlight');
+      }
+    }
+
+    video.addEventListener('timeupdate', updateSegmentHighlight);
+  }
+
+  // Initialize when the DOM is ready
+  document.addEventListener('DOMContentLoaded', initializeVideoPlayer);
+</script>
