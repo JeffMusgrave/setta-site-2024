@@ -1,4 +1,5 @@
 ---
+// src/components/HomeMeta.astro
 import { Seo } from "astro-seo-meta";
 
 const seoProps = {
@@ -11,7 +12,7 @@ const seoProps = {
       type: "website",
       url: "https://setta.dev"
     },
-    images: [  // Updated to images array
+    images: [  // Ensure this is an array
       {
         url: "https://setta.dev/assets/img/og-image.jpg",
         width: 1200,
@@ -41,7 +42,7 @@ const seoProps = {
       { name: "license", content: "Apache-2.0" },
       { name: "robots", content: "index, follow" },
       { name: "googlebot", content: "index, follow" }
-      // Removed og:image tags
+      // Removed duplicate og:image tags
     ]
   }
 } as const;
@@ -100,8 +101,6 @@ const softwareSchema = {
 };
 ---
 
-
-<Seo {...seoProps} />
-<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
-<script type="application/ld+json" set:html={JSON.stringify(softwareSchema)} />
-
+  <Seo {...seoProps} />
+  <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(softwareSchema)} />
