@@ -1,68 +1,22 @@
 ---
-// src/components/HomeMeta.astro
-import { Seo } from "astro-seo-meta";
-
-const seoProps = {
-  title: "Setta: Free & Open Source Configuration Management Tool for AI / ML Devs",
-  description: "Streamline your code. Skip the boilerplate parsers and frontend. Effortlessly expose your Python functions as a flexible UI. Configure, interact, and share with ease.",
-  canonical: "https://setta.dev/",
-  openGraph: {
-    basic: {
-      title: "Python Without The Drudgery",
-      type: "website",
-      url: "https://setta.dev"
-    },
-    images: [  // Ensure this is an array
-      {
-        url: "https://setta.dev/assets/img/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Setta - Python Configuration Management Tool",
-        type: "image/jpeg"
-      }
-    ],
-    optional: {
-      description: "Streamline your code. Skip the boilerplate parsers and frontend. Effortlessly expose your Python functions as a flexible UI. Configure, interact, and share with ease.",
-      locale: "en_US",
-      siteName: "Setta"
-    }
-  },
-  twitter: {
-    card: "summary_large_image",
-    site: "@settadev",
-    creator: "@settadev",
-    image: "https://setta.dev/assets/img/og-image.jpg",
-    imageAlt: "Setta - Python Configuration Management Tool"
-  },
-  extend: {
-    meta: [
-      { name: "application-name", content: "Setta" },
-      { name: "theme-color", content: "#3B82F6" },
-      { name: "keywords", content: "configuration management, developer tools, python, machine learning, UI/DX, open source" },
-      { name: "license", content: "Apache-2.0" },
-      { name: "robots", content: "index, follow" },
-      { name: "googlebot", content: "index, follow" }
-      // Removed duplicate og:image tags
-    ]
-  }
-} as const;
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || "https://setta.dev";
 
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "@id": "https://setta.dev/#website",
+  "@id": `${baseUrl}/#website`,
   "name": "Setta",
-  "url": "https://setta.dev",
+  "url": baseUrl,
   "description": "Streamline your code. Skip the boilerplate parsers and frontend. Effortlessly expose your Python functions as a flexible UI. Configure, interact, and share with ease.",
   "inLanguage": "en-US",
   "publisher": {
     "@type": "Organization",
-    "@id": "https://setta.dev/#organization",
+    "@id": `${baseUrl}/#organization`,
     "name": "Setta",
-    "url": "https://setta.dev",
+    "url": baseUrl,
     "logo": {
       "@type": "ImageObject",
-      "url": "https://setta.dev/assets/img/og-image.jpg"
+      "url": `${baseUrl}/assets/img/og-image.jpg`
     }
   }
 };
@@ -70,7 +24,7 @@ const websiteSchema = {
 const softwareSchema = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "@id": "https://setta.dev/#software",
+  "@id": `${baseUrl}/#software`,
   "name": "Setta",
   "applicationCategory": "DeveloperApplication",
   "operatingSystem": ["Windows", "macOS", "Linux"],
@@ -81,7 +35,7 @@ const softwareSchema = {
     "availability": "https://schema.org/InStock"
   },
   "description": "Streamline your code. Skip the boilerplate parsers and frontend. Effortlessly expose your Python functions as a flexible UI. Configure, interact, and share with ease.",
-  "url": "https://setta.dev",
+  "url": baseUrl,
   "softwareVersion": "1.0",
   "downloadUrl": "https://github.com/settadev/setta",
   "applicationSubCategory": "Configuration Management",
@@ -96,11 +50,35 @@ const softwareSchema = {
   "license": "https://www.apache.org/licenses/LICENSE-2.0",
   "author": {
     "@type": "Organization",
-    "@id": "https://setta.dev/#organization"
+    "@id": `${baseUrl}/#organization`
   }
 };
 ---
-
-  <Seo {...seoProps} />
+<>
+  <title>Setta: Free & Open Source Configuration Management Tool for AI / ML Devs</title>
+  <meta name="description" content="Streamline your code. Skip the boilerplate parsers and frontend. Effortlessly expose your Python functions as a flexible UI. Configure, interact, and share with ease." />
+  <meta name="keywords" content="configuration management, developer tools, python, machine learning, UI/DX, open source" />
+  <meta name="application-name" content="Setta" />
+  <meta name="theme-color" content="#3B82F6" />
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="index, follow" />
+  
+  <!-- Open Graph -->
+  <meta property="og:url" content={baseUrl} />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Setta: Free & Open Source Configuration Management Tool for AI / ML Devs" />
+  <meta property="og:description" content="Streamline your code. Skip the boilerplate parsers and frontend. Effortlessly expose your Python functions as a flexible UI. Configure, interact, and share with ease." />
+  <meta property="og:image" content={`${baseUrl}/assets/img/og-image.jpg`} />
+  <meta property="og:image:alt" content="Setta - Python Configuration Management Tool" />
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@settadev" />
+  <meta name="twitter:creator" content="@settadev" />
+  <meta name="twitter:image" content={`${baseUrl}/assets/img/og-image.jpg`} />
+  <meta name="twitter:image:alt" content="Setta - Python Configuration Management Tool" />
+  
+  <!-- Schema Scripts -->
   <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(softwareSchema)} />
+</>
