@@ -1,4 +1,5 @@
 ---
+import { ChevronDown } from "lucide-astro";
 import {siteWidth} from "../../styles/constants.js";
 interface Props {
   id?: string;
@@ -16,5 +17,21 @@ const { id = "", outerClass = "relative pt-24 sm:pt-32 md:pt-48 pb-4 md:pb-40 ov
     </div>
     <slot />
   </div>
+  <ChevronDown 
+  class="hidden sm:block absolute sm:bottom-0 md:bottom-36 w-full cursor-pointer animate-bounce" 
+  data-scroll-to="setta-intro" 
+/>
 </section>
+
+<script>
+  const scrollButton = document.querySelector('[data-scroll-to]');
+  scrollButton?.addEventListener('click', () => {
+    const targetId = scrollButton.getAttribute('data-scroll-to');
+    if (targetId) {
+      document.getElementById(targetId)?.scrollIntoView({ 
+        behavior: 'smooth'
+      });
+    }
+  });
+</script>
 

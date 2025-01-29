@@ -4,10 +4,11 @@ import { Image } from "astro:assets";
 import { siteWiderWidth } from "../../../styles/constants";
 
 const videoSegments = [
-  { id: 'segment1', start: 0, end: 7.5, text: '1. Install Setta' },
+  { id: 'segment1', start: 0, end: 7.7, text: '1. Install Setta' },
   { id: 'segment2', start: 7.7, end: 17.2, text: '2. Skip Boilerplate Parsers & Frontend' },
-  { id: 'segment3', start: 17.2, end: 39.5, text: '3. Expose Your Functions As a UI' },
-  { id: 'segment4', start: 39.5, end: 52, text: '4. Interact With Your UI' },
+  { id: 'segment3', start: 17.2, end: 40, text: '3. Expose Your Functions As a UI' },
+  { id: 'segment4', start: 40, end: 52.7, text: '4. Interact With Your UI' },
+  { id: 'segment5', start: 52.7, end: 65, text: '5. Simplify. Embed Docs. Share.' },
 ];
 ---
 
@@ -16,17 +17,11 @@ const videoSegments = [
   proseClasses=""
   innerClass="flex flex-col [@media(min-width:800px)]:flex-row justify-center mx-auto gap-4"
   customSiteWidth={siteWiderWidth}
+  id="setta-intro"
 >
   <h3 class="block md:hidden font-semibold text-center text-4xl mt-16 z-10">Your Setta Workflow</h3>
   <div class="relative mt-0 md:my-auto lg:-mt-24 lg:-mb-24 [@media(min-width:800px)]:basis-2/3 overflow-clip rounded-2xl bg-setta-900 border border-setta-500/50 shadow-lg aspect-[1106_/_720]">
 
-      <Image 
-        src="/assets/img/hero.png"
-        alt="setta video placeholder" 
-        width={1280} 
-        height={960} 
-        class="absolute inset-0 z-0 w-full h-full" 
-      />
       <video
         class="absolute inset-0 w-full h-full z-10 object-cover"
         id="video-player"

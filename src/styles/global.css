@@ -23,6 +23,7 @@
 html {
   /* background-color: #150833; */
   /* scroll-behavior: smooth; */
+  scroll-padding-top: 150px;
 }
 
 /* body * {
