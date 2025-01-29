@@ -41,9 +41,11 @@ const features = [
         <Image 
           src={image} 
           alt={`${title} profile photo`}
-          width={96}
-          height={96}
-          class="rounded-full mb-0"
+          width={256}
+          height={256}
+          loading="lazy"
+          decoding="async"
+          class="rounded-full mb-0 w-24"
         />
         <div class="flex flex-col h-full items-start prose-p:text-setta-500 prose-p:font-normal prose-p:mb-0">
           <h3 class="mt-0 pt-0 text-setta-700 dark:text-setta-400 !text-2xl !capitalize">{title}</h3>
