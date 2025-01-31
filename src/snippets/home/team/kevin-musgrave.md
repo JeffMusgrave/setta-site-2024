@@ -1,1 +1,1 @@
-Co-creator and Full-stack Developer.
+Co-creator and Full Stack Developer.
