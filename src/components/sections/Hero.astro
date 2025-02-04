@@ -1,6 +1,7 @@
 ---
 import { ChevronDown } from "lucide-astro";
 import {siteWidth} from "../../styles/constants.js";
+import Noise from "../general/Noise.astro";
 interface Props {
   id?: string;
   outerClass?: string;
@@ -18,9 +19,10 @@ const { id = "", outerClass = "relative pt-24 sm:pt-32 md:pt-48 pb-4 md:pb-40 ov
     <slot />
   </div>
   <ChevronDown 
-  class="hidden sm:block absolute sm:bottom-0 md:bottom-36 w-full cursor-pointer animate-bounce" 
-  data-scroll-to="setta-intro" 
-/>
+    class="hidden sm:block absolute sm:bottom-0 md:bottom-36 w-full cursor-pointer animate-bounce" 
+    data-scroll-to="setta-intro" 
+  />
+
 </section>
 
 <script>
