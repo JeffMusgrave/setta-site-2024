@@ -1,0 +1,49 @@
+---
+import Section from "./sections/Section.astro";
+---
+
+<Section outerClass="relative py-12 md:py-16 bg-setta-875" >
+
+  <div class="flex flex-col md:flex-row gap-8">
+    
+    <div class="flex-1 mt-2 prose prose-xl prose-p:text-setta-300">
+      <h2 class="!text-setta-700 mb-5 font-black uppercase">Contact</h2>
+      <p>Have a question or suggestion? We'd love to hear from you!</p>
+      <p>Drop us a message, and we'll do our best to get back to you. For immediate answers, check out our <a href="hhttps://docs.setta.dev/" target="_blank" class="!text-setta-100  hover:!text-blue-700 transition-colors">Docs</a> or <a href="https://github.com/settadev/setta" target="_blank" class="!text-setta-100  hover:!text-blue-700 transition-colors">GitHub.</a></p>
+    </div>
+    <form 
+      action="https://formspree.io/f/xgvoyjrk"
+      method="POST"
+      class="flex flex-1 md:flex-grow flex-col gap-4"
+    >
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        required
+        class="bg-transparent border-b-2 border-setta-700 px-4 py-2 text-xl text-white placeholder:text-setta-600 focus:outline-none focus:border-blue-500 transition-colors"
+      />
+      <input
+      name="subject"
+      placeholder="Subject"
+      required
+      class="bg-transparent border-b-2 border-setta-700 px-4 py-2 text-xl text-white placeholder:text-setta-600 focus:outline-none focus:border-blue-500 transition-colors"
+    />
+      <textarea
+        name="message"
+        placeholder="Message"
+        required
+        rows="3"
+        class="bg-transparent border-b-2 border-setta-700 px-4 py-2 text-xl text-white placeholder:text-setta-600 focus:outline-none focus:border-blue-500 transition-colors resize-none"
+      ></textarea>
+      <button 
+        type="submit"
+        class="!text-setta-400 hover:!text-white font-bold py-2 px-5 ml-auto bg-transparent border border-setta-800 hover:!bg-blue-700 rounded-2xl text-center transition-colors w-min"
+      >
+        Send
+      </button>
+    </form>
+</div>
+  
+  
+</Section>
