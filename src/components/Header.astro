@@ -2,6 +2,7 @@
 import ColorModeButton from "./ColorModeButton.astro";
 import SiteLogo from "./SiteLogo.astro"
 import {siteWidth} from "../styles/constants.js"
+import VersionDisplay from "./pages/home/VersionDisplay.astro";
 const domain = "https://www.setta.dev"
 
 const nav = [
@@ -14,10 +15,13 @@ const nav = [
 
 <header class="fixed py-1 top-0 left-0 right-0 z-50 scroll-fade-bg before:bg-setta-100 dark:before:bg-setta-900/90 transition-all duration-300">
   <div class={`${siteWidth} sticky mx-auto py-3 flex justify-between items-center`}>
+    <div class="flex gap-4 items-center">
     <a href="/" class="flex items-center">
       <span class="sr-only">setta</span>
-      <SiteLogo />
+      <SiteLogo /> 
     </a>
+    <VersionDisplay />
+  </div>
     
     <input type="checkbox" id="side-menu" class="side-menu hidden" />
     <label
