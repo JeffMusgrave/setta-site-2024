@@ -1,0 +1,37 @@
+---
+// interface Props {
+//   owner?: string;
+//   repo?: string;
+// }
+
+// const { owner = 'settadev', repo = 'setta' } = Astro.props;
+---
+
+<div id="version-display" class="hidden">
+  <a href="#" id="version-link" target="_blank" rel="noopener noreferrer" class="-my-0.5 flex items-center gap-2 bg-setta-950/30 rounded-full border-blue-300/20 border px-2 py-0.5 text-white/50 hover:bg-blue-700 hover:text-white transition-colors">
+    <span class="text-xs font-mono"></span>
+  </a>
+</div>
+
+<script>
+  async function fetchVersion() {
+    try {
+      const response = await fetch('https://api.github.com/repos/settadev/setta/releases/latest');
+      if (!response.ok) throw new Error('Failed to fetch');
+      const data = await response.json();
+      const display = document.getElementById('version-display');
+      const versionLink = document.getElementById('version-link') as HTMLAnchorElement;
+      const versionText = display?.querySelector('span');
+      
+      if (display && versionLink && versionText && data.tag_name) {
+        versionText.textContent = data.tag_name;
+        versionLink.href = `https://github.com/settadev/setta/releases/tag/${data.tag_name}`;
+        display.classList.remove('hidden');
+      }
+    } catch (err) {
+      console.error('Error fetching version:', err);
+    }
+  }
+
+  fetchVersion();
+</script>
