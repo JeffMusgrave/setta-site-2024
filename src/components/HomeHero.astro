@@ -15,7 +15,7 @@ import Noise from "./general/Noise.astro";
 ---
 
 <Hero outerClass="hero-section relative pt-8 md:pt-36  md:pb-24 overflow-x-clip md:overflow-clip md:shadow-2xl md:shadow-setta-950/50 md:border-b md:border-setta-700 h-[100svh] md:h-[calc(100svh_+_4rem)] flex items-center" innerClass="relative md:-mt-[8rem] z-10 items-center justify-between mx-auto flex gap-2 after:absolute after:inset-0 after:-z-10 after:bg-blue-950/0  after:blur-3xl">
-  <h1 slot="left-side" class="text-balance xl:!text-7xl tracking-tight"><span class="text-cyan-300">Python</span> <em>Without</em> The Donkeywork</h1>
+  <h1 slot="left-side" class="text-balance xl:!text-7xl tracking-tight"><span class="text-cyan-300">Python</span> <em>Without</em> The <span class="text-blue-200">Donkeywork</span></h1>
   <p class="my-0 text-white" slot="left-side">Streamline your code. Skip the boilerplate parsers and frontend. Effortlessly expose your Python functions as a flexible UI. Configure, interact, and share with ease.</p>
   <HeroCTA slot="left-side" />
   <div class="relative hidden lg:block overflow-clip min-w-[300px] min-h-[400px] h-[400px] bg-setta-900/50 rounded-[13px] shadow-xl shadow-setta-950/60 drop-shadow-[0_0px_120px_rgba(0,255,255,0.3)]">
@@ -34,8 +34,7 @@ import Noise from "./general/Noise.astro";
       </video>
       
   </div>
-  <!-- <ThemeImage alt="Setta Cards in the BG"  darkImage={HeroBgDark} width={600} height={568} class="absolute -right-40 -z-10 blur-sm hidden lg:block opacity-70 md:blur-[2px]"/> -->
+  <!-- <ThemeImage alt="Setta Cards in the BG"  darkImage={HeroBgDark} width={600} height={568} class="absolute -right-40 -z-10 blur-sm hidden lg:block opacity-50 md:blur-[2px]"/> -->
   <div class="absolute pattern-hero inset-0 z-[1] mix-blend-exclusion" slot="outer"></div>
   <Noise slot="outer" />
-  <!-- <ThemeImage alt="Setta Cards in the BG"  darkImage={NoiseBg} width={2400} height={1455} class="absolute inset-0 [&_img]:object-cover [&_img]:w-full [&_img]:h-full [&_img]:opacity-100 " quality={80} decoding="async" loading="eager" slot="outer"/> -->
 </Hero>
