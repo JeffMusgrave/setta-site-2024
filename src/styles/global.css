@@ -176,8 +176,19 @@ h6 {
 
   background: radial-gradient(
       circle at var(--d) var(--d),
-      hsla(219, 26%, 23%, 0.55) calc(var(--d) - 1px),
-      #0000 var(--d)
+      hsla(219, 26%, 23%, 0.3) calc(var(--d) - 1px),
+      #00000000 var(--d)
+    )
+    0 0 / 20px 20px;
+}
+
+.pattern-hero {
+  --d: 2px;
+  mix-blend-mode: overlay;
+  background: radial-gradient(
+      circle at var(--d) var(--d),
+      hsla(0, 0%, 100%, 0.5) calc(var(--d) - 1px),
+      #00000000 var(--d)
     )
     0 0 / 20px 20px;
 }

@@ -11,6 +11,8 @@ interface Props {
   height?: number;
   quality?: number;
   imageClass ?: string;
+  loading?:'eager' | 'lazy' | undefined | null;
+  decoding?:'async' | 'auto' | 'sync' | undefined | null;
 }
 
 const { 
@@ -21,6 +23,8 @@ const {
   width, 
   height,
   imageClass,
+  loading,
+  decoding,
   quality = 100 
 } = Astro.props;
 ---
@@ -33,6 +37,7 @@ const {
     height={height}
     class={`block dark:hidden ${imageClass}`}
     quality={quality}
+    loading={loading}
   />}
   {darkImage && <Image
     src={darkImage}
@@ -41,5 +46,6 @@ const {
     height={height}
     class={`hidden dark:block ${imageClass}`}
     quality={quality}
+    loading={loading}
   />}
 </div>
