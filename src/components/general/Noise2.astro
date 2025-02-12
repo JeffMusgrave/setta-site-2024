@@ -1,0 +1,24 @@
+---
+
+
+---
+
+
+
+<div class="absolute inset-0 min-h-full">
+  <div class="absolute inset-0 bg-[#090d14] bg-gradient-radial-complex"></div>
+  <div class="absolute inset-0 bg-[url('/assets/img/noise.png')] mix-blend-soft-light opacity-20"></div>
+  <div class="absolute inset-0 bg-[url('/assets/img/pattern.jpg')] bg-cover opacity-30 bg-center bg-no-repeat mix-blend-screen"></div>
+</div>
+
+
+<style>
+/* Astro will automatically scope these styles */
+.bg-gradient-radial-complex {
+  filter: contrast(125%) brightness(130%) saturate(110%);
+  background-image: 
+    radial-gradient(circle at 30% 85%, hsla(203, 70%, 20%, 0.95) 0%, rgba(9, 13, 20, 0) 70%),
+    radial-gradient(circle at 100% 85%, hsla(17, 70%, 32%, 0.95) 0%, rgba(9, 13, 20, 0) 70%),
+    radial-gradient(circle at 90% 15%, hsla(288, 65%, 14%, 0.95) 0%, rgba(9, 13, 20, 0) 70%);
+}
+</style>
