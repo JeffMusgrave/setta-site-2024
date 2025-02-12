@@ -45,16 +45,16 @@ const cardStyle = "group/card sm:rounded-xl px-0 sm:px-4 lg:px-12 xl:px-16 w-ful
       <slot name="icon" />
       {href ?  
         <a href={href}>
-          <h4 class="!my-0 pb-2 md:pb-4 text-4xl lg:text-4xl xl:text-5xl font-normal tracking-tight text-setta-900 dark:!text-setta-100 md:dark:!text-setta-200">
+          <h4 class="!my-0 pb-2 md:pb-4 text-4xl lg:text-4xl xl:text-5xl font-light tracking-tight text-setta-900 dark:!text-setta-100 md:dark:!text-setta-200">
             <slot name="title" />
           </h4>
         </a> :       
-        <h4 class="!my-0 pb-2 md:py-4 text-3xl lg:text-4xl xl:text-5xl font-normal tracking-tight text-setta-900 dark:!text-setta-200">
+        <h4 class="!my-0 pb-2 md:py-4 text-3xl lg:text-4xl xl:text-5xl font-light tracking-tight text-setta-900 dark:!text-setta-400">
           <slot name="title" />
         </h4>
       }
     </header>
-    <aside class="hidden md:block  [&_*]:!text-setta-100">
+    <aside class="hidden md:block  [&_*]:!text-white">
       <slot name="body" />
     </aside>
     
