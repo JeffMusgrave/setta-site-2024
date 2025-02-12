@@ -176,7 +176,7 @@ h6 {
 
   background: radial-gradient(
       circle at var(--d) var(--d),
-      hsla(219, 26%, 23%, 0.3) calc(var(--d) - 1px),
+      hsla(219, 26%, 23%, 0.5) calc(var(--d) - 1px),
       #00000000 var(--d)
     )
     0 0 / 20px 20px;
@@ -191,4 +191,56 @@ h6 {
       #00000000 var(--d)
     )
     0 0 / 20px 20px;
+}
+
+.pattern-color {
+  --d: 2px;
+  position: relative;
+  isolation: isolate;
+}
+
+.pattern-color::before {
+  content: "";
+  position: absolute;
+  opacity: 0.6;
+  inset: 0;
+  filter: contrast(150%) brightness(110%) saturate(110%);
+  background-image: 
+    /* Added cyan gradient for upper left */ radial-gradient(
+      ellipse at 15% 30%,
+      hsla(180, 85%, 45%, 0.3) 0%,
+      hsla(180, 85%, 45%, 0) 70%
+    ),
+    radial-gradient(
+      ellipse at 85% min(30%, 30svh),
+      hsla(203, 85%, 25%, 0.95) 0%,
+      hsla(203, 85%, 25%, 0) 70%
+    ),
+    radial-gradient(
+      ellipse at 85% max(80%, 70svh),
+      hsla(17, 85%, 35%, 0.7) 0%,
+      hsla(17, 85%, 35%, 0) 70%
+    ),
+    radial-gradient(
+      ellipse at 15% max(70%, 60svh),
+      hsla(288, 80%, 20%, 0.95) 0%,
+      hsla(288, 80%, 20%, 0) 70%
+    );
+  background-blend-mode: screen;
+  background-size: 100% 100%;
+  background-position: center;
+  -webkit-mask: radial-gradient(
+      circle at var(--d) var(--d),
+      black calc(var(--d) - 1px),
+      transparent var(--d)
+    )
+    0 0 / 20px 20px;
+  mask: radial-gradient(
+      circle at var(--d) var(--d),
+      black calc(var(--d) - 1px),
+      transparent var(--d)
+    )
+    0 0 / 20px 20px;
+  z-index: -1;
+  pointer-events: none;
 }
