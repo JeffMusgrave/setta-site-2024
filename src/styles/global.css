@@ -176,7 +176,7 @@ h6 {
 
   background: radial-gradient(
       circle at var(--d) var(--d),
-      hsla(219, 26%, 23%, 0.5) calc(var(--d) - 1px),
+      hsla(219, 26%, 23%, 0.6) calc(var(--d) - 1px),
       #00000000 var(--d)
     )
     0 0 / 20px 20px;
