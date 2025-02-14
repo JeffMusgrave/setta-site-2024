@@ -6,7 +6,7 @@ import SiteLogo from "./SiteLogo.astro"
 
 
 <footer class="flex justify-center py-8 bg-setta-950">
-  <div class={`${siteWidth} flex flex-wrap flex-row justify-between sm:justify-normal items-center gap-16 md:gap-36`}>
+  <div class={`${siteWidth} flex flex-wrap flex-row justify-between sm:justify-normal items-center sm:gap-16 md:gap-36`}>
 
     <div class="self-start">
       <h2 class="!text-setta-700 mb-3 font-black text-xs uppercase">More From Setta</h2>
@@ -22,13 +22,6 @@ import SiteLogo from "./SiteLogo.astro"
         <li><a href="https://youtube.com/@settadev" target="_blank" class="!text-setta-600 text-sm  hover:!text-blue-700">Youtube</a></li>     
       </ul>
     </div>
-    <!-- <div class="self-start">
-      <h2 class="!text-setta-700 mb-3 font-black text-xs uppercase">Team</h2>
-      <ul class="flex flex-col gap-2 items-start">
-        <li><a href="https://github.com/KevinMusgrave" target="_blank" class="!text-setta-600 text-sm  hover:!text-blue-700">Kevin Musgrave</a></li>
-        <li><a href="https://github.com/JeffMusgrave" target="_blank" class="!text-setta-600 text-sm  hover:!text-blue-700">Jeff Musgrave</a></li>     
-      </ul>
-    </div> -->
-    <div class="mx-auto sm:ml-auto sm:mr-0 self-end"><SiteLogo classes="w-12" innerClasses="fill-setta-500 dark:fill-setta-800" /></div>
+    <div class="mx-auto w-full sm:w-auto mt-16 sm:ml-auto sm:mr-0 self-end"><SiteLogo classes="mx-auto sm:ml-0 w-12" innerClasses="fill-setta-500 dark:fill-setta-800" /></div>
   </div>
 </footer>
