@@ -14,6 +14,7 @@ interface Props {
   loop?: boolean;
   playsInline?: boolean;
   width?: string;
+  posterImage?: string;
 }
 
 const {
@@ -28,13 +29,11 @@ const {
   muted = true,
   loop = false,
   playsInline = true,
-  width = ""
+  width = "",
+  posterImage = ""
 } = Astro.props;
 
-// bg-setta-900/80 -mx-7 px-7
-
 const cardStyle = "group/card sm:rounded-3xl px-0 sm:px-4 lg:px-12 xl:px-16 w-full flex flex-col items-center md:flex-row py-4 md:py-2 lg:py-10 xl:py-14 md:gap-5 md:max-w-full lg:max-w-auto md:mx-0 md:border-white first:border-t border-b dark:border-setta-700 sm:border md:dark:border-setta-700 md:bg-white dark:bg-transparent backdrop-blur-[2px] md:dark:shadow-setta-900/50 border-setta-700 md:shadow-xl md:dark:focus:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] sm:outline sm:outline-4 transition-all scroll-reveal"
-
 ---
 
 <div class:list={[cardStyle, width]}>
@@ -45,7 +44,7 @@ const cardStyle = "group/card sm:rounded-3xl px-0 sm:px-4 lg:px-12 xl:px-16 w-fu
       <slot name="icon" />
       {href ?  
         <a href={href}>
-          <h3 class="!my-0 pb-2 md:pb-4 text-4xl lg:text-4xl xl:text-5xl font-light tracking-tight text-setta-900 dark:!text-setta-300 !capitalize md:dark:!text-setta-200">
+          <h3 class="!my-0 pb-2 md:pb-4 text-4xl lg:text-4xl xl:text-5xl !font-light tracking-tight text-setta-900 dark:!text-setta-300 !capitalize md:dark:!text-setta-200">
             <slot name="title" />
           </h3>
         </a> :       
@@ -54,37 +53,34 @@ const cardStyle = "group/card sm:rounded-3xl px-0 sm:px-4 lg:px-12 xl:px-16 w-fu
         </h3>
       }
     </header>
-    <aside class="hidden md:block  [&_*]:!text-white">
+    <aside class="hidden md:block [&_*]:!text-white">
       <slot name="body" />
     </aside>
-    
   </div>
+
   <div class="flex flex-col md:py-3 gap-0 w-[clamp(280px,_90vw,_1140px)] sm:w-auto">
-
-
     {isVideo ? (
-      <div class="z-10 border border-solid border-setta-700 shadow-2xl md:shadow-none shadow-setta-950/70 rounded-lg overflow-hidden [&_*]:!my-0 md:!max-w-72 lg:!max-w-96">
+      <div class="z-10 border border-solid border-setta-700 shadow-2xl md:shadow-none shadow-setta-950/70 rounded-lg overflow-hidden [&_*]:!my-0 md:!max-w-72 md:!min-w-72 lg:!max-w-96 lg:!min-w-96 aspect-square">
         <video
-          class="w-full h-auto"
+          class="lazy-video w-full h-auto"
           {autoplay}
           {muted}
           {loop}
           playsinline={playsInline}
+          poster={posterImage}
         >
-          <source src={videoSrc} type="video/mp4">
+          <source data-src={videoSrc} type="video/mp4">
           Your browser does not support the video tag.
         </video>
       </div>
     ) : (
       (lightImage || darkImage) && (
-        <a href="#" class="border border-setta-800 rounded-lg overflow-hidden mt-2">
+        <a href="#" class="border border-setta-800 rounded-lg overflow-hidden mt-2 aspect-square">
           <ThemeImage class="[&_*]:!mt-0 [&_*]:!mb-0" lightImage={lightImage} darkImage={darkImage} alt={alt} />
         </a>
       )
     )}
 
-
-    
     {href && 
       <a href="#" class="inline-flex items-center py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         Read more
@@ -93,24 +89,59 @@ const cardStyle = "group/card sm:rounded-3xl px-0 sm:px-4 lg:px-12 xl:px-16 w-fu
         </svg>
       </a>
     }
-    <aside class="block md:hidden mt-5 px-2 py-1 mb-4 prose [&_*]:!text-setta-200"><slot name="body" /></aside>
+    <aside class="block md:hidden mt-5 px-2 py-1 mb-4 prose [&_*]:!text-setta-200">
+      <slot name="body" />
+    </aside>
   </div>
-
-
 </div>
+
+<script>
+const observerOptions = {
+  root: null,
+  rootMargin: '50px 0px',
+  threshold: 0.1
+};
+
+const handleIntersection = (entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const video = entry.target;
+      const source = video.querySelector('source');
+      if (source.dataset.src) {
+        source.src = source.dataset.src;
+        video.load();
+        if (video.autoplay) {
+          video.play().catch(() => {
+            console.log('Autoplay prevented');
+          });
+        }
+        video.classList.add('loaded');
+        observer.unobserve(video);
+      }
+    }
+  });
+};
+
+const observer = new IntersectionObserver(handleIntersection, observerOptions);
+
+document.addEventListener('DOMContentLoaded', () => {
+  const lazyVideos = document.querySelectorAll('.lazy-video');
+  lazyVideos.forEach(video => observer.observe(video));
+});
+</script>
 
 <style>
 @keyframes outline-reveal {
   0%, 25% {
     outline-color: transparent;
     box-shadow: var(--tw-shadow);
-    }
+  }
   38% {
-    outline-color: rgb(34 211 238); /* cyan-400 */
+    outline-color: rgb(34 211 238);
     box-shadow: var(--tw-shadow);
   }
   40% {
-    outline-color: rgb(37 99 235); /* blue-600 */
+    outline-color: rgb(37 99 235);
     box-shadow: var(--tw-shadow-2xl);
   }
   50% {
@@ -134,6 +165,12 @@ const cardStyle = "group/card sm:rounded-3xl px-0 sm:px-4 lg:px-12 xl:px-16 w-fu
   outline-color: transparent;
 }
 
+.lazy-video {
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+
+.lazy-video.loaded {
+  opacity: 1;
+}
 </style>
-
-
