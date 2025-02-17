@@ -238,3 +238,7 @@ h6 {
   z-index: -1;
   pointer-events: none;
 }
+
+/* * {
+  outline: green 2px solid;
+} */
