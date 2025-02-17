@@ -29,6 +29,7 @@ const videoSegments = [
       muted
       playsinline
       controls
+      preload="auto"
     >
       <source src="assets/video/hero.mp4" type="video/mp4">
       Your browser does not support the video tag.
@@ -76,67 +77,97 @@ const videoSegments = [
 
 <script>
   function initializeVideoPlayer() {
-    const video = document.getElementById('video-player') as HTMLVideoElement;
-    const segments = document.querySelectorAll('p[id^="segment"]');
+  const video = document.getElementById('video-player') as HTMLVideoElement;
+  const segments = document.querySelectorAll('p[id^="segment"]');
 
-    if (!video) {
-      console.error('Video element not found');
-      return;
-    }
-
-    // Create intersection observer
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        // Start playing when 75% of the video is visible
-        if (entry.intersectionRatio >= 0.75) {
-          video.play().catch(console.error);
-        } else {
-          video.pause();
-        }
-      });
-    }, {
-      threshold: 0.75 // Trigger when 75% is visible
-    });
-
-    // Start observing the video element
-    observer.observe(video);
-
-    // Handle segment clicks
-    segments.forEach(segment => {
-      segment.addEventListener('click', () => {
-        const startTime = parseFloat(segment.getAttribute('data-start') || '0');
-        video.currentTime = startTime;
-        // Only play if sufficiently in view
-        if (video.getBoundingClientRect().top < window.innerHeight * 0.25) {
-          video.play().catch(console.error);
-        }
-      });
-    });
-
-    // Update segment highlighting
-    function updateSegmentHighlight() {
-      const time = video.currentTime;
-
-      // Remove existing highlights from all segments
-      segments.forEach(segment => {
-        segment.classList.remove('transcript-highlight');
-      });
-
-      // Find and highlight current segment
-      const currentSegment = Array.from(segments).find(segment => {
-        const start = parseFloat(segment.getAttribute('data-start') || '0');
-        const end = parseFloat(segment.getAttribute('data-end') || '0');
-        return time >= start && time < end;
-      });
-
-      if (currentSegment) {
-        currentSegment.classList.add('transcript-highlight');
-      }
-    }
-
-    video.addEventListener('timeupdate', updateSegmentHighlight);
+  if (!video) {
+    console.error('Video element not found');
+    return;
   }
 
-  // Initialize when the DOM is ready
+  // Loading handling
+  let attempts = 0;
+  const maxAttempts = 3;
+  let isLoaded = false;
+
+  const handleError = (e) => {
+    console.error('Video loading error:', e);
+    if (attempts < maxAttempts) {
+      attempts++;
+      console.log(`Retrying video load, attempt ${attempts}`);
+      setTimeout(() => {
+        video.load();
+      }, 1000 * attempts);
+    }
+  };
+
+  video.addEventListener('error', handleError);
+  
+  video.addEventListener('loadeddata', () => {
+    console.log('Video loaded successfully');
+    isLoaded = true;
+    video.removeEventListener('error', handleError);
+  });
+
+  // Create intersection observer - only handles play/pause based on visibility
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.intersectionRatio >= 0.75) {
+        // Only attempt to play if the video has loaded
+        if (isLoaded) {
+          video.play().catch(console.error);
+        }
+      } else {
+        video.pause();
+      }
+    });
+  }, {
+    threshold: 0.75
+  });
+
+  // Start observing for visibility
+  observer.observe(video);
+
+  // Handle segment clicks
+  segments.forEach(segment => {
+    segment.addEventListener('click', () => {
+      const startTime = parseFloat(segment.getAttribute('data-start') || '0');
+      video.currentTime = startTime;
+      
+      // Only play if the video is sufficiently visible AND loaded
+      const rect = video.getBoundingClientRect();
+      const isVisible = rect.top < window.innerHeight * 0.25;
+      if (isVisible && isLoaded) {
+        video.play().catch(console.error);
+      }
+    });
+  });
+
+  // Update segment highlighting
+  function updateSegmentHighlight() {
+    const time = video.currentTime;
+    segments.forEach(segment => {
+      segment.classList.remove('transcript-highlight');
+    });
+
+    const currentSegment = Array.from(segments).find(segment => {
+      const start = parseFloat(segment.getAttribute('data-start') || '0');
+      const end = parseFloat(segment.getAttribute('data-end') || '0');
+      return time >= start && time < end;
+    });
+
+    if (currentSegment) {
+      currentSegment.classList.add('transcript-highlight');
+    }
+  }
+
+  video.addEventListener('timeupdate', updateSegmentHighlight);
+}
+
+// Initialize when the DOM is ready
+if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initializeVideoPlayer);
+} else {
+  initializeVideoPlayer();
+}
 </script>
