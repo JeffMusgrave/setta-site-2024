@@ -44,7 +44,7 @@ import { ViewTransitions } from 'astro:transitions';
     <slot name="SEO" />
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
-  <body>
+  <body transition:animate="fade">
     <!-- Google Tag Manager (noscript) -->
     <noscript
       ><iframe
@@ -62,4 +62,3 @@ import { ViewTransitions } from 'astro:transitions';
     <Footer />
   </body>
 </html>
-<ViewTransitions />

@@ -1,0 +1,93 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/general/sections/Section.astro';
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths, Page } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+import { siteWidth } from '../../styles/constants';
+import BlogListTitle from '../../components/pages/blog/BlogListTitle.astro';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = await getCollection('blog');
+  const sortedPosts = posts.sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+  );
+  return paginate(sortedPosts, { pageSize: 10 });
+}) satisfies GetStaticPaths;
+
+interface Props {
+  page: Page<CollectionEntry<'blog'>>;
+}
+
+const { page } = Astro.props;
+---
+
+<Layout>
+    <title>Engineering Updates | Setta</title>
+    <meta name="description" content="Technical guides, implementation insights, and engineering updates from the Setta team" />
+    <meta property="og:title" content="Setta Engineering Updates" />
+    <meta property="og:description" content="Technical guides, implementation insights, and engineering updates from the Setta team" />
+
+    <BlogListTitle>
+      <h1 class="text-4xl font-bold mt-16 text-setta-100">Engineering Updates</h1>
+    </BlogListTitle>
+    
+  <Section outerClass="relative pt-32 pb-16 border-b border-setta-700" customSiteWidth={siteWidth}>
+    <div class="grid gap-32">
+      {page.data.map((post) => (
+        <article class="prose dark:prose-invert max-w-none hover:">
+          <h2 class="mb-2">
+            <a href={`/blog/${post.slug}`} class="no-underline hover:text-blue-400">
+              {post.data.title}
+            </a>
+          </h2>
+          <time datetime={post.data.date.toISOString()} class="text-sm text-setta-400">
+            {post.data.date.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </time>
+          <p class="mt-2">{post.data.description}</p>
+          <a href={`/blog/${post.slug}`} class="text-blue-400 hover:text-blue-300 no-underline">
+            Read more →
+          </a>
+        </article>
+      ))}
+    </div>
+
+    <nav class="flex items-center justify-between mt-8 pt-8 border-t border-setta-700" aria-label="Pagination">
+      <div class="flex items-center gap-2">
+        {page.url.prev && (
+          <a href={page.url.prev} class="px-3 py-1 rounded-md text-sm font-medium text-blue-400 hover:text-blue-300 hover:bg-setta-800">
+            ← Previous
+          </a>
+        )}
+      </div>
+      
+      <div class="flex items-center gap-1">
+        {Array.from({ length: page.lastPage }, (_, i) => i + 1).map((num) => (
+          <a
+            href={num === 1 ? `/blog` : `/blog/${num}`}
+            class:list={[
+              "px-3 py-1 rounded-md text-sm font-medium",
+              page.currentPage === num 
+                ? "bg-blue-600 text-white" 
+                : "text-blue-400 hover:text-blue-300 hover:bg-setta-800"
+            ]}
+          >
+            {num}
+          </a>
+        ))}
+      </div>
+
+      <div class="flex items-center gap-2">
+        {page.url.next && (
+          <a href={page.url.next} class="px-3 py-1 rounded-md text-sm font-medium text-blue-400 hover:text-blue-300 hover:bg-setta-800">
+            Next →
+          </a>
+        )}
+      </div>
+    </nav>
+  </Section>
+</Layout>

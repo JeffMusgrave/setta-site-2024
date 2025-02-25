@@ -1,0 +1,61 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  frontmatter: CollectionEntry<'blog'>['data'];
+}
+
+const { frontmatter } = Astro.props;
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || "https://setta.dev";
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": `${baseUrl}${Astro.url.pathname}#article`,
+  "headline": frontmatter.title,
+  "description": frontmatter.description,
+  "datePublished": frontmatter.date.toISOString(),
+  "dateModified": (frontmatter.lastModified || frontmatter.date).toISOString(),
+  "author": {
+    "@type": "Organization",
+    "name": "Setta",
+    "url": baseUrl
+  },
+  "publisher": {
+    "@type": "Organization",
+    "@id": `${baseUrl}/#organization`,
+    "name": "Setta",
+    "url": baseUrl,
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${baseUrl}/assets/img/og-image.jpg`
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `${baseUrl}${Astro.url.pathname}`
+  }
+};
+---
+<>
+  <title>{frontmatter.title} | Setta Blog</title>
+  <meta name="description" content={frontmatter.description} />
+  <meta name="keywords" content={frontmatter.tags?.join(', ')} />
+  
+  <!-- Open Graph -->
+  <meta property="og:url" content={`${baseUrl}${Astro.url.pathname}`} />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content={frontmatter.title} />
+  <meta property="og:description" content={frontmatter.description} />
+  <meta property="og:image" content={frontmatter.image || `${baseUrl}/assets/img/og-image.jpg`} />
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@settadev" />
+  <meta name="twitter:title" content={frontmatter.title} />
+  <meta name="twitter:description" content={frontmatter.description} />
+  <meta name="twitter:image" content={frontmatter.image || `${baseUrl}/assets/img/og-image.jpg`} />
+  
+  <!-- Schema.org -->
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+</>
