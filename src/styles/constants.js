@@ -1,4 +1,5 @@
 export const siteWidth = "w-[clamp(280px,_90vw,_1140px)]";
+export const siteNarrowWidth = "w-[clamp(280px,_90vw,_800px)]";
 export const siteWiderWidth = "w-[clamp(280px,_90vw,_1320px)]";
 
 export const proseClasses =

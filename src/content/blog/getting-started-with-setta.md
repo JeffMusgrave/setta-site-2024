@@ -3,6 +3,7 @@ title: "Getting Started with Setta: A Quick Guide to Configuration UIs"
 description: "Learn how to transform your Python functions into interactive UIs with Setta in under 5 minutes. No frontend experience required."
 date: 2024-02-23
 tags: ["tutorial", "getting-started", "python", "ui"]
+author: "Setta Team"
 ---
 
 If you're tired of writing boilerplate code for configuration parsing and building frontend interfaces, Setta is here to help. In this quick guide, we'll show you how to transform your Python functions into interactive UIs with just a few lines of code.

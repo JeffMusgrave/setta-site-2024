@@ -2,7 +2,7 @@
 import Footer from '../components/general/Footer.astro';
 import Header from '../components/general/Header.astro';
 import '../styles/global.css';
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 
 ---
 
@@ -43,6 +43,7 @@ import { ViewTransitions } from 'astro:transitions';
     <meta name="generator" content={Astro.generator} />
     <slot name="SEO" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <ClientRouter />
   </head>
   <body transition:animate="fade">
     <!-- Google Tag Manager (noscript) -->

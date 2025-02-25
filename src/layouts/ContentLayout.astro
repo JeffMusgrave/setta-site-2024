@@ -3,8 +3,8 @@ import Footer from '../components/general/Footer.astro';
 import Header from '../components/general/Header.astro';
 import Section from '../components/general/sections/Section.astro';
 import '../styles/global.css';
-import { ViewTransitions } from 'astro:transitions';
-import { siteWidth } from '../styles/constants';
+import { ClientRouter } from 'astro:transitions';
+import { siteNarrowWidth } from '../styles/constants';
 import BlogListTitle from '../components/pages/blog/BlogListTitle.astro';
 
 const { frontmatter } = Astro.props;
@@ -25,6 +25,7 @@ const { frontmatter } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <slot name="SEO" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <ClientRouter />
   </head>
   <body transition:animate="fade">
     <Header />
@@ -40,8 +41,14 @@ const { frontmatter } = Astro.props;
             })}
           </time>
         )}
+        {frontmatter.author && (
+          <p>
+            By {frontmatter.author}
+          </p>
+        )}
+
       </BlogListTitle>
-      <Section outerClass="relative pt-32 pb-16 bg-setta-875 border-b border-setta-700" customSiteWidth={siteWidth}>
+      <Section outerClass="relative pt-24 pb-24 bg-setta-875 border-b border-setta-700" customSiteWidth={siteNarrowWidth}>
 
         <article class="prose dark:prose-invert max-w-none">
           
