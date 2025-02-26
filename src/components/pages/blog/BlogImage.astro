@@ -98,7 +98,7 @@ const imageInfo = getImageInfo();
         width={width} 
         height={height}
         loading="lazy"
-        class="w-full h-auto rounded-md"
+        class="w-full h-auto rounded-3xl"
       />
     ) : (
       <Image 
@@ -106,7 +106,7 @@ const imageInfo = getImageInfo();
         alt={alt} 
         width={imageInfo.width || width || 800} 
         height={imageInfo.height || height || 600}
-        class="w-full h-auto rounded-md"
+        class="w-full h-auto rounded-3xl"
       />
     )
   ) : (

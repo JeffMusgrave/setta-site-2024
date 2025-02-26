@@ -45,33 +45,34 @@ const ogImage = postWithImage?.data.featuredImage
     <meta property="twitter:image" content={ogImage} />
 
     <BlogListTitle>
-      <h1 class="text-white text-4xl md:text-5xl lg:text-6xl mt-32 mb-8">Setta Dev Blog</h1>
+      <h1 class="text-white text-4xl md:text-5xl lg:text-6xl mt-16 md:mt-32 mb-8">Setta Dev Blog</h1>
       <p class="font-normal mt-4">Focus on Python. Delete the config parsers, YAML, and frontend code.</p>
     </BlogListTitle>
     
-  <Section outerClass="relative pt-16 md:pt-32 pb-16 border-b border-setta-700 bg-setta-875" customSiteWidth={siteNarrowWidth}>
+  <Section outerClass="relative pt-8 md:py-16 border-b border-setta-700 bg-setta-875" customSiteWidth={siteNarrowWidth}>
     <div class="flex flex-col gap-32">
       {page.data.map((post) => (
-        <div class="md:px-8 md:-mx-8">
+
           <a 
-            class="group/blogpost block prose dark:prose-invert max-w-none border border-transparent rounded-xl md:hover:border-setta-800 md:hover:bg-setta-850/50 transition-all p-4 md:p-8"
+            class="group/blogpost flex flex-col md:flex-row-reverse md:gap-4 prose dark:prose-invert max-w-none border border-transparent rounded-xl md:hover:border-setta-800 md:hover:bg-setta-850/50 transition-all md:px-8 md:-mx-8 "
             href={`/blog/${post.slug}`}
           >
             {/* Only show images if they're explicitly defined AND we want to show featured images */}
             {SHOW_FEATURED_IMAGES && (post.data.featuredImage || post.data.image) && (
-              <div class="mb-6 max-w-xs mx-auto md:float-right md:ml-8 md:-mt-4 md:mb-2">
+
                 <FeaturedImage 
                   post={post}
-                  class="rounded-lg shadow-lg shadow-setta-950/30"
+                  class="w-full md:w-2/5"
                   sizes="(min-width: 1280px) 320px, (min-width: 768px) 240px, 100vw"
                 />
-              </div>
+
             )}
+            <div class="flex-1">
             
-            <h2 class="mb-2 group-hover/blogpost:text-blue-500 transition-colors">
+            <h2 class="mb-2 !mt-2 md:!mt-8 group-hover/blogpost:text-blue-500 transition-colors">
                 {post.data.title}
             </h2>
-            <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 font-normal">
               <time datetime={post.data.date.toISOString()} class="text-sm text-setta-400">
                 {post.data.date.toLocaleDateString('en-US', {
                   year: 'numeric',
@@ -100,8 +101,9 @@ const ogImage = postWithImage?.data.featuredImage
             </div>
             <p class="mt-2 font-normal">{post.data.description}</p>
             <p class="text-setta-300 group-hover/blogpost:text-blue-500 transition-colors">Read more →</p>
+          </div>
           </a>
-        </div>
+
       ))}
     </div>
 

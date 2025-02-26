@@ -29,8 +29,6 @@ interface Props {
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 
-// For debugging - log the available components
-console.log("Available components:", Object.keys(components));
 ---
 
 <ContentLayout frontmatter={entry.data} entry={entry}>
