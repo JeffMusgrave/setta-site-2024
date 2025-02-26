@@ -21,6 +21,7 @@ const {
 ---
 
 <section id={id} class:list={[outerClass, "w-full"]}>
+  <slot name="before" />
   <div class:list={[customSiteWidth || siteWidth, innerClass, proseClasses]} >
       <slot />
     </div>

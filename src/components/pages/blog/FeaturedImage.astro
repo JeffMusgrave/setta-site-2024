@@ -8,7 +8,16 @@ import type { ImageMetadata } from 'astro';
 type ImportedImage = { default: ImageMetadata };
 
 // Import all images from the blog directory dynamically with proper typing
-const images = import.meta.glob<ImportedImage>('/src/assets/img/blog/**/*.{png,jpg,jpeg,avif,webp,gif,svg}', { eager: true });
+const blogAssetImages = import.meta.glob<ImportedImage>('/src/assets/img/blog/**/*.{png,jpg,jpeg,avif,webp,gif,svg}', { eager: true });
+
+// Import images from content collection
+const contentCollectionImages = import.meta.glob<ImportedImage>('/src/content/blog/**/*.{png,jpg,jpeg,avif,webp,gif,svg}', { eager: true });
+
+// Combined image map for more flexible path resolution
+const images = { ...blogAssetImages, ...contentCollectionImages };
+
+// Debug available images (uncomment to see in console during build)
+// console.log("Available image paths:", Object.keys(images));
 
 type BlogFrontmatter = InferEntrySchema<'blog'>;
 
@@ -18,6 +27,7 @@ interface Props {
   class?: string;
   sizes?: string;
   priority?: boolean;
+  forMetadataOnly?: boolean; // If true, always return null for rendering
 }
 
 const { 
@@ -25,7 +35,8 @@ const {
   frontmatter, 
   class: className = '', 
   sizes = '(min-width: 1024px) 1024px, 100vw', 
-  priority = false 
+  priority = false,
+  forMetadataOnly = false 
 } = Astro.props;
 
 // Extract the data from whichever prop was provided
@@ -41,23 +52,34 @@ const getImageInfo = () => {
   if (postData.featuredImage) {
     const filename = postData.featuredImage.src;
     
-    // Look for the image in our glob imports
-    const imagePath = `/src/assets/img/blog/${filename}`;
-    const imageModule = images[imagePath];
+    // Try each possible path to find the image
+    const possiblePaths = [
+      `/src/assets/img/blog/${filename}`,
+      `/src/content/blog/getting-started-with-setta/${filename}`,
+      `/src/content/blog/${filename}`
+    ];
     
-    if (imageModule) {
-      return {
-        src: imageModule.default, // The actual import
-        alt: postData.featuredImage.alt,
-        width: postData.featuredImage.width || imageModule.default.width,
-        height: postData.featuredImage.height || imageModule.default.height,
-        exists: true,
-        isImported: true
-      };
+    // Added debugging for paths being checked
+    for (const path of possiblePaths) {
+      if (images[path]) {
+        console.log(`✅ Found image at: ${path}`);
+        return {
+          src: images[path].default,
+          alt: postData.featuredImage.alt,
+          width: postData.featuredImage.width || images[path].default.width,
+          height: postData.featuredImage.height || images[path].default.height,
+          exists: true,
+          isImported: true,
+          path
+        };
+      }
     }
     
-    // If image isn't found, log helpful error and return fallback
-    console.error(`Image not found: ${filename}. Make sure it exists in src/assets/img/blog/`);
+    // Debug when no matching image is found
+    console.error(`❌ Image not found: ${filename}`);
+    console.error(`Tried paths: ${possiblePaths.join(', ')}`);
+    console.error(`Available image keys: ${Object.keys(images).slice(0, 5).join(', ')}... (${Object.keys(images).length} total)`);
+    
     return { exists: false };
   }
   
@@ -77,10 +99,18 @@ const getImageInfo = () => {
 
 const imageInfo = getImageInfo();
 
-// Helper function to get fallback image
-const getFallbackImage = () => {
-  return '/assets/img/og-image.jpg';
-};
+// If this is for metadata only (OG images) or if the image wasn't found, render nothing
+if (forMetadataOnly || !imageInfo.exists) {
+  // Still allow the metadata to be processed, but don't render anything
+}
+
+// Helper function to get OG image for metadata
+export function getOgImagePath() {
+  if (imageInfo.exists) {
+    return imageInfo.isImported ? imageInfo.path : imageInfo.src;
+  }
+  return '/assets/img/og-image.jpg'; // Only use fallback for OG metadata
+}
 ---
 
 {imageInfo.exists ? (
@@ -102,19 +132,8 @@ const getFallbackImage = () => {
         height={imageInfo.height || 630}
         loading={priority ? "eager" : "lazy"}
         {sizes}
-        class="w-full h-auto rounded-lg shadow-md"
+        class="w-full h-auto rounded-3xl shadow-md"
       />
     )}
   </div>
-) : (
-  <div class={`featured-image ${className}`}>
-    <img 
-      src={getFallbackImage()}
-      alt={postData.title}
-      width="1200"
-      height="630"
-      loading={priority ? "eager" : "lazy"}
-      class="w-full h-auto rounded-lg shadow-md"
-    />
-  </div>
-)}
+) : null /* Don't render anything if image not found */}

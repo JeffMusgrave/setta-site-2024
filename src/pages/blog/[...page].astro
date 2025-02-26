@@ -57,6 +57,7 @@ const ogImage = postWithImage?.data.featuredImage
             class="group/blogpost block prose dark:prose-invert max-w-none border border-transparent rounded-xl md:hover:border-setta-800 md:hover:bg-setta-850/50 transition-all p-4 md:p-8"
             href={`/blog/${post.slug}`}
           >
+            {/* Only show images if they're explicitly defined AND we want to show featured images */}
             {SHOW_FEATURED_IMAGES && (post.data.featuredImage || post.data.image) && (
               <div class="mb-6 max-w-xs mx-auto md:float-right md:ml-8 md:-mt-4 md:mb-2">
                 <FeaturedImage 

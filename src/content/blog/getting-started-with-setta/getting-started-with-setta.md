@@ -5,7 +5,7 @@ date: 2024-02-23
 tags: ["tutorial", "getting-started", "python", "ui"]
 author: "Setta Team"
 featuredImage:
-  src: "./office.avif"
+  src: "office.avif"
   alt: "Python code in a modern editor"
 ---
 

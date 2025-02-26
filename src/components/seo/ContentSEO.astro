@@ -16,17 +16,46 @@ async function getOgImageUrl(frontmatter) {
   try {
     // If using new featuredImage schema
     if (frontmatter.featuredImage?.src) {
-      const imagePath = `/src/assets/img/blog/${frontmatter.featuredImage.src}`;
+      // Try to find the image in content collection first
+      try {
+        // This path is for images in the content collection
+        const contentImagePath = `/src/content/blog/getting-started-with-setta/${frontmatter.featuredImage.src}`;
+        // Dynamic import for a specific file 
+        const contentImage = await import(`/src/content/blog/getting-started-with-setta/${frontmatter.featuredImage.src}`);
+        
+        if (contentImage) {
+          // Use getImage to optimize the image for OG
+          const ogImage = await getImage({
+            src: contentImage.default,
+            width: 1200,
+            height: 630,
+            format: 'jpeg',
+          });
+          
+          ogImageUrl = ogImage.src;
+          return ogImageUrl;
+        }
+      } catch (contentError) {
+        console.log("Image not found in content collection, trying assets folder");
+      }
       
-      // Use getImage to optimize the image for OG
-      const ogImage = await getImage({
-        src: imagePath,
-        width: 1200,
-        height: 630,
-        format: 'jpeg',
-      });
-      
-      ogImageUrl = ogImage.src;
+      // If not found in content collection, try assets folder
+      try {
+        // This is the path for images in the assets folder
+        const imagePath = `/src/assets/img/blog/${frontmatter.featuredImage.src}`;
+        
+        // Use getImage to optimize the image for OG
+        const ogImage = await getImage({
+          src: imagePath,
+          width: 1200,
+          height: 630,
+          format: 'jpeg',
+        });
+        
+        ogImageUrl = ogImage.src;
+      } catch (assetError) {
+        console.error('Error loading image from assets:', assetError);
+      }
     } 
     // If using legacy image string
     else if (frontmatter.image) {

@@ -9,6 +9,13 @@ import BlogListTitle from '../components/pages/blog/BlogListTitle.astro';
 import FeaturedImage from '../components/pages/blog/FeaturedImage.astro';
 
 const { frontmatter, entry } = Astro.props;
+
+// Only display image if:
+// 1. There is a featuredImage or image property
+// 2. hideFeaturedImageInPost is not true
+// 3. The file actually exists (checked inside the FeaturedImage component)
+const shouldDisplayImage = (frontmatter.featuredImage || frontmatter.image) && 
+                           !frontmatter.hideFeaturedImageInPost;
 ---
 
 <!DOCTYPE html>
@@ -63,14 +70,12 @@ const { frontmatter, entry } = Astro.props;
         </div>
       </BlogListTitle>
       
-      {/* Featured image display if available and not hidden */}
-      {(frontmatter.featuredImage || frontmatter.image) && !frontmatter.hideFeaturedImageInPost && (
-        <div class="w-full max-w-5xl mx-auto px-4 -mt-8 mb-8">
-          <FeaturedImage frontmatter={frontmatter} priority={true} />
-        </div>
-      )}
-      
       <Section outerClass="relative py-16 md:py-24 bg-setta-875 border-b border-setta-700" customSiteWidth={siteNarrowWidth}>
+        {shouldDisplayImage && (
+          <div class="-mt-48 min-w-full">
+            <FeaturedImage frontmatter={frontmatter} priority={true} slot="before" />
+          </div>
+        )}
         <article class="prose dark:prose-invert max-w-none">
           <slot />
         </article>
