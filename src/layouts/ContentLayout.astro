@@ -31,9 +31,9 @@ const { frontmatter } = Astro.props;
     <Header />
     <main class="flex-1 flex flex-col">
       <BlogListTitle>
-        <h1 class="text-white text-5xl mt-32 mb-8">{frontmatter.title}</h1>
+        <h1 class="text-white text-4xl md:text-5xl lg:text-6xl mt-32 mb-8">{frontmatter.title}</h1>
         {frontmatter.date && (
-          <time datetime={frontmatter.date} class="text-sm text-setta-400">
+          <time datetime={frontmatter.date} class="text-sm text-white/70">
             {new Date(frontmatter.date).toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'long',
@@ -48,9 +48,9 @@ const { frontmatter } = Astro.props;
         )}
 
       </BlogListTitle>
-      <Section outerClass="relative pt-24 pb-24 bg-setta-875 border-b border-setta-700" customSiteWidth={siteNarrowWidth}>
+      <Section outerClass="relative py-16 md:py-24 bg-setta-875 border-b border-setta-700" customSiteWidth={siteNarrowWidth}>
 
-        <article class="prose dark:prose-invert max-w-none">
+        <article class="prose dark:prose-invert max-w-none ">
           
           <slot />
         </article>

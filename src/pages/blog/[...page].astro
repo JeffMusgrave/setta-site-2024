@@ -29,15 +29,15 @@ const { page } = Astro.props;
     <meta property="og:description" content="Technical guides, implementation insights, and engineering updates from the Setta team" />
 
     <BlogListTitle>
-      <h1 class="text-white text-5xl mt-32 mb-8">Setta Dev Blog</h1>
+      <h1 class="text-white text-4xl md:text-5xl lg:text-6xl mt-32 mb-8">Setta Dev Blog</h1>
       <p class="font-normal mt-4">Focus on Python. Delete the config parsers, YAML, and frontend code.</p>
     </BlogListTitle>
     
-  <Section outerClass="relative pt-32 pb-16 border-b border-setta-700 bg-setta-875" customSiteWidth={siteNarrowWidth}>
+  <Section outerClass="relative pt-16 md:pt-32 pb-16 border-b border-setta-700 bg-setta-875" customSiteWidth={siteNarrowWidth}>
     <div class="grid gap-32">
       {page.data.map((post) => (
-        <a class="prose dark:prose-invert max-w-none border border-transparent hover:border-setta-800 rounded-xl p-8 -m-8 hover:bg-setta-850/50 transition-colors" href={`/blog/${post.slug}`}>
-          <h2 class="mb-2">
+        <a class="group/blogpost prose dark:prose-invert max-w-none border border-transparent md:hover:border-setta-800 rounded-xl md:p-8 md:-m-8 md:hover:bg-setta-850/50 transition-all" href={`/blog/${post.slug}`}>
+          <h2 class="mb-2 group-hover/blogpost:text-blue-500 transition-colors">
               {post.data.title}
           </h2>
           <time datetime={post.data.date.toISOString()} class="text-sm text-setta-400">
@@ -48,7 +48,7 @@ const { page } = Astro.props;
             })}
           </time>
           <p class="mt-2 font-normal">{post.data.description}</p>
-          <p class="text-setta-300">Read more →</p>
+          <p class="text-setta-300 group-hover/blogpost:text-blue-500 transition-colors">Read more →</p>
         </a>
       ))}
     </div>
