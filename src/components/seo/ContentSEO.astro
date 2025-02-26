@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { getImage } from 'astro:assets';
 
 interface Props {
   frontmatter: CollectionEntry<'blog'>['data'];
@@ -7,6 +8,38 @@ interface Props {
 
 const { frontmatter } = Astro.props;
 const baseUrl = import.meta.env.PUBLIC_BASE_URL || "https://setta.dev";
+
+// Helper function to get the OG image URL
+async function getOgImageUrl(frontmatter) {
+  let ogImageUrl = `${baseUrl}/assets/img/og-image.jpg`; // Default fallback
+  
+  try {
+    // If using new featuredImage schema
+    if (frontmatter.featuredImage?.src) {
+      const imagePath = `/src/assets/img/blog/${frontmatter.featuredImage.src}`;
+      
+      // Use getImage to optimize the image for OG
+      const ogImage = await getImage({
+        src: imagePath,
+        width: 1200,
+        height: 630,
+        format: 'jpeg',
+      });
+      
+      ogImageUrl = ogImage.src;
+    } 
+    // If using legacy image string
+    else if (frontmatter.image) {
+      ogImageUrl = new URL(frontmatter.image, baseUrl).toString();
+    }
+  } catch (error) {
+    console.error('Error generating OG image:', error);
+  }
+  
+  return ogImageUrl;
+}
+
+const ogImageUrl = await getOgImageUrl(frontmatter);
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -31,6 +64,10 @@ const articleSchema = {
       "url": `${baseUrl}/assets/img/og-image.jpg`
     }
   },
+  "image": {
+    "@type": "ImageObject",
+    "url": ogImageUrl
+  },
   "mainEntityOfPage": {
     "@type": "WebPage",
     "@id": `${baseUrl}${Astro.url.pathname}`
@@ -47,14 +84,16 @@ const articleSchema = {
   <meta property="og:type" content="article" />
   <meta property="og:title" content={frontmatter.title} />
   <meta property="og:description" content={frontmatter.description} />
-  <meta property="og:image" content={frontmatter.image || `${baseUrl}/assets/img/og-image.jpg`} />
+  <meta property="og:image" content={ogImageUrl} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@settadev" />
   <meta name="twitter:title" content={frontmatter.title} />
   <meta name="twitter:description" content={frontmatter.description} />
-  <meta name="twitter:image" content={frontmatter.image || `${baseUrl}/assets/img/og-image.jpg`} />
+  <meta name="twitter:image" content={ogImageUrl} />
   
   <!-- Schema.org -->
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />

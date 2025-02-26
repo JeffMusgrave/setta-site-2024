@@ -3,11 +3,12 @@ import Footer from '../components/general/Footer.astro';
 import Header from '../components/general/Header.astro';
 import Section from '../components/general/sections/Section.astro';
 import '../styles/global.css';
-import { ClientRouter } from 'astro:transitions';
+import { ViewTransitions } from 'astro:transitions';
 import { siteNarrowWidth } from '../styles/constants';
 import BlogListTitle from '../components/pages/blog/BlogListTitle.astro';
+import FeaturedImage from '../components/pages/blog/FeaturedImage.astro';
 
-const { frontmatter } = Astro.props;
+const { frontmatter, entry } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -25,33 +26,52 @@ const { frontmatter } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <slot name="SEO" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <ClientRouter />
+    <ViewTransitions />
   </head>
   <body transition:animate="fade">
     <Header />
     <main class="flex-1 flex flex-col">
       <BlogListTitle>
         <h1 class="text-white text-4xl md:text-5xl lg:text-6xl mt-32 mb-8">{frontmatter.title}</h1>
-        {frontmatter.date && (
-          <time datetime={frontmatter.date} class="text-sm text-white/70">
-            {new Date(frontmatter.date).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            })}
-          </time>
-        )}
-        {frontmatter.author && (
-          <p>
-            By {frontmatter.author}
-          </p>
-        )}
-
-      </BlogListTitle>
-      <Section outerClass="relative py-16 md:py-24 bg-setta-875 border-b border-setta-700" customSiteWidth={siteNarrowWidth}>
-
-        <article class="prose dark:prose-invert max-w-none ">
+        
+        <div class="flex flex-wrap gap-2 items-center">
+          {frontmatter.date && (
+            <time datetime={frontmatter.date.toISOString()} class="text-sm text-white/70">
+              {new Date(frontmatter.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}
+            </time>
+          )}
           
+          {frontmatter.author && (
+            <p class="text-sm text-white/70">
+              By {frontmatter.author}
+            </p>
+          )}
+          
+          {frontmatter.tags && frontmatter.tags.length > 0 && (
+            <div class="flex flex-wrap gap-2 mt-2">
+              {frontmatter.tags.map(tag => (
+                <span class="px-2 py-1 text-xs bg-setta-700 text-setta-200 rounded-full">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      </BlogListTitle>
+      
+      {/* Featured image display if available and not hidden */}
+      {(frontmatter.featuredImage || frontmatter.image) && !frontmatter.hideFeaturedImageInPost && (
+        <div class="w-full max-w-5xl mx-auto px-4 -mt-8 mb-8">
+          <FeaturedImage frontmatter={frontmatter} priority={true} />
+        </div>
+      )}
+      
+      <Section outerClass="relative py-16 md:py-24 bg-setta-875 border-b border-setta-700" customSiteWidth={siteNarrowWidth}>
+        <article class="prose dark:prose-invert max-w-none">
           <slot />
         </article>
       </Section>

@@ -1,50 +1,36 @@
 import { defineConfig } from 'astro/config';
-import tailwind from "@astrojs/tailwind";
-import sitemap from "@astrojs/sitemap";
-import prefetch from "@astrojs/prefetch";
-import mdx from "@astrojs/mdx"
-import robotsTxt from "astro-robots-txt";
+import mdx from '@astrojs/mdx';
+import tailwind from '@astrojs/tailwind';
+import sitemap from '@astrojs/sitemap';
+import prefetch from '@astrojs/prefetch';
+import robotsTxt from 'astro-robots-txt';
 
 export default defineConfig({
   site: 'https://setta.dev',
-  image: {
-    service: { entrypoint: 'astro/assets/services/sharp' },
-    domains: ['setta.dev'],
-    remotePatterns: [{ protocol: "https" }],
-  },
   integrations: [
-    tailwind(), 
-    sitemap(), 
-    prefetch(), 
-    mdx(),
-    robotsTxt(),
+    mdx({
+      // Optional: Configure MDX options
+      extendMarkdownConfig: true,
+      optimize: true,
+    }),
+    tailwind(),
+    sitemap(),
+    prefetch(),
+    robotsTxt()
   ],
-  redirects:{
-  },
-  vite: {
-    plugins: [
-      {
-        name: 'image-optimization',
-        enforce: 'post',
-        apply: 'build',
-        transformIndexHtml(html) {
-          return html.replace(/src="([^"]+)"/g, (match, url) => {
-            if (url.includes('/_astro/')) {
-              return match;
-            }
-            const fileName = url.split('/').pop().split('.')[0];
-            return `src="/_astro/${fileName}.webp"`;
-          });
-        }
-      },
-    ],
-  },
-  content: {
-    sources: ['src/content'],
-    collections: {
-      blog: {},
-      articles: {},
-      topics: {},
+  markdown: {
+    shikiConfig: {
+      theme: 'github-dark',
+      wrap: true,
     },
   },
+  image: {
+    // Configure built-in image service
+    service: {
+      entrypoint: 'astro/assets/services/sharp',
+    },
+    // Optional: Configure default dimensions for images
+    defaultDimensions: { width: 1200, height: 630 },
+  },
+
 });

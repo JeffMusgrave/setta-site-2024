@@ -1,0 +1,120 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import type { InferEntrySchema } from 'astro:content';
+import type { ImageMetadata } from 'astro';
+
+// Define a type for the imported images
+type ImportedImage = { default: ImageMetadata };
+
+// Import all images from the blog directory dynamically with proper typing
+const images = import.meta.glob<ImportedImage>('/src/assets/img/blog/**/*.{png,jpg,jpeg,avif,webp,gif,svg}', { eager: true });
+
+type BlogFrontmatter = InferEntrySchema<'blog'>;
+
+interface Props {
+  post?: CollectionEntry<'blog'>;
+  frontmatter?: BlogFrontmatter;
+  class?: string;
+  sizes?: string;
+  priority?: boolean;
+}
+
+const { 
+  post, 
+  frontmatter, 
+  class: className = '', 
+  sizes = '(min-width: 1024px) 1024px, 100vw', 
+  priority = false 
+} = Astro.props;
+
+// Extract the data from whichever prop was provided
+const postData = post ? post.data : frontmatter;
+
+if (!postData) {
+  throw new Error('FeaturedImage component requires either post or frontmatter prop');
+}
+
+// Get the image source based on featuredImage data
+const getImageInfo = () => {
+  // If using new featuredImage object schema
+  if (postData.featuredImage) {
+    const filename = postData.featuredImage.src;
+    
+    // Look for the image in our glob imports
+    const imagePath = `/src/assets/img/blog/${filename}`;
+    const imageModule = images[imagePath];
+    
+    if (imageModule) {
+      return {
+        src: imageModule.default, // The actual import
+        alt: postData.featuredImage.alt,
+        width: postData.featuredImage.width || imageModule.default.width,
+        height: postData.featuredImage.height || imageModule.default.height,
+        exists: true,
+        isImported: true
+      };
+    }
+    
+    // If image isn't found, log helpful error and return fallback
+    console.error(`Image not found: ${filename}. Make sure it exists in src/assets/img/blog/`);
+    return { exists: false };
+  }
+  
+  // If using legacy image string
+  else if (postData.image) {
+    return {
+      src: postData.image,
+      alt: postData.title,
+      exists: true,
+      isImported: false
+    };
+  }
+  
+  // No image available
+  return { exists: false };
+};
+
+const imageInfo = getImageInfo();
+
+// Helper function to get fallback image
+const getFallbackImage = () => {
+  return '/assets/img/og-image.jpg';
+};
+---
+
+{imageInfo.exists ? (
+  <div class={`featured-image ${className}`}>
+    {!imageInfo.isImported ? (
+      <img 
+        src={imageInfo.src as string}
+        alt={imageInfo.alt || postData.title}
+        width={imageInfo.width || 1200}
+        height={imageInfo.height || 630}
+        loading={priority ? "eager" : "lazy"}
+        class="w-full h-auto rounded-lg shadow-md"
+      />
+    ) : (
+      <Image 
+        src={imageInfo.src as ImageMetadata}
+        alt={imageInfo.alt || postData.title}
+        width={imageInfo.width || 1200}
+        height={imageInfo.height || 630}
+        loading={priority ? "eager" : "lazy"}
+        {sizes}
+        class="w-full h-auto rounded-lg shadow-md"
+      />
+    )}
+  </div>
+) : (
+  <div class={`featured-image ${className}`}>
+    <img 
+      src={getFallbackImage()}
+      alt={postData.title}
+      width="1200"
+      height="630"
+      loading={priority ? "eager" : "lazy"}
+      class="w-full h-auto rounded-lg shadow-md"
+    />
+  </div>
+)}

@@ -26,15 +26,6 @@
             }
           ]
         },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "image": {
-          "type": "string"
-        },
         "lastModified": {
           "anyOf": [
             {
@@ -50,6 +41,47 @@
               "format": "unix-time"
             }
           ]
+        },
+        "author": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "featuredImage": {
+          "type": "object",
+          "properties": {
+            "src": {
+              "type": "string"
+            },
+            "alt": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "height": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "src",
+            "alt"
+          ],
+          "additionalProperties": false
+        },
+        "hideFeaturedImageInPost": {
+          "type": "boolean"
+        },
+        "image": {
+          "type": "string"
+        },
+        "draft": {
+          "type": "boolean",
+          "default": false
         },
         "$schema": {
           "type": "string"

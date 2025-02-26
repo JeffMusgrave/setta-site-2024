@@ -4,6 +4,9 @@ description: "Learn how to transform your Python functions into interactive UIs 
 date: 2024-02-23
 tags: ["tutorial", "getting-started", "python", "ui"]
 author: "Setta Team"
+featuredImage:
+  src: "office.avif"
+  alt: "Python code in a modern editor"
 ---
 
 If you're tired of writing boilerplate code for configuration parsing and building frontend interfaces, Setta is here to help. In this quick guide, we'll show you how to transform your Python functions into interactive UIs with just a few lines of code.
@@ -41,6 +44,8 @@ def train_model(
     # Your training code here
     print(f"Training {model_type} for {epochs} epochs...")
 ```
+
+![Developer working on a config file](screen.avif)
 
 That's it! The `@configure` decorator automatically creates an interactive UI for your function. Run your script:
 
