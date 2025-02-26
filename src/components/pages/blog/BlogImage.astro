@@ -1,14 +1,11 @@
 ---
+// src/components/pages/blog/BlogImage.astro
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 
-// Define a type for the imported images
-type ImportedImage = { default: ImageMetadata };
+// Import all images from content directories
+const contentImages = import.meta.glob<{ default: ImageMetadata }>('/src/content/**/*.{png,jpg,jpeg,avif,webp,gif,svg}', { eager: true });
 
-// Import all images from the blog directory dynamically with proper typing
-const images = import.meta.glob<ImportedImage>('/src/assets/img/blog/**/*.{png,jpg,jpeg,avif,webp,gif,svg}', { eager: true });
-
-// This component is designed to be used in MDX content for optimized inline images
 interface Props {
   src: string;
   alt: string;
@@ -27,10 +24,10 @@ const {
   caption
 } = Astro.props;
 
-// Extract filename from path or use the full path
+// Enhanced image resolver for co-located images
 const getImageInfo = () => {
-  // If it's an external URL, just use it directly
-  if (src.startsWith('http') || src.startsWith('/')) {
+  // External URLs
+  if (src.startsWith('http')) {
     return {
       src,
       isExternal: true,
@@ -38,11 +35,39 @@ const getImageInfo = () => {
     };
   }
   
-  // For relative paths in blog content (just filename)
-  const imagePath = `/src/assets/img/blog/${src}`;
-  const imageModule = images[imagePath];
+  // If it's already an absolute path
+  if (src.startsWith('/')) {
+    // Try to find the exact path in our images
+    const matches = Object.entries(contentImages).filter(([path]) => 
+      path.endsWith(src.substring(1))
+    );
+    
+    if (matches.length > 0) {
+      const [path, imageModule] = matches[0];
+      return {
+        src: imageModule.default,
+        exists: true,
+        isExternal: false,
+        width: width || imageModule.default.width,
+        height: height || imageModule.default.height
+      };
+    }
+  }
   
-  if (imageModule) {
+  // For relative paths (common with co-located files)
+  // This handles patterns like "./image.avif" or just "image.avif"
+  const normalizedSrc = src.startsWith('./') ? src.substring(2) : src;
+  
+  // With co-located images, we typically just need the filename
+  const filename = normalizedSrc.split('/').pop();
+  
+  // Look for that filename anywhere in our content directory
+  const matches = Object.entries(contentImages).filter(([path]) => 
+    path.endsWith(`/${filename}`)
+  );
+  
+  if (matches.length > 0) {
+    const [path, imageModule] = matches[0];
     return {
       src: imageModule.default,
       exists: true,
@@ -52,18 +77,9 @@ const getImageInfo = () => {
     };
   }
   
-  // If not found, check if this is already a full path
-  if (images[src]) {
-    return {
-      src: images[src].default,
-      exists: true,
-      isExternal: false,
-      width: width || images[src].default.width,
-      height: height || images[src].default.height
-    };
-  }
+  // Debug info when image not found
+  console.warn(`Image not found: ${src}`);
   
-  // Image not found
   return {
     exists: false,
     src
@@ -97,7 +113,7 @@ const imageInfo = getImageInfo();
     <div class="p-4 bg-red-900/30 border border-red-500 rounded-md text-red-200">
       <p class="font-bold">Image not found: {src}</p>
       <p class="text-sm mt-2">
-        Make sure the image exists in src/assets/img/blog/ and is referenced with the correct filename.
+        Make sure the image exists alongside your Markdown file in src/content/blog/[post-folder]/.
       </p>
     </div>
   )}

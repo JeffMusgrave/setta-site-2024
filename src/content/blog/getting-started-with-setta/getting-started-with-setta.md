@@ -5,7 +5,7 @@ date: 2024-02-23
 tags: ["tutorial", "getting-started", "python", "ui"]
 author: "Setta Team"
 featuredImage:
-  src: "office.avif"
+  src: "./office.avif"
   alt: "Python code in a modern editor"
 ---
 
@@ -45,7 +45,7 @@ def train_model(
     print(f"Training {model_type} for {epochs} epochs...")
 ```
 
-![Developer working on a config file](screen.avif)
+![Developer working on a config file](./screen.avif)
 
 That's it! The `@configure` decorator automatically creates an interactive UI for your function. Run your script:
 

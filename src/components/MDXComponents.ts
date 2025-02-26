@@ -1,6 +1,7 @@
+// src/components/MDXComponents.ts
 import BlogImage from './pages/blog/BlogImage.astro';
 
 export const components = {
   img: BlogImage,
-  // You can add other custom component mappings here
+  BlogImage // Also expose the component directly
 };
