@@ -61,9 +61,12 @@ const shouldDisplayImage = (frontmatter.featuredImage || frontmatter.image) &&
           {frontmatter.tags && frontmatter.tags.length > 0 && (
             <div class="flex flex-wrap gap-2">
               {frontmatter.tags.map(tag => (
-                <span class="px-2 py-1 text-xs bg-setta-700 text-setta-200 rounded-full hover:bg-blue-700 transition-colors">
+                <a 
+                  href={`/category/${tag.toLowerCase()}`}
+                  class="px-2 py-1 text-xs bg-setta-700 text-setta-200 rounded-full hover:bg-blue-700 transition-colors"
+                >
                   {tag}
-                </span>
+                </a>
               ))}
             </div>
           )}

@@ -93,7 +93,7 @@ const pageDescription = "Technical guides, implementation insights, and engineer
                 )}
                 
                 {/* Show tags if available */}
-                {post.data.tags && post.data.tags.length > 0 && (
+                {post.data.tags && post.data.tags.length > 0 ? (
                   <div class="flex flex-wrap gap-2">
                     {post.data.tags.map(tag => (
                       <span class="px-2 py-0.5 text-xs bg-setta-800 text-setta-300 rounded-full">
@@ -101,7 +101,7 @@ const pageDescription = "Technical guides, implementation insights, and engineer
                       </span>
                     ))}
                   </div>
-                )}
+                ):null}
               </div>
               <p class="mt-2 font-normal">{post.data.description}</p>
               <p class="text-setta-300 group-hover/blogpost:text-blue-500 transition-colors">Read more →</p>
