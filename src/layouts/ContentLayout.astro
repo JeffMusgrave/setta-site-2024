@@ -71,11 +71,11 @@ const shouldDisplayImage = (frontmatter.featuredImage || frontmatter.image) &&
       </BlogListTitle>
       
       <Section outerClass="relative py-16 md:py-24 bg-setta-875 border-b border-setta-700" customSiteWidth={siteNarrowWidth}>
-        {shouldDisplayImage && (
+        {shouldDisplayImage ? (
           <div class="-mt-32 md:-mt-48 min-w-full">
             <FeaturedImage frontmatter={frontmatter} priority={true} slot="before" />
           </div>
-        )}
+        ) : null}
         <article class="prose dark:prose-invert max-w-none [&_img]:rounded-3xl">
           <slot />
         </article>

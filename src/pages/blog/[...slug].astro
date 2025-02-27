@@ -4,6 +4,7 @@ import ContentLayout from '../../layouts/ContentLayout.astro';
 import ContentSEO from '../../components/seo/ContentSEO.astro';
 import BottomCTA from '../../components/pages/home/BottomCTA.astro';
 import { components } from '../../components/MDXComponents';
+import ContactForm from '../../components/general/ContactForm.astro';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog', ({ data }) => {
@@ -41,6 +42,7 @@ const slug = entry.slug.includes('/index')
   <Content components={components} />
   
   <BottomCTA slot="bottom" />
+  <ContactForm slot="bottom" />
 </ContentLayout>
 
 <script>
