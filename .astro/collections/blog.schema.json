@@ -5,10 +5,18 @@
       "type": "object",
       "properties": {
         "title": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1,
+          "errorMessage": {
+            "minLength": "Title is required"
+          }
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1,
+          "errorMessage": {
+            "minLength": "Description is required"
+          }
         },
         "date": {
           "anyOf": [
@@ -43,13 +51,15 @@
           ]
         },
         "author": {
-          "type": "string"
+          "type": "string",
+          "default": "Setta Team"
         },
         "tags": {
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "default": []
         },
         "featuredImage": {
           "type": "object",
@@ -73,11 +83,12 @@
           ],
           "additionalProperties": false
         },
-        "hideFeaturedImageInPost": {
-          "type": "boolean"
-        },
         "image": {
           "type": "string"
+        },
+        "hideFeaturedImageInPost": {
+          "type": "boolean",
+          "default": false
         },
         "draft": {
           "type": "boolean",

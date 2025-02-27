@@ -1,129 +1,147 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 
 interface Props {
   frontmatter: CollectionEntry<'blog'>['data'];
+  slug: string;
 }
 
-const { frontmatter } = Astro.props;
-const baseUrl = import.meta.env.PUBLIC_BASE_URL || "https://setta.dev";
+const { frontmatter, slug } = Astro.props;
+const baseUrl = import.meta.env.PUBLIC_BASE_URL || (Astro.site?.toString() || "https://setta.dev");
+const canonicalUrl = new URL(Astro.url.pathname, baseUrl).toString();
+
+// Import all images from the blog directory dynamically with proper typing
+// This is used for featured images that might be co-located with blog posts
+const contentCollectionImages = import.meta.glob<{ default: ImageMetadata }>('/src/content/blog/**/*.{png,jpg,jpeg,avif,webp,gif,svg}', { eager: true });
+const blogAssetImages = import.meta.glob<{ default: ImageMetadata }>('/src/assets/img/blog/**/*.{png,jpg,jpeg,avif,webp,gif,svg}', { eager: true });
+
+// Combined image map for more flexible path resolution
+const images = { ...contentCollectionImages, ...blogAssetImages };
 
 // Helper function to get the OG image URL
-async function getOgImageUrl(frontmatter) {
-  let ogImageUrl = `${baseUrl}/assets/img/og-image.jpg`; // Default fallback
+async function getOgImageUrl(frontmatter, slug) {
+  const defaultImage = `${baseUrl}/assets/img/og-image.jpg`; // Default fallback
   
-  try {
-    // If using new featuredImage schema
-    if (frontmatter.featuredImage?.src) {
-      // Try to find the image in content collection first
+  // If no featured image, return default
+  if (!frontmatter.featuredImage?.src) {
+    // Legacy support for older 'image' field
+    if (frontmatter.image) {
+      return frontmatter.image.startsWith('http') 
+        ? frontmatter.image 
+        : new URL(frontmatter.image, baseUrl).toString();
+    }
+    return defaultImage;
+  }
+  
+  const imageName = frontmatter.featuredImage.src;
+  
+  // Try to find the image in different possible locations
+  const possiblePaths = [
+    `/src/content/blog/${slug}/${imageName}`,
+    `/src/content/blog/${slug.split('/')[0]}/${imageName}`,
+    `/src/assets/img/blog/${imageName}`,
+    `/src/assets/img/blog/${slug}/${imageName}`
+  ];
+  
+  for (const path of possiblePaths) {
+    if (images[path]) {
       try {
-        // This path is for images in the content collection
-        const contentImagePath = `/src/content/blog/getting-started-with-setta/${frontmatter.featuredImage.src}`;
-        // Dynamic import for a specific file 
-        const contentImage = await import(`/src/content/blog/getting-started-with-setta/${frontmatter.featuredImage.src}`);
-        
-        if (contentImage) {
-          // Use getImage to optimize the image for OG
-          const ogImage = await getImage({
-            src: contentImage.default,
-            width: 1200,
-            height: 630,
-            format: 'jpeg',
-          });
-          
-          ogImageUrl = ogImage.src;
-          return ogImageUrl;
-        }
-      } catch (contentError) {
-        console.log("Image not found in content collection, trying assets folder");
-      }
-      
-      // If not found in content collection, try assets folder
-      try {
-        // This is the path for images in the assets folder
-        const imagePath = `/src/assets/img/blog/${frontmatter.featuredImage.src}`;
-        
-        // Use getImage to optimize the image for OG
+        // Use getImage to optimize for OG
         const ogImage = await getImage({
-          src: imagePath,
+          src: images[path].default,
           width: 1200,
           height: 630,
           format: 'jpeg',
+          quality: 80
         });
         
-        ogImageUrl = ogImage.src;
-      } catch (assetError) {
-        console.error('Error loading image from assets:', assetError);
+        return ogImage.src;
+      } catch (error) {
+        console.error(`Error optimizing image at ${path}:`, error);
+        // If optimization fails, try to use the original
+        return images[path].default.src;
       }
-    } 
-    // If using legacy image string
-    else if (frontmatter.image) {
-      ogImageUrl = new URL(frontmatter.image, baseUrl).toString();
     }
-  } catch (error) {
-    console.error('Error generating OG image:', error);
   }
   
-  return ogImageUrl;
+  // If we couldn't find the image, log the error and return default
+  console.warn(`Could not find image: ${imageName} for post: ${slug}`);
+  console.warn(`Checked paths: ${possiblePaths.join(', ')}`);
+  return defaultImage;
 }
 
-const ogImageUrl = await getOgImageUrl(frontmatter);
+// Get OG image URL
+const ogImageUrl = await getOgImageUrl(frontmatter, slug);
 
+// Prepare the article schema
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "@id": `${baseUrl}${Astro.url.pathname}#article`,
+  "@id": `${canonicalUrl}#article`,
   "headline": frontmatter.title,
   "description": frontmatter.description,
+  "image": ogImageUrl,
   "datePublished": frontmatter.date.toISOString(),
   "dateModified": (frontmatter.lastModified || frontmatter.date).toISOString(),
   "author": {
-    "@type": "Organization",
-    "name": "Setta",
-    "url": baseUrl
+    "@type": "Person",
+    "name": frontmatter.author || "Setta Team"
   },
   "publisher": {
     "@type": "Organization",
     "@id": `${baseUrl}/#organization`,
     "name": "Setta",
-    "url": baseUrl,
     "logo": {
       "@type": "ImageObject",
       "url": `${baseUrl}/assets/img/og-image.jpg`
     }
   },
-  "image": {
-    "@type": "ImageObject",
-    "url": ogImageUrl
-  },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": `${baseUrl}${Astro.url.pathname}`
+    "@id": canonicalUrl
   }
 };
+
 ---
-<>
-  <title>{frontmatter.title} | Setta Blog</title>
-  <meta name="description" content={frontmatter.description} />
-  <meta name="keywords" content={frontmatter.tags?.join(', ')} />
-  
-  <!-- Open Graph -->
-  <meta property="og:url" content={`${baseUrl}${Astro.url.pathname}`} />
-  <meta property="og:type" content="article" />
-  <meta property="og:title" content={frontmatter.title} />
-  <meta property="og:description" content={frontmatter.description} />
-  <meta property="og:image" content={ogImageUrl} />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@settadev" />
-  <meta name="twitter:title" content={frontmatter.title} />
-  <meta name="twitter:description" content={frontmatter.description} />
-  <meta name="twitter:image" content={ogImageUrl} />
-  
-  <!-- Schema.org -->
-  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
-</>
+
+<!-- Basic metadata -->
+<title>{frontmatter.title} | Setta Blog</title>
+<meta name="description" content={frontmatter.description} />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Setta" />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={frontmatter.title} />
+<meta property="og:description" content={frontmatter.description} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<!-- Article specific OG tags -->
+<meta property="article:published_time" content={frontmatter.date.toISOString()} />
+{frontmatter.lastModified && 
+  <meta property="article:modified_time" content={frontmatter.lastModified.toISOString()} />
+}
+{frontmatter.author && 
+  <meta property="article:author" content={frontmatter.author} />
+}
+{frontmatter.tags && frontmatter.tags.map(tag => (
+  <meta property="article:tag" content={tag} />
+))}
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@settadev" />
+<meta name="twitter:creator" content="@settadev" />
+<meta name="twitter:title" content={frontmatter.title} />
+<meta name="twitter:description" content={frontmatter.description} />
+<meta name="twitter:image" content={ogImageUrl} />
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />

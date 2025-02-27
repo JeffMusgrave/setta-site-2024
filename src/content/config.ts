@@ -3,23 +3,29 @@ import { defineCollection, z } from 'astro:content';
 const blogCollection = defineCollection({
   type: 'content',
   schema: z.object({
-    title: z.string(),
-    description: z.string(),
+    // Required fields
+    title: z.string().min(1, "Title is required"),
+    description: z.string().min(1, "Description is required"),
     date: z.date(),
+    
+    // Optional fields with defaults
     lastModified: z.date().optional(),
-    author: z.string().optional(),
-    tags: z.array(z.string()).optional(),
-    // Featured image for thumbnails and OG images
+    author: z.string().default("Setta Team"),
+    tags: z.array(z.string()).default([]),
+    
+    // Featured image - structured object approach
     featuredImage: z.object({
-      src: z.string(), // Path to the image relative to src/assets/img/blog/
+      src: z.string(), // Path to the image relative to blog post or assets/img/blog/
       alt: z.string(), // Alt text for the image
-      width: z.number().optional(), // Optional width (defaults to natural size)
-      height: z.number().optional(), // Optional height (defaults to natural size)
+      width: z.number().optional(), // Optional width
+      height: z.number().optional(), // Optional height
     }).optional(),
-    // Optional property to hide featured image on post page (but still use for thumbnails/OG)
-    hideFeaturedImageInPost: z.boolean().optional(),
-    // Legacy support for the old image field (string URL)
+    
+    // Legacy support for the old image field (string URL) - marked as deprecated
     image: z.string().optional(),
+    
+    // Display options
+    hideFeaturedImageInPost: z.boolean().optional().default(false),
     draft: z.boolean().optional().default(false),
   }),
 });

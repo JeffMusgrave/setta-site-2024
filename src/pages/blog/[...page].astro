@@ -7,6 +7,7 @@ import type { CollectionEntry } from 'astro:content';
 import { siteNarrowWidth } from '../../styles/constants';
 import BlogListTitle from '../../components/pages/blog/BlogListTitle.astro';
 import FeaturedImage from '../../components/pages/blog/FeaturedImage.astro';
+import BaseSEO from '../../components/seo/BaseSEO.astro';
 
 // Set to true if you want to show featured images in the blog list
 const SHOW_FEATURED_IMAGES = true;
@@ -30,19 +31,20 @@ const { page } = Astro.props;
 
 // Get the first post with a featured image to use for OG image, if available
 const postWithImage = page.data.find(post => post.data.featuredImage || post.data.image);
-const ogImage = postWithImage?.data.featuredImage 
-  ? `/src/assets/img/blog/${postWithImage.data.featuredImage.src}` 
-  : postWithImage?.data.image || '/assets/img/og-image.jpg';
+const pageTitle = "Engineering Blog | Setta";
+const pageDescription = "Technical guides, implementation insights, and engineering updates from the Setta team";
 ---
 
 <Layout>
-    <title>Engineering Updates | Setta</title>
-    <meta name="description" content="Technical guides, implementation insights, and engineering updates from the Setta team" />
-    <meta property="og:title" content="Setta Engineering Updates" />
-    <meta property="og:description" content="Technical guides, implementation insights, and engineering updates from the Setta team" />
-    <meta property="og:image" content={ogImage} />
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:image" content={ogImage} />
+    <BaseSEO 
+      slot="SEO"
+      title={pageTitle}
+      description={pageDescription}
+      type="website"
+      image={postWithImage?.data.featuredImage 
+        ? `/src/content/blog/${postWithImage.slug}/${postWithImage.data.featuredImage.src}`
+        : postWithImage?.data.image}
+    />
 
     <BlogListTitle>
       <h1 class="text-white text-4xl md:text-5xl lg:text-6xl mt-16 md:mt-32 mb-8">Setta Dev Blog</h1>
@@ -51,60 +53,62 @@ const ogImage = postWithImage?.data.featuredImage
     
   <Section outerClass="relative pt-8 md:py-16 border-b border-setta-700 bg-setta-875" customSiteWidth={siteNarrowWidth}>
     <div class="flex flex-col gap-32">
-      {page.data.map((post) => (
-
+      {page.data.map((post) => {
+        // Get the slug for image resolution
+        const slug = post.slug.includes('/index') 
+          ? post.slug.replace('/index', '') 
+          : post.slug;
+          
+        return (
           <a 
             class="group/blogpost flex flex-col md:flex-row-reverse md:gap-4 prose dark:prose-invert max-w-none border border-transparent rounded-xl md:hover:border-setta-800 md:hover:bg-setta-850/50 transition-all md:px-8 md:-mx-8 "
-            href={`/blog/${post.slug}`}
+            href={`/blog/${slug}`}
           >
             {/* Only show images if they're explicitly defined AND we want to show featured images */}
             {SHOW_FEATURED_IMAGES && (post.data.featuredImage || post.data.image) && (
-
-                <FeaturedImage 
-                  post={post}
-                  class="w-full md:w-2/5"
-                  sizes="(min-width: 1280px) 320px, (min-width: 768px) 240px, 100vw"
-                />
-
+              <FeaturedImage 
+                post={post}
+                class="w-full md:w-2/5"
+                sizes="(min-width: 1280px) 320px, (min-width: 768px) 240px, 100vw"
+              />
             )}
             <div class="flex-1">
-            
-            <h2 class="mb-2 !mt-2 md:!mt-8 group-hover/blogpost:text-blue-500 transition-colors">
+              <h2 class="mb-2 !mt-2 md:!mt-8 group-hover/blogpost:text-blue-500 transition-colors">
                 {post.data.title}
-            </h2>
-            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 font-normal">
-              <time datetime={post.data.date.toISOString()} class="text-sm text-setta-400">
-                {post.data.date.toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                })}
-              </time>
-              
-              {/* Show author if available */}
-              {post.data.author && (
-                <span class="text-sm text-setta-400">
-                  By {post.data.author}
-                </span>
-              )}
-              
-              {/* Show tags if available */}
-              {post.data.tags && post.data.tags.length > 0 && (
-                <div class="flex flex-wrap gap-2">
-                  {post.data.tags.map(tag => (
-                    <span class="px-2 py-0.5 text-xs bg-setta-800 text-setta-300 rounded-full">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
+              </h2>
+              <div class="flex flex-wrap items-center gap-x-4 gap-y-2 font-normal">
+                <time datetime={post.data.date.toISOString()} class="text-sm text-setta-400">
+                  {post.data.date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </time>
+                
+                {/* Show author if available */}
+                {post.data.author && (
+                  <span class="text-sm text-setta-400">
+                    By {post.data.author}
+                  </span>
+                )}
+                
+                {/* Show tags if available */}
+                {post.data.tags && post.data.tags.length > 0 && (
+                  <div class="flex flex-wrap gap-2">
+                    {post.data.tags.map(tag => (
+                      <span class="px-2 py-0.5 text-xs bg-setta-800 text-setta-300 rounded-full">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <p class="mt-2 font-normal">{post.data.description}</p>
+              <p class="text-setta-300 group-hover/blogpost:text-blue-500 transition-colors">Read more →</p>
             </div>
-            <p class="mt-2 font-normal">{post.data.description}</p>
-            <p class="text-setta-300 group-hover/blogpost:text-blue-500 transition-colors">Read more →</p>
-          </div>
           </a>
-
-      ))}
+        );
+      })}
     </div>
 
     <nav class="flex items-center justify-between mt-8 pt-8" aria-label="Pagination">

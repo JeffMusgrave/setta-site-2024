@@ -1,5 +1,4 @@
 ---
-// src/pages/blog/[...slug].astro
 import { getCollection, type CollectionEntry } from 'astro:content';
 import ContentLayout from '../../layouts/ContentLayout.astro';
 import ContentSEO from '../../components/seo/ContentSEO.astro';
@@ -29,10 +28,14 @@ interface Props {
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 
+// Get the slug for image resolution
+const slug = entry.slug.includes('/index') 
+  ? entry.slug.replace('/index', '') 
+  : entry.slug;
 ---
 
 <ContentLayout frontmatter={entry.data} entry={entry}>
-  <ContentSEO slot="SEO" frontmatter={entry.data} />
+  <ContentSEO slot="SEO" frontmatter={entry.data} slug={slug} />
   
   {/* Render the blog content with our custom components */}
   <Content components={components} />
