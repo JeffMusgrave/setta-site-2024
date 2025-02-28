@@ -27,7 +27,7 @@ Whether you’re tuning large AI models or writing a simple script, Setta turns 
 
 Traditional workflows involve writing Python functions, creating separate config files, building parsers, and making (or remaking) a frontend when parameters change. Setta merges configuration and UI in one place. Simply right click and add a card in Setta, type your function’s name, and all its arguments will appear. Set interface elements like sliders, color pickers, or switches for each parameter to your heart’s content!
 
-## What Setta Is Not
+## What Setta Is _Not_
 
 - **Not a WYSIWYG Web Builder**: Setta won’t generate custom HTML pages or pixel-perfect UIs. It produces standardized, interactive components inside its own interface.
 - **Not a Visual Programming System**: You still write regular Python. Setta just provides a streamlined UI so you and other users can interact with your functions without wrestling with frontend code or config files.
@@ -43,42 +43,43 @@ Traditional workflows involve writing Python functions, creating separate config
 
 Visit our [examples repo](https://github.com/settadev/examples) to see Setta in action:
 
-### Stream Diffusion Image-to-Image
-
-![Stream Diffusion with Setta](stream-diffusion-setta.png)
-https://www.youtube.com/watch?v=KE6FZxbGVkw
-
-https://github.com/settadev/examples/tree/main/stream_diffusion_img_to_img
+### [Stream Diffusion Image-to-Image](https://github.com/settadev/examples/tree/main/stream_diffusion_img_to_img)
 
 Sketch in real time to generate AI-enhanced images.
 
-### Hugging Face TRL Language Model Finetuning
+[![Stream Diffusion with Setta](stream-diffusion-setta.png)](https://github.com/settadev/examples/tree/main/stream_diffusion_img_to_img)
 
-![Hugging Face TRL Fine Tuning](trl-hugging-face-setta.png)
+---
 
-https://www.youtube.com/watch?v=hVH3IPoNngo
-
-https://github.com/settadev/examples/tree/main/trl_language_model_finetuning
+### [Hugging Face TRL Language Model Finetuning](https://github.com/settadev/examples/tree/main/trl_language_model_finetuning)
 
 Experiment with Hugging Face TRL training configurations.
 
-### Llama 3 Chat UI powered by the Groq API
+[![Hugging Face TRL Fine Tuning](trl-hugging-face-setta.png)](https://github.com/settadev/examples/tree/main/trl_language_model_finetuning)
 
-![Llama 3 Chat UI built in Setta, powered by Groq](groq-llama3-setta.png)
+---
 
-https://github.com/settadev/examples/tree/main/groq_api_chat
+### [Llama 3 Chat UI powered by the Groq API](https://github.com/settadev/examples/tree/main/groq_api_chat)
 
-### Transformers Sequence Classification
+Custom chat UIs are made easy with Setta! In this example we take a look at how you can quickly transform a small python script into a useable Chat UI powered by Groq and Llama 3.
 
-![Hugging Face's Transformers Library in Setta](transformers-hugging-face-setta.png)
+[![Llama 3 Chat UI built in Setta, powered by Groq](groq-llama3-setta.png)](https://github.com/settadev/examples/tree/main/groq_api_chat)
+
+---
+
+### [Transformers Sequence Classification](https://github.com/settadev/examples/tree/main/transformers_trainer)
 
 Train text classifiers with minimal setup.
 
-### PyTorch Metric Learning
+[![Hugging Face's Transformers Library in Setta](transformers-hugging-face-setta.png)](https://github.com/settadev/examples/tree/main/transformers_trainer)
 
-![PML or Pytorch Metric Learning configuration UI inside of Setta](pytorch-metric-learning-setta.png)
+---
+
+### [PyTorch Metric Learning](https://github.com/settadev/examples/tree/main/pytorch_metric_learning_trainer)
 
 Finetune embeddings using various metric learning methods.
+
+[![PML or Pytorch Metric Learning configuration UI inside of Setta](pytorch-metric-learning-setta.png)](https://github.com/settadev/examples/tree/main/pytorch_metric_learning_trainer)
 
 ## Getting Started
 
@@ -95,7 +96,13 @@ Open http://127.0.0.1:8000/ to add sections, parameters, and see your functions 
 
 ## What’s Next?
 
-We’re actively adding new features! More improvements are on the way—stay tuned!
+We're actively developing Setta with new features and improvements. In our latest releases, we've added:
+
+- Support for chat interfaces through a new "Chat" section type
+- Artifact management improvements
+- Bug fixes compatibility
+
+And there's a whole lot more on the way!
 
 ## Join the Setta Community
 
