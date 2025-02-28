@@ -1,6 +1,6 @@
 ---
 title: "Introducing Setta: Effortless Python Configuration & User Interfaces"
-description: "We're excited to announce the launch of Setta, an open-source tool that lets you expose Python functions as flexible UIs without writing boilerplate parsers or frontend code."
+description: "Setta is available to download! Try the open-source tool that treats configuration & UI as one and the same. Eliminate your boilerplate. Onboard users with ease. Simplify your life with Setta!"
 date: 2024-02-28
 tags: ["launch", "python", "configuration", "ui", "developer-tools"]
 author: "Setta Team"
@@ -73,8 +73,8 @@ And there's a whole lot more on the way!
 
 ## Join the Setta Community
 
-- Check out our [documentation](https:docs.setta.dev)
-- Join our [Discord community](https://discord.gg/MmHJz75bZ5)
-- Star us on [GitHub](https://github.com/settadev/setta)
-- Try our [example projects](https://github.com/settadev/examples)
-- Follow us on [X](https://x.com/settadev)
+- 📚 Check out our [documentation](https://docs.setta.dev)
+- 📣 Join our [Discord community](https://discord.gg/MmHJz75bZ5)
+- ⭐ Star us on [GitHub](https://github.com/settadev/setta)
+- 🏋️ Try our [example projects](https://github.com/settadev/examples)
+- 🔍 Follow us on [X](https://x.com/settadev)
