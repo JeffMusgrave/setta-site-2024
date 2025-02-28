@@ -1,0 +1,181 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import type { InferEntrySchema } from 'astro:content';
+import type { ImageMetadata } from 'astro';
+
+// Define a type for the imported images
+type ImportedImage = { default: ImageMetadata };
+
+// Import all images from the blog directory dynamically with proper typing
+const blogAssetImages = import.meta.glob<ImportedImage>('/src/assets/img/blog/**/*.{png,jpg,jpeg,avif,webp,gif,svg}', { eager: true });
+
+// Import images from content collection
+const contentCollectionImages = import.meta.glob<ImportedImage>('/src/content/blog/**/*.{png,jpg,jpeg,avif,webp,gif,svg}', { eager: true });
+
+// Combined image map for more flexible path resolution
+const images = { ...blogAssetImages, ...contentCollectionImages };
+
+// Debug available images (uncomment to see in console during build)
+// console.log("Available image paths:", Object.keys(images));
+
+type BlogFrontmatter = InferEntrySchema<'blog'>;
+
+interface Props {
+  post?: CollectionEntry<'blog'>;
+  frontmatter?: BlogFrontmatter;
+  class?: string;
+  sizes?: string;
+  priority?: boolean;
+  forMetadataOnly?: boolean; // If true, always return null for rendering
+}
+
+const { 
+  post, 
+  frontmatter, 
+  class: className = '', 
+  sizes = '(min-width: 1024px) 1024px, 100vw', 
+  priority = false,
+  forMetadataOnly = false 
+} = Astro.props;
+
+// Extract the data from whichever prop was provided
+const postData = post ? post.data : frontmatter;
+
+if (!postData) {
+  throw new Error('FeaturedImage component requires either post or frontmatter prop');
+}
+
+// Get the image source based on featuredImage data
+const getImageInfo = () => {
+  // If using new featuredImage object schema
+  if (postData.featuredImage) {
+    const filename = postData.featuredImage.src;
+    
+    // Get post slug and directory
+    const slug = post ? post.slug : '';
+    console.log('Original slug:', slug);
+    
+    // Properly extract the directory - handle both /index and directory formats
+    let postDirectory = '';
+    if (slug) {
+      // Remove trailing /index if present
+      const normalizedSlug = slug.replace(/\/index$/, '');
+      // Get the directory part
+      postDirectory = normalizedSlug.includes('/') 
+        ? normalizedSlug.split('/')[0] 
+        : normalizedSlug;
+    }
+    console.log('Post directory extracted:', postDirectory);
+    
+    // Try each possible path to find the image
+    const possiblePaths = [];
+    
+    // Only add directory-specific paths if we have a directory
+    if (postDirectory) {
+      possiblePaths.push(`/src/content/blog/${postDirectory}/${filename}`);
+      possiblePaths.push(`/src/assets/img/blog/${postDirectory}/${filename}`);
+    }
+    
+    // Always add these general paths
+    possiblePaths.push(`/src/assets/img/blog/${filename}`);
+    possiblePaths.push(`/src/content/blog/${filename}`);
+    
+    // Added debugging for paths being checked
+    console.log('Searching for image in paths:', possiblePaths);
+    
+    for (const path of possiblePaths) {
+      if (images[path]) {
+        console.log(`✅ Found image at: ${path}`);
+        return {
+          src: images[path].default,
+          alt: postData.featuredImage.alt,
+          width: postData.featuredImage.width || images[path].default.width,
+          height: postData.featuredImage.height || images[path].default.height,
+          exists: true,
+          isImported: true,
+          path
+        };
+      }
+    }
+    
+    // If we couldn't find it in specific paths, try a direct search in all imported images
+    // This is helpful when the image paths might not match our expected patterns
+    const exactFilename = filename.split('/').pop(); // Get just the filename without path
+    for (const [path, image] of Object.entries(images)) {
+      if (path.endsWith(`/${exactFilename}`)) {
+        console.log(`✅ Found image by direct search: ${path}`);
+        return {
+          src: image.default,
+          alt: postData.featuredImage.alt,
+          width: postData.featuredImage.width || image.default.width,
+          height: postData.featuredImage.height || image.default.height,
+          exists: true,
+          isImported: true,
+          path
+        };
+      }
+    }
+    
+    // Debug when no matching image is found
+    console.error(`❌ Image not found: ${filename}`);
+    console.error(`Tried paths: ${possiblePaths.join(', ')}`);
+    console.error(`Available image keys: ${Object.keys(images).slice(0, 5).join(', ')}... (${Object.keys(images).length} total)`);
+    
+    return { exists: false };
+  }
+  
+  // If using legacy image string
+  else if (postData.image) {
+    return {
+      src: postData.image,
+      alt: postData.title,
+      exists: true,
+      isImported: false
+    };
+  }
+  
+  // No image available
+  return { exists: false };
+};
+
+const imageInfo = getImageInfo();
+
+// If this is for metadata only (OG images) or if the image wasn't found, render nothing
+if (forMetadataOnly || !imageInfo.exists) {
+  // Still allow the metadata to be processed, but don't render anything
+}
+
+// Helper function to get OG image path for metadata
+export function getOgImagePath() {
+  if (imageInfo.exists) {
+    return imageInfo.isImported ? imageInfo.path : imageInfo.src;
+  }
+  return '/assets/img/og-image.jpg'; // Only use fallback for OG metadata
+}
+---
+
+{imageInfo.exists ? (
+  <div class={`featured-image ${className}`}>
+    {!imageInfo.isImported ? (
+      <img 
+        src={imageInfo.src as string}
+        alt={imageInfo.alt || postData.title}
+        width={imageInfo.width || 1200}
+        height={imageInfo.height || 630}
+        loading={priority ? "eager" : "lazy"}
+        class="w-full h-auto rounded-lg shadow-md"
+      />
+    ) : (
+      <Image 
+        src={imageInfo.src as ImageMetadata}
+        alt={imageInfo.alt || postData.title}
+        width={imageInfo.width || 1200}
+        height={imageInfo.height || 630}
+        loading={priority ? "eager" : "lazy"}
+        {sizes}
+        class="w-full h-auto rounded-xl shadow-md"
+      />
+    )}
+  </div>
+) : null }

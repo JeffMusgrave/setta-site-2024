@@ -1,15 +1,13 @@
 ---
-import Section from "../../sections/Section.astro";
-
+import Section from "../../general/sections/Section.astro";
 import { siteWiderWidth } from "../../../styles/constants";
-
+import VideoPlayer from "./VideoPlayer.astro";
 
 const videoSegments = [
   { id: 'segment1', start: 0, end: 24, text: 'Why Setta?' },
   { id: 'segment2', start: 24.5, end: 32.5, text: 'Quick Setup' },
   { id: 'segment3', start: 33.5, end: 71, text: 'Basic Guide' },
   { id: 'segment4', start: 72, end: 110, text: 'Power Features' },
-
 ];
 ---
 
@@ -21,19 +19,9 @@ const videoSegments = [
   id="setta-intro"
 >
   <h2 class="block md:hidden text-4xl mt-16 z-10">Introducing Setta</h2>
-  <div class="relative mt-0 md:my-auto lg:-mt-24 lg:-mb-24 [@media(min-width:800px)]:basis-2/3 overflow-clip rounded-2xl bg-setta-900 border border-setta-500/50 shadow-lg setta-video-aspect">
-    <video
-      class="absolute inset-0 w-full h-full z-10 object-cover"
-      id="video-player"
-      loop
-      muted
-      playsinline
-      controls
-      preload="auto"
-    >
-      <source src="assets/video/hero.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+  <div class="relative mt-0 md:my-auto lg:-mt-24 lg:-mb-24 [@media(min-width:800px)]:basis-2/3 overflow-clip rounded-2xl bg-setta-900 border border-setta-500/50 shadow-lg setta-video-aspect"
+  >
+    <VideoPlayer />
   </div>
   
   <div class="flex-1 flex flex-col items-center md:items-start pb-8 sm:pb-12 md:py-0 pt-0 sm:pt-4 md:my-auto gap-4">
@@ -73,101 +61,96 @@ const videoSegments = [
         clear: both;
     }
 }
+
+.transcript-highlight {
+    @apply bg-blue-700/30 text-setta-50;
+}
 </style>
 
 <script>
-  function initializeVideoPlayer() {
-  const video = document.getElementById('video-player') as HTMLVideoElement;
-  const segments = document.querySelectorAll('p[id^="segment"]');
+let isVideoInitialized = false;
 
+function initializeVideoPlayer() {
+  if (isVideoInitialized) {
+    console.log('Video already initialized, skipping');
+    return;
+  }
+
+  const video = document.querySelector<HTMLVideoElement>('#video-player');
   if (!video) {
     console.error('Video element not found');
     return;
   }
 
-  // Loading handling
-  let attempts = 0;
-  const maxAttempts = 3;
-  let isLoaded = false;
+  console.log('Initializing video player');
+  isVideoInitialized = true;
 
-  const handleError = (e) => {
-    console.error('Video loading error:', e);
-    if (attempts < maxAttempts) {
-      attempts++;
-      console.log(`Retrying video load, attempt ${attempts}`);
-      setTimeout(() => {
-        video.load();
-      }, 1000 * attempts);
+  // Force muted state for autoplay
+  video.muted = true;
+
+  const attemptPlay = async () => {
+    if (!video.paused) {
+      console.log('Video is already playing');
+      return;
+    }
+
+    try {
+      console.log('Attempting to play video');
+      await video.play();
+      console.log('Video playing successfully');
+    } catch (error) {
+      console.error('Error playing video:', error);
+      // If play fails, try again with a delay
+      setTimeout(attemptPlay, 1000);
     }
   };
 
-  video.addEventListener('error', handleError);
-  
+  // Handle loading events
+  video.addEventListener('loadedmetadata', () => {
+    console.log('Video metadata loaded');
+    if (document.visibilityState === 'visible') {
+      attemptPlay();
+    }
+  });
+
   video.addEventListener('loadeddata', () => {
-    console.log('Video loaded successfully');
-    isLoaded = true;
-    video.removeEventListener('error', handleError);
+    console.log('Video data loaded');
+    if (document.visibilityState === 'visible') {
+      attemptPlay();
+    }
   });
 
-  // Create intersection observer - only handles play/pause based on visibility
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.intersectionRatio >= 0.75) {
-        // Only attempt to play if the video has loaded
-        if (isLoaded) {
-          video.play().catch(console.error);
-        }
-      } else {
-        video.pause();
-      }
-    });
-  }, {
-    threshold: 0.75
-  });
-
-  // Start observing for visibility
-  observer.observe(video);
-
-  // Handle segment clicks
+  // Handle segments
+  const segments = document.querySelectorAll<HTMLParagraphElement>('p[id^="segment"]');
+  
   segments.forEach(segment => {
     segment.addEventListener('click', () => {
-      const startTime = parseFloat(segment.getAttribute('data-start') || '0');
+      const startTime = parseFloat(segment.dataset.start || '0');
       video.currentTime = startTime;
-      
-      // Only play if the video is sufficiently visible AND loaded
-      const rect = video.getBoundingClientRect();
-      const isVisible = rect.top < window.innerHeight * 0.25;
-      if (isVisible && isLoaded) {
-        video.play().catch(console.error);
-      }
+      attemptPlay();
     });
   });
 
-  // Update segment highlighting
   function updateSegmentHighlight() {
     const time = video.currentTime;
     segments.forEach(segment => {
       segment.classList.remove('transcript-highlight');
+      
+      const start = parseFloat(segment.dataset.start || '0');
+      const end = parseFloat(segment.dataset.end || '0');
+      
+      if (time >= start && time < end) {
+        segment.classList.add('transcript-highlight');
+      }
     });
-
-    const currentSegment = Array.from(segments).find(segment => {
-      const start = parseFloat(segment.getAttribute('data-start') || '0');
-      const end = parseFloat(segment.getAttribute('data-end') || '0');
-      return time >= start && time < end;
-    });
-
-    if (currentSegment) {
-      currentSegment.classList.add('transcript-highlight');
-    }
   }
 
   video.addEventListener('timeupdate', updateSegmentHighlight);
 }
 
-// Initialize when the DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initializeVideoPlayer);
-} else {
-  initializeVideoPlayer();
-}
+// Initialize on page load
+document.addEventListener('astro:page-load', initializeVideoPlayer, { once: true });
+
+// Also initialize on view transitions
+document.addEventListener('astro:after-swap', initializeVideoPlayer);
 </script>

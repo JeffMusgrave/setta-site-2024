@@ -1,0 +1,35 @@
+---
+import HeroCTA from "../home/HeroCTA.astro";
+import Hero from "../../general/sections/Hero.astro";
+import Noise from "../../general/Noise.astro";
+// import HeroBgLight from "../assets/img/home/hero-bg-light.png"
+// drop-shadow-[0_0px_120px_rgba(59,129,246,0.6)]
+// drop-shadow-[0_0px_120px_rgba(59,129,246,0.6)]
+
+---
+
+<Hero outerClass="hero-section relative pt-8 md:pt-36  md:pb-24 overflow-x-clip md:overflow-clip md:shadow-2xl md:shadow-setta-950/50 md:border-b md:border-setta-700 h-[100svh] md:h-[calc(100svh_+_4rem)] flex items-center" innerClass="relative md:-mt-[8rem] z-10 items-center justify-between mx-auto flex gap-2 after:absolute after:inset-0 after:-z-10 after:bg-blue-950/0  after:blur-3xl">
+  <h1 slot="left-side" class="text-balance xl:!text-7xl tracking-tight">Python <em>Without</em> The Donkeywork</h1>
+  <p class="my-0 text-white" slot="left-side">Streamline your code. Skip the boilerplate parsers and frontend. Effortlessly expose your Python functions as a flexible UI. Configure, interact, and share with ease.</p>
+  <HeroCTA slot="left-side" />
+  <div class="relative hidden lg:block overflow-clip min-w-[300px] min-h-[400px] h-[400px] bg-setta-900/50 rounded-[13px] shadow-xl shadow-setta-950/60 drop-shadow-[0_0px_120px_rgba(70,180,255,0.65)]">
+
+      <video
+        class="z-10"
+        autoplay
+        muted
+        playsinline
+        poster="/assets/img/hero-card-static.webp"
+        height="400"
+        width="300"
+        preload="auto"
+      >
+        <source src="assets/video/hero-card.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      
+  </div>
+  <!-- <ThemeImage alt="Setta Cards in the BG"  darkImage={HeroBgDark} width={600} height={568} class="absolute -right-40 -z-10 blur-sm hidden lg:block opacity-50 md:blur-[2px]"/> -->
+  <div class="absolute pattern-hero inset-0 z-[1] mix-blend-exclusion" slot="outer"></div>
+  <Noise slot="outer" />
+</Hero>

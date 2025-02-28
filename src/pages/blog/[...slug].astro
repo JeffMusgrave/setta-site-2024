@@ -1,0 +1,61 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import ContentSEO from '../../components/seo/ContentSEO.astro';
+import BottomCTA from '../../components/pages/home/BottomCTA.astro';
+import { components } from '../../components/MDXComponents';
+import ContactForm from '../../components/general/ContactForm.astro';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog', ({ data }) => {
+    return !data.draft;
+  });
+  
+  return blogEntries.map(entry => ({
+    // For directory-based content, use the directory name as the slug
+    params: { 
+      slug: entry.slug.includes('/index') 
+        ? entry.slug.replace('/index', '') 
+        : entry.slug 
+    }, 
+    props: { entry }
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'blog'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+// Get the slug for image resolution
+const slug = entry.slug.includes('/index') 
+  ? entry.slug.replace('/index', '') 
+  : entry.slug;
+---
+
+<ContentLayout frontmatter={entry.data} entry={entry}>
+  <ContentSEO slot="SEO" frontmatter={entry.data} slug={slug} />
+  
+  {/* Render the blog content with our custom components */}
+  <Content components={components} />
+  
+  <BottomCTA slot="bottom" />
+  <ContactForm slot="bottom" />
+</ContentLayout>
+
+<script>
+  // Client-side script to check if images loaded properly
+  document.addEventListener('DOMContentLoaded', () => {
+    const images = document.querySelectorAll('img');
+    images.forEach(img => {
+      img.addEventListener('error', () => {
+        console.error(`Failed to load image: ${img.src}`);
+        img.style.border = '2px solid red';
+        img.style.padding = '8px';
+        img.style.backgroundColor = 'rgba(255,0,0,0.1)';
+      });
+    });
+  });
+</script>

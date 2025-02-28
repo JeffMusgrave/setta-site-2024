@@ -1,0 +1,30 @@
+---
+import {siteWidth} from "../../../styles/constants"
+interface Props {
+  id?: string;
+  outerClass?: string;
+  innerClass?: string;
+  proseClasses?: string;
+  before?: boolean;
+  opacity?: string;
+  customSiteWidth?: string;
+}
+
+const { 
+  id = "", 
+  outerClass = "relative py-12 md:py-16", 
+  innerClass = "relative z-10 justify-center mx-auto",
+  proseClasses = "prose prose-a:font-bold prose-a:no-underline md:prose-h2:text-4xl max-w-none prose-h2:font-bold z-10  prose-h3:uppercase prose-h3:text-lg  prose-h3:mb-1 prose-h3:font-semibold text-left [&_h2]:scroll-mt-32 dark:prose-invert",
+  customSiteWidth = ""
+} = Astro.props;
+
+---
+
+<section id={id} class:list={[outerClass, "w-full"]}>
+  <slot name="before" />
+  <div class:list={[customSiteWidth || siteWidth, innerClass, proseClasses]} >
+      <slot />
+    </div>
+  </div>
+  <slot name="bg" />
+</section>

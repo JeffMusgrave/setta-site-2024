@@ -1,0 +1,126 @@
+---
+// src/components/pages/blog/BlogImage.astro
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+// Import all images from content directories
+const contentImages = import.meta.glob<{ default: ImageMetadata }>('/src/content/**/*.{png,jpg,jpeg,avif,webp,gif,svg}', { eager: true });
+
+interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  class?: string;
+  caption?: string;
+}
+
+const { 
+  src, 
+  alt, 
+  width, 
+  height,
+  class: className = '',
+  caption
+} = Astro.props;
+
+// Enhanced image resolver for co-located images
+const getImageInfo = () => {
+  // External URLs
+  if (src.startsWith('http')) {
+    return {
+      src,
+      isExternal: true,
+      exists: true
+    };
+  }
+  
+  // If it's already an absolute path
+  if (src.startsWith('/')) {
+    // Try to find the exact path in our images
+    const matches = Object.entries(contentImages).filter(([path]) => 
+      path.endsWith(src.substring(1))
+    );
+    
+    if (matches.length > 0) {
+      const [path, imageModule] = matches[0];
+      return {
+        src: imageModule.default,
+        exists: true,
+        isExternal: false,
+        width: width || imageModule.default.width,
+        height: height || imageModule.default.height
+      };
+    }
+  }
+  
+  // For relative paths (common with co-located files)
+  // This handles patterns like "./image.avif" or just "image.avif"
+  const normalizedSrc = src.startsWith('./') ? src.substring(2) : src;
+  
+  // With co-located images, we typically just need the filename
+  const filename = normalizedSrc.split('/').pop();
+  
+  // Look for that filename anywhere in our content directory
+  const matches = Object.entries(contentImages).filter(([path]) => 
+    path.endsWith(`/${filename}`)
+  );
+  
+  if (matches.length > 0) {
+    const [path, imageModule] = matches[0];
+    return {
+      src: imageModule.default,
+      exists: true,
+      isExternal: false,
+      width: width || imageModule.default.width,
+      height: height || imageModule.default.height
+    };
+  }
+  
+  // Debug info when image not found
+  console.warn(`Image not found: ${src}`);
+  
+  return {
+    exists: false,
+    src
+  };
+};
+
+const imageInfo = getImageInfo();
+---
+
+<figure class={`blog-image my-8 ${className}`}>
+  {imageInfo.exists ? (
+    imageInfo.isExternal ? (
+      <img 
+        src={imageInfo.src as string} 
+        alt={alt} 
+        width={width} 
+        height={height}
+        loading="lazy"
+        class="w-full h-auto rounded-3xl"
+      />
+    ) : (
+      <Image 
+        src={imageInfo.src as ImageMetadata} 
+        alt={alt} 
+        width={imageInfo.width || width || 800} 
+        height={imageInfo.height || height || 600}
+        class="w-full h-auto rounded-3xl"
+      />
+    )
+  ) : (
+    <div class="p-4 bg-red-900/30 border border-red-500 rounded-md text-red-200">
+      <p class="font-bold">Image not found: {src}</p>
+      <p class="text-sm mt-2">
+        Make sure the image exists alongside your Markdown file in src/content/blog/[post-folder]/.
+      </p>
+    </div>
+  )}
+  
+  {caption && (
+    <figcaption class="text-sm text-center text-setta-300 mt-2 italic">
+      {caption}
+    </figcaption>
+  )}
+</figure>

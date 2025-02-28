@@ -1,26 +1,35 @@
-// import { defineCollection, z } from 'astro:content';
+import { defineCollection, z } from 'astro:content';
 
-// const portfolioCollection = defineCollection({
-//   schema: z.object({
-//     title: z.string(),
-//     description: z.string(),
-//     image: z.string(),
-//     tags: z.array(z.string()),
-//   }),
-// });
+const blogCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    // Required fields
+    title: z.string().min(1, "Title is required"),
+    description: z.string().min(1, "Description is required"),
+    date: z.date(),
+    
+    // Optional fields with defaults
+    lastModified: z.date().optional(),
+    author: z.string().default("Setta Team"),
+    tags: z.array(z.string()).default([]),
+    
+    // Featured image - structured object approach
+    featuredImage: z.object({
+      src: z.string(), // Path to the image relative to blog post or assets/img/blog/
+      alt: z.string(), // Alt text for the image
+      width: z.number().optional(), // Optional width
+      height: z.number().optional(), // Optional height
+    }).optional(),
+    
+    // Legacy support for the old image field (string URL) - marked as deprecated
+    image: z.string().optional(),
+    
+    // Display options
+    hideFeaturedImageInPost: z.boolean().optional().default(false),
+    draft: z.boolean().optional().default(false),
+  }),
+});
 
-// const blogCollection = defineCollection({
-//   schema: z.object({
-//     title: z.string(),
-//     excerpt: z.string(),
-//     date: z.date(),
-//     author: z.string(),
-//     image: z.string(),
-//     tags: z.array(z.string()),
-//   }),
-// });
-
-// export const collections = {
-//   'portfolio': portfolioCollection,
-//   'blog': blogCollection,
-// };
+export const collections = {
+  'blog': blogCollection,
+};

@@ -1,0 +1,117 @@
+---
+import type { ImageMetadata } from "astro";
+import { Schema } from "astro-seo-schema";
+import { Seo } from "astro-seo-meta";
+import type { WithContext, BlogPosting, Article, WebPage } from "schema-dts";
+import {
+  getSchemaImage,
+  getOgImage,
+  getFullImageUrl,
+} from "../../utils/imageUtils";
+
+export interface ContentMetaProps {
+  title: string;
+  description: string;
+  date?: Date;
+  author?: string;
+  image?: ImageMetadata;
+  type: "Blog" | "Article" | "Topic";
+  tags?: string[];
+  category?: string;
+  canonicalUrl?: string;
+}
+
+const {
+  title,
+  description,
+  date,
+  author,
+  image,
+  type,
+  tags,
+  category,
+  canonicalUrl,
+} = Astro.props as ContentMetaProps;
+
+const schemaImage = image ? await getSchemaImage(image) : null;
+const ogImage = image ? await getOgImage(image) : null;
+
+const getSchemaType = (type: string): "BlogPosting" | "Article" | "WebPage" => {
+  switch (type) {
+    case "Blog":
+      return "BlogPosting";
+    case "Article":
+      return "Article";
+    case "Topic":
+    default:
+      return "WebPage";
+  }
+};
+
+const schemaContent: WithContext<BlogPosting | Article | WebPage> = {
+  "@context": "https://schema.org",
+  "@type": getSchemaType(type),
+  headline: title,
+  description: description,
+  datePublished: date ? date.toISOString() : new Date().toISOString(),
+  author: {
+    "@type": "Person",
+    name: author,
+  },
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": canonicalUrl,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Learn Portugal",
+    logo: {
+      "@type": "ImageObject",
+      url: getFullImageUrl("/img/logo/logo.png", Astro.site),
+    },
+  },
+  ...(schemaImage && { image: getFullImageUrl(schemaImage.src, Astro.site) }),
+  ...(category && { about: { "@type": "Thing", name: category } }),
+};
+
+const seoProps = {
+  title,
+  description,
+  canonical: canonicalUrl,
+  openGraph: {
+    basic: {
+      title,
+      type: "article",
+      image: ogImage ? getFullImageUrl(ogImage.src, Astro.site) : undefined,
+    },
+    optional: {
+      description,
+    },
+    article: {
+      publishedTime: date ? date.toISOString() : new Date().toISOString(),
+      authors: [author],
+      tags: tags || [],
+    },
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@settadev",
+    creator: "@settadev",
+  },
+  extend: {
+    meta: [
+      { name: "twitter:title", content: title },
+      { name: "twitter:description", content: description },
+      {
+        name: "twitter:image",
+        content: ogImage ? getFullImageUrl(ogImage.src, Astro.site) : "",
+      },
+      { name: "keywords", content: tags ? tags.join(", ") : "" },
+    ],
+  },
+} as const;
+---
+
+<Schema item={schemaContent} />
+<Seo {...seoProps} />
+<!-- <div>{JSON.stringify(seoProps)}</div> -->

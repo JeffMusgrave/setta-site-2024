@@ -1,0 +1,30 @@
+---
+import {siteWidth} from "../../styles/constants"
+import SiteLogo from "./SiteLogo.astro"
+---
+
+
+
+<footer class="flex justify-center py-8 bg-setta-950">
+  <div class={`${siteWidth} flex flex-wrap flex-row justify-between sm:justify-normal items-center sm:gap-16 md:gap-36`}>
+
+    <div class="self-start">
+      <h2 class="!text-setta-400 mb-3 font-black text-xs uppercase">More From Setta</h2>
+      <ul class="flex flex-col gap-2 items-start">
+        <li><a href="https://discord.gg/MmHJz75bZ5" target="_blank" class="!text-setta-300 text-sm  hover:!text-blue-700">Discord</a></li>
+        <li><a href="https://docs.setta.dev/" target="_blank" class="!text-setta-300 text-sm  hover:!text-blue-700">Docs</a></li>
+        <li><a href="/blog" class="!text-setta-300 text-sm  hover:!text-blue-700">Blog</a></li>
+        <li><a href="https://github.com/settadev/examples" target="_blank" class="!text-setta-300 text-sm  hover:!text-blue-700">Examples</a></li>
+        <li><a href="https://github.com/settadev/setta" target="_blank" class="!text-setta-300 text-sm  hover:!text-blue-700">GitHub</a></li>
+      </ul>
+    </div>
+    <div class="self-start">
+      <h2 class="!text-setta-400 mb-3 font-black text-xs uppercase">Social</h2>
+      <ul class="flex flex-col gap-2 items-start">
+        <li><a href="https://x.com/settadev" target="_blank" class="!text-setta-300 text-sm  hover:!text-blue-700">X</a></li>
+        <li><a href="https://youtube.com/@settadev" target="_blank" class="!text-setta-300 text-sm  hover:!text-blue-700">Youtube</a></li>     
+      </ul>
+    </div>
+    <div class="mx-auto w-full sm:w-auto mt-16 sm:ml-auto sm:mr-0 self-end"><SiteLogo classes="mx-auto sm:ml-0 w-12" innerClasses="fill-setta-500 dark:fill-setta-700" /></div>
+  </div>
+</footer>

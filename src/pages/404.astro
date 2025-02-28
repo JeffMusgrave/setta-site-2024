@@ -1,18 +1,22 @@
 ---
-import {siteWidth} from "../styles/constants.js"
 import Layout from '../layouts/Layout.astro';
+import Section from "../components/general/sections/Section.astro";
+import Noise3 from "../components/general/Noise3.astro";
+import confusedTravolta from "../assets/video/travolta-lost.gif";
 ---
-
 <Layout 
   title="404 - Page Not Found" 
 >
-  <section class="py-20 text-center">
-    <div class={`${siteWidth} mx-auto `}>
-      <h1 class="text-6xl mb-4">404</h1>
-      <p class="text-2xl mb-8">Oops! The page you're looking for doesn't exist.</p>
-      <a href="/" class="bg-setta-500 hover:bg-setta-600  font-bold py-2 rounded-lg transition duration-300">
-        Go Back Home
+  <Section outerClass="h-[100svh]" innerClass="!h-full relative grid !mx-auto" proseClasses="">
+    <div class="place-self-center flex flex-col items-center z-10">
+      <h1 class="text-6xl font-black mb-4">404</h1>
+      
+      <img src={confusedTravolta.src} width="128" height="128" alt="Confused Travolta" class="h-32 -mr-8" />
+      <p class="text-2xl my-8">Page not found. Forgetta 'bout it.</p>
+      <a href="/" class="bg-setta-900/50 hover:bg-blue-800 font-bold px-3 py-2 rounded-lg transition duration-300">
+        Setta Home
       </a>
     </div>
-  </section>
+    <Noise3 slot="bg" />
+  </Section>
 </Layout>

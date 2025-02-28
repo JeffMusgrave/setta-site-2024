@@ -1,0 +1,10 @@
+---
+import Noise3 from "../../general/Noise3.astro";
+import Section from "../../general/sections/Section.astro";
+import { siteNarrowWidth } from "../../../styles/constants";
+---
+
+<Section outerClass="py-16 md:py-24 relative overflow-hidden" innerClass="z-20 relative mx-auto" proseClasses="" customSiteWidth={siteNarrowWidth}>
+    <slot />
+  <Noise3 slot="bg" />
+</Section>

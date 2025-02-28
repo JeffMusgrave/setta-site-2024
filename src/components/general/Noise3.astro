@@ -1,0 +1,124 @@
+<div class="absolute inset-0 min-h-full">
+  <div class="absolute inset-0 bg-[#090d14]" id="dynamic-background"></div>
+  <div class="absolute inset-0 bg-[url('/assets/img/noise.webp')] mix-blend-soft-light opacity-20"></div>
+  <div class="absolute inset-0 bg-[url('/assets/img/pattern.webp')] bg-cover opacity-70 bg-center bg-no-repeat mix-blend-plus-lighter"></div>
+</div>
+
+<script>
+  // Random number generation helper function
+  function random(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+  
+  // Colors for the gradients - using the original colors
+  const colors = [
+    { hue: 203, sat: 75, light: 22 }, // Blue
+    { hue: 17, sat: 80, light: 35 },  // Orange/Red
+    { hue: 288, sat: 70, light: 16 }  // Purple
+  ];
+  
+  let gradients = [];
+  let element = null;
+  let animationId = null;
+
+  // Initialize gradient data with random positions and directions
+  function initGradients() {
+    gradients = colors.map(color => ({
+      x: random(20, 80),           // Random position within the visible area
+      y: random(20, 80),
+      vx: random(0.06, 0.12) * (Math.random() > 0.5 ? 1 : -1),  // Faster movement
+      vy: random(0.06, 0.12) * (Math.random() > 0.5 ? 1 : -1),
+      hue: color.hue,
+      sat: color.sat,
+      light: color.light
+    }));
+  }
+
+  // Animation loop
+  function animateGradients() {
+    // Update gradient positions
+    for (const gradient of gradients) {
+      gradient.x += gradient.vx;
+      gradient.y += gradient.vy;
+      
+      // Boundary check with bounce effect
+      if (gradient.x < 20) { gradient.x = 20; gradient.vx *= -1; }
+      if (gradient.x > 80) { gradient.x = 80; gradient.vx *= -1; }
+      if (gradient.y < 20) { gradient.y = 20; gradient.vy *= -1; }
+      if (gradient.y > 80) { gradient.y = 80; gradient.vy *= -1; }
+      
+      // Occasionally change direction slightly
+      if (Math.random() < 0.02) {
+        gradient.vx += random(-0.01, 0.01);
+        gradient.vy += random(-0.01, 0.01);
+      }
+    }
+    
+    // Update the DOM
+    if (element) {
+      const gradientStyle = gradients.map(g => 
+        `radial-gradient(circle at ${g.x}% ${g.y}%, hsla(${g.hue}, ${g.sat}%, ${g.light}%, 0.95) 0%, rgba(9, 13, 20, 0) 65%)`
+      ).join(', ');
+      
+      element.style.backgroundImage = gradientStyle;
+    }
+    
+    // Continue animation
+    animationId = requestAnimationFrame(animateGradients);
+  }
+
+  // Detect if user prefers reduced motion
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Initialize animation
+  function initAnimation() {
+    // Find the element
+    element = document.getElementById('dynamic-background');
+    
+    if (element) {
+      // Generate new random starting positions and paths
+      initGradients();
+      
+      // Apply initial styles once
+      element.style.filter = 'contrast(130%) brightness(135%) saturate(115%)';
+      
+      // Start animation if motion is not reduced
+      if (!prefersReducedMotion) {
+        // Cancel any existing animation first
+        if (animationId) {
+          cancelAnimationFrame(animationId);
+        }
+        
+        animationId = requestAnimationFrame(animateGradients);
+      } else {
+        // Static background for users who prefer reduced motion
+        const staticGradientStyle = colors.map((color, i) => {
+          const x = 20 + (i * 30);
+          const y = 20 + (i * 30);
+          return `radial-gradient(circle at ${x}% ${y}%, hsla(${color.hue}, ${color.sat}%, ${color.light}%, 0.95) 0%, rgba(9, 13, 20, 0) 65%)`;
+        }).join(', ');
+        
+        element.style.backgroundImage = staticGradientStyle;
+      }
+    }
+  }
+
+  // Clean up animation when component unmounts
+  function cleanupAnimation() {
+    if (animationId) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
+    }
+  }
+
+  // Handle page transitions in Astro
+  document.addEventListener('astro:page-load', initAnimation);
+  document.addEventListener('astro:before-swap', cleanupAnimation);
+  
+  // Initialize on first load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAnimation);
+  } else {
+    initAnimation();
+  }
+</script>

@@ -1,0 +1,92 @@
+---
+import Footer from '../components/general/Footer.astro';
+import Header from '../components/general/Header.astro';
+import Section from '../components/general/sections/Section.astro';
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import { siteNarrowWidth } from '../styles/constants';
+import BlogListTitle from '../components/pages/blog/BlogListTitle.astro';
+import FeaturedImage from '../components/pages/blog/FeaturedImage.astro';
+import SiteLogo from '../components/general/SiteLogo.astro';
+
+const { frontmatter, entry } = Astro.props;
+
+// Only display image if:
+// 1. There is a featuredImage or image property
+// 2. hideFeaturedImageInPost is not true
+// 3. The file actually exists (checked inside the FeaturedImage component)
+const shouldDisplayImage = (frontmatter.featuredImage || frontmatter.image) && 
+                           !frontmatter.hideFeaturedImageInPost;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#0051FF">
+    <meta name="msapplication-TileColor" content="#0051FF">
+    <meta name="generator" content={Astro.generator} />
+    <slot name="SEO" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <ClientRouter />
+  </head>
+  <body transition:animate="fade">
+    <Header />
+    <main class="flex-1 flex flex-col">
+      <BlogListTitle>
+        <h1 class="text-white text-4xl md:text-5xl lg:text-6xl mt-16 md:mt-32 mb-8">{frontmatter.title}</h1>
+        
+        <div class="flex flex-wrap gap-2 items-center">
+          {frontmatter.date && (
+            <time datetime={frontmatter.date.toISOString()} class="text-sm text-white/70">
+              {new Date(frontmatter.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}
+            </time>
+          )}
+          
+          {frontmatter.author && (
+            <p class="text-sm text-white/70">
+              By {frontmatter.author}
+            </p>
+          )}
+          
+          {frontmatter.tags && frontmatter.tags.length > 0 && (
+            <div class="flex flex-wrap gap-2">
+              {frontmatter.tags.map(tag => (
+                <a 
+                  href={`/category/${tag.toLowerCase()}`}
+                  class="px-2 py-1 text-xs bg-black/50 text-setta-200 rounded-full hover:bg-blue-700 transition-colors"
+                >
+                  {tag}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      </BlogListTitle>
+      
+      <Section outerClass="relative py-16 md:py-24 bg-setta-875 border-b border-setta-700 [&_img]:border [&_img]:border-setta-700" customSiteWidth={siteNarrowWidth}>
+        {shouldDisplayImage ? (
+          <div class="-mt-32 md:-mt-48 min-w-full">
+            <FeaturedImage frontmatter={frontmatter} priority={true} slot="before" />
+          </div>
+        ) : null}
+        <article class="prose dark:prose-invert prose-h3:capitalize max-w-none [&_img]:rounded-xl prose-a:text-blue-500 prose-a:font-black hover:prose-a:text-blue-700 prose-a:transition-all">
+          <slot />
+        </article>
+        <div class="pt-20 mt-24 border-t border-setta-800"><SiteLogo classes="mx-auto w-12" innerClasses="fill-setta-500 dark:fill-setta-700" /></div>
+      </Section>
+      <slot name="bottom" />
+    </main>
+    <Footer />
+  </body>
+</html>
