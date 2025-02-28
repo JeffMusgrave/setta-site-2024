@@ -4,123 +4,103 @@ description: "We're excited to announce the launch of Setta, an open-source tool
 date: 2024-02-28
 tags: ["launch", "python", "configuration", "ui", "developer-tools"]
 author: "Setta Team"
-# featuredImage:
-#   src: "setta-launch.jpg"
-#   alt: "Setta interface showing Python configuration UI"
+featuredImage:
+  src: "setta-project.png"
+  alt: "Setta interface showing Python configuration UI"
 ---
 
 # Introducing Setta: Python Without The Donkeywork
 
-We're thrilled to announce the launch of Setta, an open-source tool created by Kevin Musgrave and Jeff Musgrave that transforms how developers work with Python configurations and interfaces. Say goodbye to tedious boilerplate and hello to a streamlined Python development experience!
+We’re excited to launch **Setta**, a **general purpose, open-source tool for Python** by [Kevin Musgrave](https://kevinmusgrave.com) and [Jeff Musgrave](https://designgenius.ca). It reimagines how you handle Python configurations and user interfaces while eliminating complexity that comes with existing solutions. So, go ahead, you can delete your YAML parsers, configuration files, _and_ frontend code!
 
-## What is Setta?
+## What Is Setta?
 
-Setta is a general-purpose developer tool that streamlines Python coding, configuration, UI creation, and onboarding. At its core, Setta embraces a simple but powerful philosophy: your config is your UI.
+Setta is a developer tool that **unifies Python configuration and UI.** Instead of scattering config files and building custom frontends, you can:
 
-With Setta, you can:
+- **Expose Python functions as interactive UIs** with a single decorator – No frontend code required!
+- **Eliminate boilerplate parsers**—no more YAML or JSON for your configs
+- **Share and configure easily**—everyone from engineers to non-technical users can tweak parameters in a friendly interface
 
-- Skip the boilerplate parsers and frontend code - No more writing YAML parsers or building UI components from scratch
-- Effortlessly expose your Python functions as a flexible UI - Turn any Python function into an interactive interface with just a decorator
-- Configure, interact, and share with ease - Create intuitive interfaces for both technical and non-technical stakeholders
+Whether you’re tuning large AI models or writing a simple script, Setta turns your Python code into an interactive application with minimal overhead.
 
-Whether you're fine-tuning large AI models or writing small Python scripts, Setta can transform them into usable interfaces without special integrations or deep frontend knowledge.
+## Why Setta Is Betta
 
-## Why Setta is Betta
+Traditional workflows involve writing Python functions, creating separate config files, building parsers, and making (or remaking) a frontend when parameters change. Setta merges configuration and UI in one place. Simply right click and add a card in Setta, type your function’s name, and all its arguments will appear. Set interface elements like sliders, color pickers, or switches for each parameter to your heart’s content!
 
-As machine learning engineers and developers, we were tired of the repetitive workflow:
+## What Setta Is Not
 
-- Write Python functions with parameters
-- Create config files (YAML, JSON, etc.)
-- Build parsers to interpret these configs
-- Develop a separate frontend to adjust parameters
-- Rebuild everything when parameters change
+- **Not a WYSIWYG Web Builder**: Setta won’t generate custom HTML pages or pixel-perfect UIs. It produces standardized, interactive components inside its own interface.
+- **Not a Visual Programming System**: You still write regular Python. Setta just provides a streamlined UI so you and other users can interact with your functions without wrestling with frontend code or config files.
 
-This cycle wastes valuable time and creates unnecessary complexity. Setta eliminates these pain points by automatically generating UI components directly from your Python functions and their type annotations.
+## How Setta Empowers Developers and Users
 
-By tying configuration and UI together, Setta lets you focus on what matters most—your code, not the infrastructure around it.
+- **Unified Configuration and UI**: Config and frontend tools solve parts of the puzzle while adding complexity. Setta treats your config and UI as one, while eliminating the config and UI code complexity entirely.
+- **Rich, Interactive Experiences**: Insert markdown docs, tooltips, or YouTube videos so users can learn as they go—no diving into separate READMEs.
+- **Flexible Usability**: Hide less-used functions to keep the UI clean. We’ve also got upcoming features like meta controls and user modes that will further simplify the interface for different audiences.
+- **Effortless Sharing**: Hand off your project to anyone; they can explore the UI and learn what they need, without constant help from you.
 
-## How Setta Works
+## Examples to Try
 
-Setta's magic happens through a simple decorator that transforms Python functions into interactive UIs:
+Visit our [examples repo](https://github.com/settadev/examples) to see Setta in action:
 
-```python
-from setta import configure
+### Stream Diffusion Image-to-Image
 
-@configure
-def train_model(
-    learning_rate: float = 0.001,
-    batch_size: int = 32,
-    epochs: int = 100,
-    model_type: str = "resnet18"
-):
-    """Train a neural network model."""
-    # Your training code here
-    print(f"Training {model_type} for {epochs} epochs...")
-```
+![Stream Diffusion with Setta](stream-diffusion-setta.png)
+https://www.youtube.com/watch?v=KE6FZxbGVkw
 
-That's it! The @configure decorator automatically creates an interactive UI for your function. Just run your script with Setta, and a browser opens with controls for all your parameters, including:
+https://github.com/settadev/examples/tree/main/stream_diffusion_img_to_img
 
-- Type-appropriate inputs (sliders, dropdowns, text fields)
-- Validation based on Python type hints
-- Documentation generated from your docstrings
-- Visual organization of related parameters
+Sketch in real time to generate AI-enhanced images.
 
-## Boost Your Productivity
+### Hugging Face TRL Language Model Finetuning
 
-Setta transforms your development process by:
+![Hugging Face TRL Fine Tuning](trl-hugging-face-setta.png)
 
-- Simplifying Workflow: Write your code in Setta or your favorite IDE, set configs with autocompletions and type-checking, and run your project—no extra steps required.
-- Saving Time: By auto-generating the UI from your config, Setta cuts out repetitive frontend work.
-- Enhancing Flexibility: With support for various input types, Setta adapts to a wide range of use cases.
-- Supporting Collaboration: Projects auto-export in a Git-friendly YAML format, making version control and sharing seamless.
+https://www.youtube.com/watch?v=hVH3IPoNngo
 
-## Exciting Examples You Can Try Today
+https://github.com/settadev/examples/tree/main/trl_language_model_finetuning
 
-The best way to experience Setta's potential is to try it yourself! We've prepared several examples to showcase what you can build:
+Experiment with Hugging Face TRL training configurations.
 
-- Stream Diffusion Image-to-Image: A real-time drawing interface that creates multiple AI-enhanced images as you sketch in parallel.
-- TRL Language Model Finetuning: Try different training configurations using the Hugging Face Transformer Reinforcement Learning (TRL) library.
-- Transformers Sequence Classification: Train text classification models using the Hugging Face Transformers library.
-- PyTorch Metric Learning: Finetune embedding models using different metric learning algorithms.
+### Llama 3 Chat UI powered by the Groq API
 
-You can find all these examples in our examples repository. Each example comes with simple setup instructions—just clone the repo, follow the instructions, and see Setta in action!
+![Llama 3 Chat UI built in Setta, powered by Groq](groq-llama3-setta.png)
 
-## Getting Started in Minutes
+https://github.com/settadev/examples/tree/main/groq_api_chat
 
-Getting started with Setta is incredibly easy:
+### Transformers Sequence Classification
 
-```
-# Install Setta
-pip install setta
+![Hugging Face's Transformers Library in Setta](transformers-hugging-face-setta.png)
 
-# Create a new project
-mkdir my_project
-cd my_project
+Train text classifiers with minimal setup.
 
-# Start Setta
-setta
-```
+### PyTorch Metric Learning
 
-The Setta UI will be available at http://127.0.0.1:8000/. From there, you can create a new configuration, add sections and parameters, and run your code.
+![PML or Pytorch Metric Learning configuration UI inside of Setta](pytorch-metric-learning-setta.png)
 
-## What's Next?
+Finetune embeddings using various metric learning methods.
 
-We're actively developing Setta with new features and improvements. In our latest releases, we've added:
+## Getting Started
 
-- Support for chat interfaces through a new "Chat" section type
-- CLI command enhancements
-- Artifact management improvements
-- Bug fixes for cross-platform compatibility
+<div class="[&_ol]:!mb-0 [&_pre]:!mt-0">
+
+1. **Create a new project directory** <pre><code>mkdir my_project
+   cd my_project</pre></code>
+2. **Install Setta** <pre><code>pip install setta</code></pre>
+3. **Start Setta** <pre><code>setta</pre></code>
+
+</div>
+
+Open http://127.0.0.1:8000/ to add sections, parameters, and see your functions come to life.
+
+## What’s Next?
+
+We’re actively adding new features! More improvements are on the way—stay tuned!
 
 ## Join the Setta Community
 
-Setta was brought to life by Kevin Musgrave, a full-stack developer, and Jeff Musgrave, a UI/UX and frontend expert. Together, they're passionate about making Python development more accessible and efficient for everyone.
-
-As an open-source project available on GitHub, Setta thrives on community input. We welcome contributions, feedback, and feature requests:
-
-- Check out our documentation
-- Join our Discord community
-- Star us on GitHub
-- Follow us on Twitter
-
-We're excited to see what you'll build with Setta! Happy coding!
+- Check out our [documentation](https:docs.setta.dev)
+- Join our [Discord community](https://discord.gg/MmHJz75bZ5)
+- Star us on [GitHub](https://github.com/settadev/setta)
+- Try our [example projects](https://github.com/settadev/examples)
+- Follow us on [X](https://x.com/settadev)

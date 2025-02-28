@@ -1,1 +1,8 @@
-export default new Map();
+
+import __ASTRO_IMAGE_IMPORT_2amaqP from "stream-diffusion-setta.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fintroducing-setta%2Findex.md";
+import __ASTRO_IMAGE_IMPORT_ZKjHa1 from "trl-hugging-face-setta.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fintroducing-setta%2Findex.md";
+import __ASTRO_IMAGE_IMPORT_Z1n7uKe from "groq-llama3-setta.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fintroducing-setta%2Findex.md";
+import __ASTRO_IMAGE_IMPORT_Z1e5NHj from "transformers-hugging-face-setta.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fintroducing-setta%2Findex.md";
+import __ASTRO_IMAGE_IMPORT_13kMoe from "pytorch-metric-learning-setta.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fintroducing-setta%2Findex.md";
+export default new Map([["stream-diffusion-setta.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fintroducing-setta%2Findex.md", __ASTRO_IMAGE_IMPORT_2amaqP], ["trl-hugging-face-setta.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fintroducing-setta%2Findex.md", __ASTRO_IMAGE_IMPORT_ZKjHa1], ["groq-llama3-setta.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fintroducing-setta%2Findex.md", __ASTRO_IMAGE_IMPORT_Z1n7uKe], ["transformers-hugging-face-setta.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fintroducing-setta%2Findex.md", __ASTRO_IMAGE_IMPORT_Z1e5NHj], ["pytorch-metric-learning-setta.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fintroducing-setta%2Findex.md", __ASTRO_IMAGE_IMPORT_13kMoe]]);
+		

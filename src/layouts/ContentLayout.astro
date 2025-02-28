@@ -63,7 +63,7 @@ const shouldDisplayImage = (frontmatter.featuredImage || frontmatter.image) &&
               {frontmatter.tags.map(tag => (
                 <a 
                   href={`/category/${tag.toLowerCase()}`}
-                  class="px-2 py-1 text-xs bg-setta-700 text-setta-200 rounded-full hover:bg-blue-700 transition-colors"
+                  class="px-2 py-1 text-xs bg-black/50 text-setta-200 rounded-full hover:bg-blue-700 transition-colors"
                 >
                   {tag}
                 </a>
@@ -79,7 +79,7 @@ const shouldDisplayImage = (frontmatter.featuredImage || frontmatter.image) &&
             <FeaturedImage frontmatter={frontmatter} priority={true} slot="before" />
           </div>
         ) : null}
-        <article class="prose dark:prose-invert max-w-none [&_img]:rounded-3xl">
+        <article class="prose dark:prose-invert max-w-none prose-strong:font-black [&_img]:rounded-3xl prose-a:text-blue-500 prose-a:font-black hover:prose-a:text-blue-700 prose-a:transition-all">
           <slot />
         </article>
       </Section>
