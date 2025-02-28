@@ -83,7 +83,7 @@ const shouldDisplayImage = (frontmatter.featuredImage || frontmatter.image) &&
         <article class="prose dark:prose-invert max-w-none prose-strong:font-black [&_img]:rounded-xl prose-a:text-blue-500 prose-a:font-black hover:prose-a:text-blue-700 prose-a:transition-all">
           <slot />
         </article>
-        <SiteLogo classes="mx-auto w-12 pt-6 mt-24 border-t border-setta-800" innerClasses="fill-setta-500 dark:fill-setta-700" />
+        <div class="pt-20 mt-24 border-t border-setta-800"><SiteLogo classes="mx-auto w-12" innerClasses="fill-setta-500 dark:fill-setta-700" /></div>
       </Section>
       <slot name="bottom" />
     </main>
