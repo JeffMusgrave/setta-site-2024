@@ -1,5 +1,5 @@
 ---
-title: "Introducing Setta: Python Without The Donkeywork"
+title: "Introducing Setta: Effortless Python Configuration & User Interfaces"
 description: "We're excited to announce the launch of Setta, an open-source tool that lets you expose Python functions as flexible UIs without writing boilerplate parsers or frontend code."
 date: 2024-02-28
 tags: ["launch", "python", "configuration", "ui", "developer-tools"]
@@ -9,7 +9,7 @@ featuredImage:
   alt: "Setta interface showing Python configuration UI"
 ---
 
-# Introducing Setta: Python Without The Donkeywork
+# No More Donkeywork!
 
 We’re excited to launch **Setta**, a **general purpose, open-source tool for Python** by [Kevin Musgrave](https://kevinmusgrave.com) and [Jeff Musgrave](https://designgenius.ca). It reimagines how you handle Python configurations and user interfaces while eliminating complexity that comes with existing solutions. So, go ahead, you can delete your YAML parsers, configuration files, _and_ frontend code!
 

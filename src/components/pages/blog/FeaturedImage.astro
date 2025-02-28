@@ -52,14 +52,38 @@ const getImageInfo = () => {
   if (postData.featuredImage) {
     const filename = postData.featuredImage.src;
     
+    // Get post slug and directory
+    const slug = post ? post.slug : '';
+    console.log('Original slug:', slug);
+    
+    // Properly extract the directory - handle both /index and directory formats
+    let postDirectory = '';
+    if (slug) {
+      // Remove trailing /index if present
+      const normalizedSlug = slug.replace(/\/index$/, '');
+      // Get the directory part
+      postDirectory = normalizedSlug.includes('/') 
+        ? normalizedSlug.split('/')[0] 
+        : normalizedSlug;
+    }
+    console.log('Post directory extracted:', postDirectory);
+    
     // Try each possible path to find the image
-    const possiblePaths = [
-      `/src/assets/img/blog/${filename}`,
-      `/src/content/blog/getting-started-with-setta/${filename}`,
-      `/src/content/blog/${filename}`
-    ];
+    const possiblePaths = [];
+    
+    // Only add directory-specific paths if we have a directory
+    if (postDirectory) {
+      possiblePaths.push(`/src/content/blog/${postDirectory}/${filename}`);
+      possiblePaths.push(`/src/assets/img/blog/${postDirectory}/${filename}`);
+    }
+    
+    // Always add these general paths
+    possiblePaths.push(`/src/assets/img/blog/${filename}`);
+    possiblePaths.push(`/src/content/blog/${filename}`);
     
     // Added debugging for paths being checked
+    console.log('Searching for image in paths:', possiblePaths);
+    
     for (const path of possiblePaths) {
       if (images[path]) {
         console.log(`✅ Found image at: ${path}`);
@@ -68,6 +92,24 @@ const getImageInfo = () => {
           alt: postData.featuredImage.alt,
           width: postData.featuredImage.width || images[path].default.width,
           height: postData.featuredImage.height || images[path].default.height,
+          exists: true,
+          isImported: true,
+          path
+        };
+      }
+    }
+    
+    // If we couldn't find it in specific paths, try a direct search in all imported images
+    // This is helpful when the image paths might not match our expected patterns
+    const exactFilename = filename.split('/').pop(); // Get just the filename without path
+    for (const [path, image] of Object.entries(images)) {
+      if (path.endsWith(`/${exactFilename}`)) {
+        console.log(`✅ Found image by direct search: ${path}`);
+        return {
+          src: image.default,
+          alt: postData.featuredImage.alt,
+          width: postData.featuredImage.width || image.default.width,
+          height: postData.featuredImage.height || image.default.height,
           exists: true,
           isImported: true,
           path
@@ -104,7 +146,7 @@ if (forMetadataOnly || !imageInfo.exists) {
   // Still allow the metadata to be processed, but don't render anything
 }
 
-// Helper function to get OG image for metadata
+// Helper function to get OG image path for metadata
 export function getOgImagePath() {
   if (imageInfo.exists) {
     return imageInfo.isImported ? imageInfo.path : imageInfo.src;
@@ -132,8 +174,8 @@ export function getOgImagePath() {
         height={imageInfo.height || 630}
         loading={priority ? "eager" : "lazy"}
         {sizes}
-        class="w-full h-auto rounded-3xl shadow-md"
+        class="w-full h-auto rounded-xl shadow-md"
       />
     )}
   </div>
-) : null /* Don't render anything if image not found */}
+) : null }

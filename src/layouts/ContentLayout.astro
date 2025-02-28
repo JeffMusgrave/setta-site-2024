@@ -73,13 +73,13 @@ const shouldDisplayImage = (frontmatter.featuredImage || frontmatter.image) &&
         </div>
       </BlogListTitle>
       
-      <Section outerClass="relative py-16 md:py-24 bg-setta-875 border-b border-setta-700" customSiteWidth={siteNarrowWidth}>
+      <Section outerClass="relative py-16 md:py-24 bg-setta-875 border-b border-setta-700 [&_img]:border [&_img]:border-setta-700" customSiteWidth={siteNarrowWidth}>
         {shouldDisplayImage ? (
           <div class="-mt-32 md:-mt-48 min-w-full">
             <FeaturedImage frontmatter={frontmatter} priority={true} slot="before" />
           </div>
         ) : null}
-        <article class="prose dark:prose-invert max-w-none prose-strong:font-black [&_img]:rounded-3xl prose-a:text-blue-500 prose-a:font-black hover:prose-a:text-blue-700 prose-a:transition-all">
+        <article class="prose dark:prose-invert max-w-none prose-strong:font-black [&_img]:rounded-xl prose-a:text-blue-500 prose-a:font-black hover:prose-a:text-blue-700 prose-a:transition-all">
           <slot />
         </article>
       </Section>
