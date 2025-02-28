@@ -1,6 +1,6 @@
 ---
 title: "Introducing Setta: Effortless Python Configuration & User Interfaces"
-description: "Setta is available to download! Try the open-source tool that treats configuration & UI as one and the same. Eliminate your boilerplate. Onboard users with ease. Simplify your life with Setta!"
+description: "Try the open-source tool for Python that treats configuration & UI as one and the same. Eliminate your boilerplate. Onboard users with ease. Simplify your life with Setta!"
 date: 2024-02-28
 tags: ["launch", "python", "configuration", "ui", "developer-tools"]
 author: "Setta Team"
@@ -13,7 +13,9 @@ featuredImage:
 
 We’re excited to launch **Setta**, a **general purpose, open-source config & user interface tool for Python**. With Setta, configuration & user interfaces are _one and the same._
 
-**Simplify your life with Setta:** It eliminates the need for YAML files, config parsers, _and_ frontend code. Plus, you don't have to think about styling the UI, _and_ it makes onboarding other devs and users easier. Intrigued?
+### Simplify your life with Setta
+
+It eliminates the need for YAML files, config parsers, _and_ frontend code. Plus, you don't have to think about styling the UI, _and_ it makes onboarding other devs and users easier. Intrigued?
 
 ## Try it out!
 
@@ -59,15 +61,15 @@ Finetune embeddings using various metric learning methods.
 
 ## What Setta Is _Not_
 
-- **Not a WYSIWYG Web Builder**: Setta won’t generate custom HTML pages. It produces standardized, interactive components inside its own interface.
-- **Not a Visual Programming System**: You still write regular Python. Setta just provides a streamlined UI so you and other users can interact with your functions without wrestling with frontend code or config files.
+- **Not a WYSIWYG web builder**: Setta won’t generate custom HTML pages. It produces standardized, interactive components inside its own interface.
+- **Not a visual programming system**: You still write regular Python. Setta just provides a streamlined UI so you and other users can interact with your functions without wrestling with frontend code or config files.
 
 ## What’s Next?
 
 We're actively developing Setta. In our latest releases, we've added:
 
-- Support for chat interfaces through a new "Chat" section type
-- Artifact management improvements
+- Support for chat interfaces through a new "Chat" section type.
+- Artifact management improvements.
 
 And there's a whole lot more on the way!
 
