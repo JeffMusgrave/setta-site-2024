@@ -25,14 +25,16 @@ const { id = "", outerClass = "relative pt-24 sm:pt-32 md:pt-48 pb-4 md:pb-40 ov
 </section>
 
 <script>
-  const scrollButton = document.querySelector('[data-scroll-to]');
-  scrollButton?.addEventListener('click', () => {
-    const targetId = scrollButton.getAttribute('data-scroll-to');
+const scrollButtons = document.querySelectorAll('[data-scroll-to]');
+scrollButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const targetId = button.getAttribute('data-scroll-to');
     if (targetId) {
       document.getElementById(targetId)?.scrollIntoView({ 
         behavior: 'smooth'
       });
     }
   });
+});
 </script>
 
